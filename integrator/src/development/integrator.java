@@ -17,6 +17,7 @@ public class integrator {
     public static void main(String[] args) {
         // TODO code application logic here
         System.out.println(" / Hola trabajo integrador / ");
+        System.out.println(" / Prueba numero 1 en git hub con net beans / ");
     }
     
 }
