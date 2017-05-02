@@ -9,6 +9,7 @@ package development;
  *
  * @author Acer
  */
+import java.util.Scanner;
 public class integrator {
 
     /**
@@ -16,8 +17,15 @@ public class integrator {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        int valor = 5;
+        while (valor == (5))  {
         System.out.println(" / Hola trabajo integrador / ");
         System.out.println(" / Prueba numero 1 en git hub con net beans / ");
+        System.out.println(" / presione 0 para finalizar / ");
+        Scanner entrada = new Scanner(System.in);
+        valor = entrada.nextInt();
+        
+        }
     }
     
 }
