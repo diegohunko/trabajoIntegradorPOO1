@@ -4,12 +4,14 @@
  * and open the template in the editor.
  */
 package modelo;
-
+import java.io.Serializable;
+import javax.persistence.Embeddable;
 /**
  *
  * @author Diego Raul Fernandez
  */
-public class Direccion {
+@Embeddable
+public class Direccion implements Serializable{
     private String calle;
     private String numero;
     private String localidad;

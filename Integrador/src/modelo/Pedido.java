@@ -4,13 +4,14 @@
  * and open the template in the editor.
  */
 package modelo;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 /**
  *
  * @author Diego Raul Fernandez
  */
-public class Pedido {
+public class Pedido implements Serializable{
      private Long idPedido;
      private Integer totalDeEntregas;
      private Date entregaInicial;
