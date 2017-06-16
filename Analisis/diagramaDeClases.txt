@@ -1,0 +1,73 @@
+@startuml diagramaDeClases.png
+Cliente "1" -- "1..*" Pedido : Realiza >
+Cliente "1" -left- "1" Direccion
+Pedido "1" --* "1..*" Entrega : < Forma parte
+Entrega "1" --* "1..*" Linea : Compuesta >
+Articulo "1" -- "1..*" Linea : Aparece en >
+Articulo "1" -- "1" Envase : Tiene >
+
+class Entrega {
+-articulosEntrega[] : Articulo 
+'es un diccionario clave articulo, valor cantidad
+-cantidad : int
+-fechaEntrega : Date
+}
+
+class Articulo{
+-codigo : int
+-descripcion : String
+-largo : double
+-ancho : double
+-diametro : double
+'-existencia : int
+}
+
+class Linea {
+-cantidad : int
+
+}
+
+class Pedido{
+'Atributos
+-idDePedido : long
+-totalEntregas : int
+-entregaInicial : Date
+-periodicidad : String
+-fechasEntrega : Date[]
+'-entregas : Entrega[]
+'Métodos
+'+Pedido()
+'+calcularFechasEntrega() : 
+
+}
+
+class Cliente{
+'Atributos
+-nroDeCliente : int
+-cuit : String
+-razonSocial : String
+-domicilioFiscal : String
+'Métodos
+'+Cliente()
+'+realizarPedido() : void
+'+consultarEstadoPedido() : 
+'+seleccionarEnvase()
+'+consultarEnvases(articulo : Articulo)
+}
+
+class Envase{
+'Atributos
+-codigo : int
+-tipoDeArticulo : Articulo[]
+-capacidad
+'Métodos
+'+Envase()
+}
+
+class Direccion {
+-calle : String
+-numero : int
+-localidad : String
+-provincia : String
+}
+@enduml
