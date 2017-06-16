@@ -4,12 +4,12 @@
  * and open the template in the editor.
  */
 package modelo;
-
+import java.io.Serializable;
 /**
  *
  * @author Diego Raul Fernandez
  */
-public class Envase {
+public class Envase implements Serializable{
     private Long codigo;
     private Double capacidad;
     private Articulo tipoArticulo;
