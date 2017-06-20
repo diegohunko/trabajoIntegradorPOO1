@@ -21,9 +21,6 @@ import javax.persistence.Temporal;
 @Entity
 @Table(name="entregas")
 public class Entrega implements Serializable{
-
-    @OneToOne
-    private Linea linea;
     @Id
     private Long idEntrega;
     @Id //?

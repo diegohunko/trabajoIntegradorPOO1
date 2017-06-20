@@ -32,7 +32,7 @@ public class Cliente implements Serializable{
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="sec_cliente")
     private Long nroCliente;
     @OneToMany(mappedBy = "propietario")//
-    private Pedido pedido;
+    private List<Pedido> pedidos;
     private String cuit;
     private String razonSocial;
     @Embedded
