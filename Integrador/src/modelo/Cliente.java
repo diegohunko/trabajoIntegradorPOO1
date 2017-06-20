@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.Table;
@@ -27,9 +28,14 @@ import javax.persistence.Table;
 @Table(name="clientes")
 public class Cliente implements Serializable{
     @Id
+    @SequenceGenerator(name="sec_cliente", initialValue=1, allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="sec_cliente")
     private Long nroCliente;
+    @OneToMany(mappedBy = "propietario")//
+    private List<Pedido> pedidos;
     private String cuit;
     private String razonSocial;
+    @Embedded
     private Direccion domicilioFiscal;
     
 }
