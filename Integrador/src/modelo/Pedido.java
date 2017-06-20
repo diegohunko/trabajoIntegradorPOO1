@@ -16,7 +16,7 @@ public class Pedido implements Serializable{
      private Integer totalDeEntregas;
      private Date entregaInicial;
      private char periodicidad;
-     private List<Date> fechasDeEntrega;//es necesario este atributo?
+     //private List<Date> fechasDeEntrega;//es necesario este atributo?
      private Cliente propietario;
      private List<Entrega> entregas;
 

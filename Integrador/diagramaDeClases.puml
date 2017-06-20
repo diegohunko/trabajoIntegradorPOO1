@@ -1,0 +1,51 @@
+@startuml
+annotation javax.persistence.Embeddable
+annotation javax.persistence.Entity
+annotation javax.persistence.Id
+annotation javax.persistence.Table
+class java.util.ArrayList
+class java.util.Date
+class java.util.List
+class javax.persistence.Embedded
+class javax.persistence.GeneratedValue
+class javax.persistence.GenerationType
+class javax.persistence.ManyToMany
+class javax.persistence.ManyToOne
+class javax.persistence.OneToMany
+class javax.persistence.SequenceGenerator
+class javax.persistence.Temporal
+class modelo.Articulo
+class modelo.Cliente
+class modelo.Direccion
+class modelo.Entrega
+class modelo.Envase
+class modelo.Linea
+class modelo.Pedido
+interface java.io.Serializable
+modelo.Articulo --|> java.io.Serializable
+modelo.Cliente ..> javax.persistence.Entity
+modelo.Cliente ..> javax.persistence.Id
+modelo.Cliente ..> javax.persistence.Table
+modelo.Cliente ..> java.util.ArrayList
+modelo.Cliente ..> java.util.Date
+modelo.Cliente ..> java.util.List
+modelo.Cliente ..> javax.persistence.Embedded
+modelo.Cliente ..> javax.persistence.GeneratedValue
+modelo.Cliente ..> javax.persistence.GenerationType
+modelo.Cliente ..> javax.persistence.ManyToMany
+modelo.Cliente ..> javax.persistence.ManyToOne
+modelo.Cliente ..> javax.persistence.OneToMany
+modelo.Cliente ..> javax.persistence.SequenceGenerator
+modelo.Cliente ..> javax.persistence.Temporal
+modelo.Cliente --|> java.io.Serializable
+modelo.Direccion ..> javax.persistence.Embeddable
+modelo.Direccion --|> java.io.Serializable
+modelo.Entrega ..> java.util.Date
+modelo.Entrega ..> java.util.List
+modelo.Entrega --|> java.io.Serializable
+modelo.Envase --|> java.io.Serializable
+modelo.Linea --|> java.io.Serializable
+modelo.Pedido ..> java.util.Date
+modelo.Pedido ..> java.util.List
+modelo.Pedido --|> java.io.Serializable
+@enduml
