@@ -1,4 +1,4 @@
-@startuml diagramaDeClases.png
+﻿@startuml diagramaDeClases.png
 Cliente "1" -- "1..*" Pedido : Realiza >
 Cliente "1" -left- "1" Direccion
 Pedido "1" --* "1..*" Entrega : < Forma parte
@@ -7,7 +7,7 @@ Articulo "1" -- "1..*" Linea : Aparece en >
 Articulo "1" -- "1" Envase : Tiene >
 
 class Entrega {
--articulosEntrega[] : Articulo 
+'-articulosEntrega[] : Articulo 
 'es un diccionario clave articulo, valor cantidad
 -cantidad : int
 -fechaEntrega : Date
@@ -33,7 +33,7 @@ class Pedido{
 -totalEntregas : int
 -entregaInicial : Date
 -periodicidad : String
--fechasEntrega : Date[]
+'-fechasEntrega : Date[]
 '-entregas : Entrega[]
 'Métodos
 '+Pedido()
@@ -58,7 +58,7 @@ class Cliente{
 class Envase{
 'Atributos
 -codigo : int
--tipoDeArticulo : Articulo[]
+-tipoDeArticulo : Articulo
 -capacidad
 'Métodos
 '+Envase()
