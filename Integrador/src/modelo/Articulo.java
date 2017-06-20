@@ -25,6 +25,6 @@ public class Articulo implements Serializable{
     private Double largo;
     private Double ancho;
     private Double diametro;
-    @OneToOne
+    @OneToOne(mappedBy="codigo")
     private Envase envase;
 }
