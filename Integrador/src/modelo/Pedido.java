@@ -43,6 +43,8 @@ public class Pedido implements Serializable{
     
     public Pedido(Cliente propietario, Date entregaInicial, 
             Integer totalDeEntregas, char periodicidad){
+        entregas = new ArrayList<>();
+        fechasDeEntrega = new ArrayList<>();
         this.propietario = propietario;
         this.entregaInicial = entregaInicial;
         this.totalDeEntregas = totalDeEntregas;
