@@ -6,6 +6,7 @@
 package modelo;
 import java.io.Serializable;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -26,8 +27,12 @@ public class Entrega implements Serializable{
     @Id //?
     @ManyToOne
     private Pedido nroPedido;
-    @OneToMany(mappedBy = "entrega")
+    @OneToMany(mappedBy = "idEntrega")
     private List<Linea> detalle;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechaEntrega;
+    
+    public Entrega(){
+        detalle = new ArrayList<>();
+    }
 }
