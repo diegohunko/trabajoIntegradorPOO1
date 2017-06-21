@@ -44,6 +44,7 @@ public class Cliente implements Serializable{
     }
     
     public Cliente(String razonSocial, String cuit, Direccion domicilioFiscal){
+        pedidos = new ArrayList<>();
         this.razonSocial = razonSocial;
         this.cuit = cuit;
         this.domicilioFiscal = domicilioFiscal;
