@@ -4,12 +4,20 @@ Cliente "1" -left- "1" Direccion
 Pedido "1" --* "1..*" Entrega : < Forma parte
 Entrega "1" --* "1..*" Linea : Compuesta >
 Articulo "1" -- "1..*" Linea : Aparece en >
-Articulo "1" -- "1" Envase : Tiene >
+'Articulo "1" -- "1" Envase : Tiene >
+Articulo "1" -- "1" TipoArticulo : Es de >
+Envase "1" -- "1" TipoArticulo : Es para >
+Envase "1" -- "1..*" Articulo : Puede ser usado por >
+
+class TipoArticulo {
+-idTipoArticulo : Long
+-descripcion : String
+}
 
 class Entrega {
 '-articulosEntrega[] : Articulo 
 'es un diccionario clave articulo, valor cantidad
--cantidad : int
+'-cantidad : int
 -fechaEntrega : Date
 }
 
@@ -30,10 +38,10 @@ class Linea {
 class Pedido{
 'Atributos
 -idDePedido : long
--totalEntregas : int
+-totalDeEntregas : int
 -entregaInicial : Date
--periodicidad : String
-'-fechasEntrega : Date[]
+-periodicidad : char
+-fechasDeEntrega[] : Date
 '-entregas : Entrega[]
 'Métodos
 '+Pedido()
