@@ -38,4 +38,8 @@ public class Cliente implements Serializable{
     @Embedded
     private Direccion domicilioFiscal;
     
+    
+    public Cliente(){
+        pedidos = new ArrayList<>();
+    }
 }
