@@ -7,6 +7,7 @@ package modelo;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.ArrayList;
 import javax.persistence.Id;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -31,5 +32,9 @@ public class Pedido implements Serializable{
     private Cliente propietario;
     @OneToMany(mappedBy = "nroPedido")
     private List<Entrega> entregas;
+    
+    public Pedido(){
+        entregas = new ArrayList<>();
+    }
 
 }
