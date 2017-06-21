@@ -38,8 +38,57 @@ public class Cliente implements Serializable{
     @Embedded
     private Direccion domicilioFiscal;
     
-    
+    //constructores
     public Cliente(){
         pedidos = new ArrayList<>();
     }
+    
+    public Cliente(String razonSocial, String cuit, Direccion domicilioFiscal){
+        this.razonSocial = razonSocial;
+        this.cuit = cuit;
+        this.domicilioFiscal = domicilioFiscal;
+    }
+    
+    public Long getNroCliente() {
+        return nroCliente;
+    }
+
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public String getCuit() {
+        return cuit;
+    }
+
+    public String getRazonSocial() {
+        return razonSocial;
+    }
+
+    public Direccion getDomicilioFiscal() {
+        return domicilioFiscal;
+    }
+    
+    public void setNroCliente(Long nroCliente) {
+        this.nroCliente = nroCliente;
+    }
+
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
+
+    public void setCuit(String cuit) {
+        this.cuit = cuit;
+    }
+
+    public void setRazonSocial(String razonSocial) {
+        this.razonSocial = razonSocial;
+    }
+
+    public void setDomicilioFiscal(Direccion domicilioFiscal) {
+        this.domicilioFiscal = domicilioFiscal;
+    }
+    
+    
+    
 }
