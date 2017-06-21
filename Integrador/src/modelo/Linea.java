@@ -23,4 +23,28 @@ public class Linea implements Serializable{
      @OneToOne
      private Articulo descripcion;
      private Integer cantidad;
+
+    public Entrega getEntrega() {
+        return entrega;
+    }
+
+    public void setEntrega(Entrega entrega) {
+        this.entrega = entrega;
+    }
+
+    public Articulo getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(Articulo descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public Integer getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
+    }
 }
