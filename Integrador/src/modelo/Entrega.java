@@ -32,7 +32,41 @@ public class Entrega implements Serializable{
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechaEntrega;
     
+    //Construtores
     public Entrega(){
         detalle = new ArrayList<>();
+    }
+    
+    //Accesores y Mutadores
+    public Long getIdEntrega() {
+        return idEntrega;
+    }
+
+    public void setIdEntrega(Long idEntrega) {
+        this.idEntrega = idEntrega;
+    }
+
+    public Pedido getNroPedido() {
+        return nroPedido;
+    }
+
+    public void setNroPedido(Pedido nroPedido) {
+        this.nroPedido = nroPedido;
+    }
+
+    public List<Linea> getDetalle() {
+        return detalle;
+    }
+
+    public void setDetalle(List<Linea> detalle) {
+        this.detalle = detalle;
+    }
+
+    public Date getFechaEntrega() {
+        return fechaEntrega;
+    }
+
+    public void setFechaEntrega(Date fechaEntrega) {
+        this.fechaEntrega = fechaEntrega;
     }
 }
