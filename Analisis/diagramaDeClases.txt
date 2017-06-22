@@ -6,8 +6,10 @@ Entrega "1" --* "1..*" Linea : Compuesta >
 Articulo "1" -- "1..*" Linea : Aparece en >
 'Articulo "1" -- "1" Envase : Tiene >
 Articulo "1" -- "1" TipoArticulo : Es de >
-Envase "1" -- "1" TipoArticulo : Es para >
+Envase "1" -- "1..*" TipoArticulo : Es para >
 Envase "1" -- "1..*" Articulo : Puede ser usado por >
+Linea "1" -- "1" Envase : < Se usa para
+
 
 class TipoArticulo {
 -idTipoArticulo : Long
