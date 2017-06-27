@@ -23,7 +23,6 @@ import javax.persistence.Temporal;
 public class Entrega implements Serializable{
     @Id
     private Long idEntrega;
-    @Id //?
     @ManyToOne
     private Pedido nroPedido;
     @OneToMany(mappedBy = "idEntrega")
