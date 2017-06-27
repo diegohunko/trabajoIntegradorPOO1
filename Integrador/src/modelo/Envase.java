@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 /**
@@ -23,5 +24,9 @@ public class Envase implements Serializable{
     private Long codigo;
     private Double capacidad;
     @OneToOne(mappedBy="codigo")
-    private Articulo tipoArticulo;
+    private Articulo articulo;
+    @ManyToOne
+    private TipoArticulo tipoArticulo;
+    @OneToOne(mappedBy = "envase")
+    private Linea lineaEntrega;
 }
