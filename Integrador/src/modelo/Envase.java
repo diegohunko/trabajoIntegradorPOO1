@@ -36,9 +36,8 @@ public class Envase implements Serializable{
         
     }
     
-    public Envase(Long codigo, Double capacidad, Articulo articulo,
+    public Envase(Double capacidad, Articulo articulo,
             TipoArticulo tipoArticulo) {
-        this.codigo = codigo;
         this.capacidad = capacidad;
         this.articulo = articulo;
         this.tipoArticulo = tipoArticulo;
