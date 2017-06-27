@@ -19,6 +19,8 @@ import javax.persistence.OneToMany;
 @Table(name="articulos")
 public class Articulo implements Serializable{
 
+   
+
     
     @Id
     @GeneratedValue
@@ -34,6 +36,17 @@ public class Articulo implements Serializable{
     
     
     public Articulo() {
+    }
+    
+     public Articulo(Long codigo, String descripcion, Double largo, Double ancho,
+             Double diametro, Envase envase, TipoArticulo tipo) {
+        this.codigo = codigo;
+        this.descripcion = descripcion;
+        this.largo = largo;
+        this.ancho = ancho;
+        this.diametro = diametro;
+        this.envase = envase;
+        this.tipo = tipo;
     }
     
     public Long getCodigo() {

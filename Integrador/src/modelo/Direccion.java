@@ -12,6 +12,8 @@ import javax.persistence.Embeddable;
  */
 @Embeddable
 public class Direccion implements Serializable{
+
+    
     private String calle;
     private String numero;
     private String localidad;
@@ -19,6 +21,12 @@ public class Direccion implements Serializable{
     
     public Direccion(){
         
+    }
+    
+    public Direccion(String calle, String numero, String localidad) {
+        this.calle = calle;
+        this.numero = numero;
+        this.localidad = localidad;
     }
 
     public String getCalle() {
