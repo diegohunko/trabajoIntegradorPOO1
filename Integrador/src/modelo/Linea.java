@@ -23,6 +23,8 @@ public class Linea implements Serializable{
      @OneToOne
      private Articulo descripcion;
      private Integer cantidad;
+    @OneToOne
+     private Envase envase;
 
     public Entrega getEntrega() {
         return entrega;

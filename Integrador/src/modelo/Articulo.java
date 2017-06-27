@@ -18,6 +18,8 @@ import javax.persistence.OneToMany;
 @Entity
 @Table(name="articulos")
 public class Articulo implements Serializable{
+
+    
     @Id
     @GeneratedValue
     private Long codigo;
@@ -27,4 +29,66 @@ public class Articulo implements Serializable{
     private Double diametro;
     @OneToOne(mappedBy="codigo")
     private Envase envase;
+    @OneToOne(mappedBy = "articulo")
+    private TipoArticulo tipo;
+    
+    
+    public Articulo() {
+    }
+    
+    public Long getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(Long codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public Double getLargo() {
+        return largo;
+    }
+
+    public void setLargo(Double largo) {
+        this.largo = largo;
+    }
+
+    public Double getAncho() {
+        return ancho;
+    }
+
+    public void setAncho(Double ancho) {
+        this.ancho = ancho;
+    }
+
+    public Double getDiametro() {
+        return diametro;
+    }
+
+    public void setDiametro(Double diametro) {
+        this.diametro = diametro;
+    }
+
+    public Envase getEnvase() {
+        return envase;
+    }
+
+    public void setEnvase(Envase envase) {
+        this.envase = envase;
+    }
+
+    public TipoArticulo getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoArticulo tipo) {
+        this.tipo = tipo;
+    }
 }

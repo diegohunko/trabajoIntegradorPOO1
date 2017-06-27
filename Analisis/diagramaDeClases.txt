@@ -5,8 +5,8 @@ Pedido "1" --* "1..*" Entrega : < Forma parte
 Entrega "1" --* "1..*" Linea : Compuesta >
 Articulo "1" -- "1..*" Linea : Aparece en >
 'Articulo "1" -- "1" Envase : Tiene >
-Articulo "1" -- "1" TipoArticulo : Es de >
-Envase "1" -- "1..*" TipoArticulo : Es para >
+Articulo "1" -- "1" TipoArticulo : Tiene >
+Envase "1..*" -- "1" TipoArticulo : Tiene <
 Envase "1" -- "1..*" Articulo : Puede ser usado por >
 Linea "1" -- "1" Envase : < Se usa para
 
@@ -17,19 +17,16 @@ class TipoArticulo {
 }
 
 class Entrega {
-'-articulosEntrega[] : Articulo 
-'es un diccionario clave articulo, valor cantidad
-'-cantidad : int
+-idEntrega : Long
 -fechaEntrega : Date
 }
 
 class Articulo{
--codigo : int
+-codigo : Long
 -descripcion : String
--largo : double
--ancho : double
--diametro : double
-'-existencia : int
+-largo : Double
+-ancho : Double
+-diametro : Double
 }
 
 class Linea {
@@ -56,7 +53,7 @@ class Cliente{
 -nroDeCliente : int
 -cuit : String
 -razonSocial : String
--domicilioFiscal : String
+-domicilioFiscal : Direccion
 'Métodos
 '+Cliente()
 '+realizarPedido() : void
@@ -68,7 +65,7 @@ class Cliente{
 class Envase{
 'Atributos
 -codigo : int
--tipoDeArticulo : Articulo
+'-tipoDeArticulo : TipoArticulo
 -capacidad
 'Métodos
 '+Envase()
