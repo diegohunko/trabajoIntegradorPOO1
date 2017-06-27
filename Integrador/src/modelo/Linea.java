@@ -26,6 +26,17 @@ public class Linea implements Serializable{
     @OneToOne
      private Envase envase;
 
+    public Linea(){
+        
+    }
+    
+    public Linea(Entrega entrega, Articulo descripcion, 
+            Integer cantidad, Envase envase){
+        this.entrega = entrega;
+        this.descripcion = descripcion;
+        this.cantidad = cantidad;
+        this.envase = envase;
+    }
     public Entrega getEntrega() {
         return entrega;
     }
@@ -48,5 +59,13 @@ public class Linea implements Serializable{
 
     public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
+    }
+    
+    public Envase getEnvase() {
+        return envase;
+    }
+
+    public void setEnvase(Envase envase) {
+        this.envase = envase;
     }
 }
