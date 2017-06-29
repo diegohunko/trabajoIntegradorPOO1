@@ -6,19 +6,14 @@
 package modelo;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Temporal;
 import javax.persistence.Table;
 /**
  *
@@ -43,11 +38,13 @@ public class Cliente implements Serializable{
         pedidos = new ArrayList<>();
     }
     
-    public Cliente(String razonSocial, String cuit, Direccion domicilioFiscal){
+    public Cliente(String razonSocial, String cuit, String calle, 
+            String numero, String localidad, String provincia){
         pedidos = new ArrayList<>();
         this.razonSocial = razonSocial;
         this.cuit = cuit;
-        this.domicilioFiscal = domicilioFiscal;
+        Direccion d = new Direccion(calle, numero, localidad, provincia);
+        this.domicilioFiscal = d;
     }
     
     public Long getNroCliente() {
@@ -90,6 +87,12 @@ public class Cliente implements Serializable{
         this.domicilioFiscal = domicilioFiscal;
     }
     
+    //los mejore, los únicos los MÉTODOS piqueteros
+    public void agregarPedido(Pedido p){
+        this.pedidos.add(p);
+    }
     
-    
+    public void quitarPedido(Pedido p){
+        this.pedidos.remove(p);
+    }
 }

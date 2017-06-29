@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
+import javax.persistence.GeneratedValue;
 /**
  *
  * @author Diego Raul Fernandez
@@ -22,6 +23,7 @@ import javax.persistence.Temporal;
 @Table(name="entregas")
 public class Entrega implements Serializable{
     @Id
+    @GeneratedValue
     private Long idEntrega;
     @ManyToOne
     private Pedido nroPedido;
@@ -32,7 +34,13 @@ public class Entrega implements Serializable{
     
     //Construtores
     public Entrega(){
-        detalle = new ArrayList<>();
+        this.detalle = new ArrayList<>();
+    }
+    
+    public Entrega(Pedido nroPedido, Date fechaEntrega){
+        this.detalle = new ArrayList<>();
+        this.nroPedido = nroPedido;
+        this.fechaEntrega = fechaEntrega;
     }
     
     //Accesores y Mutadores
@@ -66,5 +74,13 @@ public class Entrega implements Serializable{
 
     public void setFechaEntrega(Date fechaEntrega) {
         this.fechaEntrega = fechaEntrega;
+    }
+    
+    public void agregarLineaDetalle(Linea l){
+        this.detalle.add(l);
+    }
+    
+    public void quitarLineaDetalle(Linea l){
+        this.detalle.remove(l);
     }
 }
