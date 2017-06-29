@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 package sistema;
-import vistas.Bienvenida;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import vistas.VentanaPrincipal;
 /**
  *
  * @author Diego Raul Fernandez
@@ -12,7 +14,9 @@ import vistas.Bienvenida;
 public class Sistema {
     public static void main(String args[]){
         //TODO codigo aqui.
-        Bienvenida miVentanaInicio = new Bienvenida();
+        EntityManagerFactory emf;
+        emf = Persistence.createEntityManagerFactory("IntegradorPU");
+        VentanaPrincipal miVentanaInicio = new VentanaPrincipal();
         miVentanaInicio.setVisible(true);
     }
 }
