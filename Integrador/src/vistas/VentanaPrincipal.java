@@ -4,7 +4,8 @@
  * and open the template in the editor.
  */
 package vistas;
-
+import persistencia.Persistencia;
+import controlador.Controlador;
 /**
  *
  * @author Diego Raul Fernandez
@@ -14,7 +15,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form Bienvenida
      */
-    public VentanaPrincipal() {
+    private Controlador controlador;
+    public VentanaPrincipal(Controlador c) {
+        this.controlador = c;
         initComponents();
     }
 
@@ -39,6 +42,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);
+            }
+        });
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -90,8 +98,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
-        VentanaCliente vc = new VentanaCliente();
+        
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        VentanaCliente vc = new VentanaCliente();
+        vc.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
