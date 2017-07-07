@@ -7,6 +7,8 @@ package sistema;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import vistas.VentanaPrincipal;
+import persistencia.Persistencia;
+import controlador.Controlador;
 /**
  *
  * @author Diego Raul Fernandez
@@ -16,7 +18,10 @@ public class Sistema {
         //TODO codigo aqui.
         EntityManagerFactory emf;
         emf = Persistence.createEntityManagerFactory("IntegradorPU");
-        VentanaPrincipal miVentanaInicio = new VentanaPrincipal();
+        Persistencia persistencia = new Persistencia(emf);
+        Controlador c = new Controlador(persistencia);
+        VentanaPrincipal miVentanaInicio;
+        miVentanaInicio = new VentanaPrincipal(c);
         miVentanaInicio.setVisible(true);
     }
 }
