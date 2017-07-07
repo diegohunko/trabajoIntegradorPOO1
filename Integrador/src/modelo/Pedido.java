@@ -32,7 +32,7 @@ public class Pedido implements Serializable{
     private List<Date> fechasDeEntrega;//es necesario este atributo?
     @ManyToOne
     private Cliente propietario;
-    @OneToMany(mappedBy = "idPedido")
+    @OneToMany(mappedBy = "nroPedido")
     private List<Entrega> entregas;
     
     //Constructores de la clase

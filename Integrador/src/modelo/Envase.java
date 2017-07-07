@@ -11,6 +11,9 @@ import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import java.util.Set;
+import java.util.HashSet;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -19,36 +22,33 @@ import javax.persistence.OneToOne;
 @Entity
 @Table(name="envases")
 public class Envase implements Serializable{
-
-    
     @Id
     @GeneratedValue
-    private Long codigo;
+    private Long idEnvase;
     private Double capacidad;
-    @OneToOne(mappedBy="codigo")
-    private Articulo articulo;
+    @OneToMany(mappedBy="envase")
+    private Set<Articulo> articulos;
     @ManyToOne
     private TipoArticulo tipoArticulo;
-    @OneToOne(mappedBy = "envase")
+    @OneToOne
     private Linea lineaEntrega;
     
     public Envase(){
-        
+        this.articulos = new HashSet<>();
     }
     
-    public Envase(Double capacidad, Articulo articulo,
-            TipoArticulo tipoArticulo) {
+    public Envase(Double capacidad, TipoArticulo tipoArticulo) {
         this.capacidad = capacidad;
-        this.articulo = articulo;
         this.tipoArticulo = tipoArticulo;
+        this.articulos = new HashSet<>();
     }
     
-    public Long getCodigo() {
-        return codigo;
+    public Long getIdEnvase() {
+        return idEnvase;
     }
 
-    public void setCodigo(Long codigo) {
-        this.codigo = codigo;
+    public void setIdEnvase(Long idEnvase) {
+        this.idEnvase = idEnvase;
     }
 
     public Double getCapacidad() {
@@ -59,12 +59,8 @@ public class Envase implements Serializable{
         this.capacidad = capacidad;
     }
 
-    public Articulo getArticulo() {
-        return articulo;
-    }
-
-    public void setArticulo(Articulo articulo) {
-        this.articulo = articulo;
+    public Set<Articulo> getArticulo() {
+        return articulos;
     }
 
     public TipoArticulo getTipoArticulo() {
@@ -81,5 +77,13 @@ public class Envase implements Serializable{
 
     public void setLineaEntrega(Linea lineaEntrega) {
         this.lineaEntrega = lineaEntrega;
+    }
+    
+    public void agregarArticulo(Articulo articulo) {
+        this.articulos.add(articulo);
+    }
+    
+    public void quitarArticulo(Articulo articulo){
+        this.articulos.remove(articulo);
     }
 }

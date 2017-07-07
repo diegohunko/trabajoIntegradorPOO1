@@ -27,7 +27,7 @@ public class Entrega implements Serializable{
     private Long idEntrega;
     @ManyToOne
     private Pedido nroPedido;
-    @OneToMany(mappedBy = "idEntrega")
+    @OneToMany(mappedBy = "entrega")
     private List<Linea> detalle;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechaEntrega;

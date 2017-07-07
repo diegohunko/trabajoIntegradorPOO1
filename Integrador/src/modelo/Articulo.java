@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.OneToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 /**
  *
  * @author Diego Raul Fernandez
@@ -18,18 +18,14 @@ import javax.persistence.OneToMany;
 @Entity
 @Table(name="articulos")
 public class Articulo implements Serializable{
-
-   
-
-    
     @Id
     @GeneratedValue
-    private Long codigo;
+    private Long idArticulo;
     private String descripcion;
     private Double largo;
     private Double ancho;
     private Double diametro;
-    @OneToOne(mappedBy="codigo")
+    @ManyToOne
     private Envase envase;
     @OneToOne(mappedBy = "articulo")
     private TipoArticulo tipo;
@@ -40,7 +36,7 @@ public class Articulo implements Serializable{
     
      public Articulo(Long codigo, String descripcion, Double largo, Double ancho,
              Double diametro, Envase envase, TipoArticulo tipo) {
-        this.codigo = codigo;
+        this.idArticulo = codigo;
         this.descripcion = descripcion;
         this.largo = largo;
         this.ancho = ancho;
@@ -49,12 +45,12 @@ public class Articulo implements Serializable{
         this.tipo = tipo;
     }
     
-    public Long getCodigo() {
-        return codigo;
+    public Long getIdArticulo() {
+        return idArticulo;
     }
 
-    public void setCodigo(Long codigo) {
-        this.codigo = codigo;
+    public void setIdArticulo(Long idArticulo) {
+        this.idArticulo = idArticulo;
     }
 
     public String getDescripcion() {
