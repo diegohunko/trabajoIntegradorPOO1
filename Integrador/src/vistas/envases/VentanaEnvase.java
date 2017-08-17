@@ -3,7 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package vistas;
+package vistas.envases;
+
+import controlador.Controlador;
+import javax.swing.JFrame;
 
 /**
  *
@@ -14,7 +17,11 @@ public class VentanaEnvase extends javax.swing.JFrame {
     /**
      * Creates new form VentanaEnvase
      */
-    public VentanaEnvase() {
+    private JFrame vp;
+    private Controlador controlador;
+    public VentanaEnvase(Controlador c, JFrame previo) {
+        this.controlador = c;
+        this.vp = previo;
         initComponents();
     }
 
