@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import vistas.VentanaEntrega;
+import vistas.entregas.VentanaEntrega;
 /**
  *
  * @author Diego Raul Fernandez
@@ -87,6 +87,11 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
 
         txtCuilPropietario.setToolTipText("Ingrese CUIL/CUIT sin guiones ni puntos");
 
+        lstFechasEntregas.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "18/12/2017" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
         lstFechasEntregas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         lstFechasEntregas.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
