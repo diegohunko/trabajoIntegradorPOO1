@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package vistas;
-
+package vistas.articulos;
+import controlador.Controlador;
+import javax.swing.*;
 /**
  *
  * @author Diego Raul Fernandez
@@ -14,7 +15,11 @@ public class VentanaArticulo extends javax.swing.JFrame {
     /**
      * Creates new form VentanaArticulo
      */
-    public VentanaArticulo() {
+    private final JFrame vp;
+    private final Controlador controlador;
+    public VentanaArticulo(Controlador c, JFrame previo) {
+        this.controlador = c;
+        this.vp = previo;
         initComponents();
     }
 
