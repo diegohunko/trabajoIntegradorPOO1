@@ -22,6 +22,10 @@ public class Controlador {
     }
     
     //Controlador de clientes
+    public Cliente buscarCliente(Object criterioBusqueda){
+        return this.persistencia.buscar(Cliente.class, criterioBusqueda);
+    }
+    
     public List listarClientes(){
         return this.persistencia.buscarTodosOrdenadosPor(Cliente.class, 
                 Cliente_.nroCliente);
@@ -41,7 +45,42 @@ public class Controlador {
         }
     }
     
+    public void modificarCliente(Cliente c, String razonSocial, String calle, 
+            String numero, String localidad, String provincia){
+        if (c != null){
+            this.persistencia.iniciarTransaccion();
+            try{
+                Direccion nuevoDomicilio = c.getDomicilioFiscal();
+                nuevoDomicilio.setCalle(calle.toUpperCase());
+                nuevoDomicilio.setNumero(numero.toUpperCase());
+                nuevoDomicilio.setLocalidad(localidad.toUpperCase());
+                nuevoDomicilio.setProvincia(provincia.toUpperCase());
+                c.setRazonSocial(razonSocial.toUpperCase());
+                c.setDomicilioFiscal(nuevoDomicilio);
+                this.persistencia.modificar(c);
+                this.persistencia.confirmarTransaccion();
+            }catch(Exception ex){
+                this.persistencia.descartarTransaccion();
+            }
+        }
+    }
+    
+    public void eliminarCliente(){
+        
+    }
+    
     //Controlador de Pedidos
+    public List listarPedidosCliente(Cliente c){
+        return this.persistencia.buscarTodosOrdenadosPor(Pedido.class, Pedido_.propietario);
+    }
+    
+    /**
+     *
+     * @param propietario
+     * @param entregaInicial
+     * @param totalDeEntregas
+     * @param periodicidad
+     */
     public void nuevoPedido(String propietario, Date entregaInicial, 
             Integer totalDeEntregas, char periodicidad){
         this.persistencia.iniciarTransaccion();
@@ -63,7 +102,67 @@ public class Controlador {
     }
     
     //Controlador de Entrega
-    public void nuevaEntrega(){
-        
+
+    /**
+     *
+     * @param pedido
+     * @param fechaEntrega
+     */
+    public void nuevaEntrega(Object pedido, Date fechaEntrega){
+        try{
+            this.persistencia.iniciarTransaccion();
+            Pedido unPedido;
+            //recuperar el pedido al que pertenece la entrega
+            unPedido = (Pedido) this.persistencia.buscar(Pedido.class, pedido);
+            Entrega unaEntrega;
+            //Crear una nueva entrega para el pedido
+            unaEntrega = new Entrega(unPedido, fechaEntrega);
+            //Agregar la entrega al array de netregas del Pedido.
+            unPedido.agregarEntrega(unaEntrega);
+            //Insertar la entregaen la base de datos y actualizar(?) el pedido
+            this.persistencia.insertar(unaEntrega);
+            this.persistencia.refrescar(unPedido);
+            this.persistencia.confirmarTransaccion();
+        }catch(Exception ex){
+            this.persistencia.descartarTransaccion();
+        }
+    }
+    /**
+     * 
+     * @param fechaEntrega : Fecha en la que debe ser entregado el pedido
+     * @param idEntrega : Entrega a la que pertenece esta linea
+     * @param cantidad : Cantidad de un artículo para esta entrega
+     * @param articulo : El artículo para esta entrega
+     * @param envase : envase para este artículo
+     */
+    public void agregarLineaEntrega(Date fechaEntrega, Object idEntrega,
+            Integer cantidad, //Object tipoArticulo,
+            Object articulo, Object envase){
+        try{
+            //Inicia la transaccion
+            this.persistencia.iniciarTransaccion();
+            //Recuperar los objetos para crear un objeto de tipo Linea
+            Entrega unaEntrega;
+            unaEntrega = (Entrega) this.persistencia.buscar(Entrega.class, idEntrega);
+            Articulo unArticulo;
+            unArticulo = (Articulo) this.persistencia.buscar(Articulo.class, articulo);
+            Envase unEnvase;
+            unEnvase = (Envase) this.persistencia.buscar(Envase.class, envase);
+            
+            //Creamos la linea para la entrega
+            Linea unaLinea;
+            unaLinea = new Linea(unaEntrega, unArticulo, cantidad, unEnvase);
+            
+            //Agregamos la linea a la entrega
+            unaEntrega.agregarLineaDetalle(unaLinea);
+            
+            //Insertar la nueva linea en la tabla renglones en la base de datos
+            this.persistencia.insertar(unaLinea);
+            //actualizar la tabla entregas
+            this.persistencia.refrescar(unaEntrega);
+            this.persistencia.confirmarTransaccion();
+        }catch(Exception ex){
+            this.persistencia.descartarTransaccion();
+        }
     }
 }
