@@ -178,8 +178,8 @@ public class VentanaEntrega extends javax.swing.JFrame {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
+        this.setVisible(false);
         this.previo.setVisible(true);
-        this.dispose();
     }//GEN-LAST:event_formWindowClosing
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked

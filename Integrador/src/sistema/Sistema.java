@@ -9,6 +9,7 @@ import javax.persistence.Persistence;
 import vistas.VentanaPrincipal;
 import persistencia.Persistencia;
 import controlador.Controlador;
+import javax.swing.JFrame;
 /**
  *
  * @author Diego Raul Fernandez
@@ -22,6 +23,7 @@ public class Sistema {
         Controlador c = new Controlador(persistencia);
         VentanaPrincipal miVentanaInicio;
         miVentanaInicio = new VentanaPrincipal(c);
+        miVentanaInicio.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         miVentanaInicio.setVisible(true);
     }
 }
