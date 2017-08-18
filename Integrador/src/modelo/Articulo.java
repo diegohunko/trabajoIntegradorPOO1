@@ -27,7 +27,7 @@ public class Articulo implements Serializable{
     private Double diametro;
     @ManyToOne
     private Envase envase;
-    @OneToOne(mappedBy = "articulo")
+    @OneToOne
     private TipoArticulo tipo;
     
     

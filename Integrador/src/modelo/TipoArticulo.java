@@ -22,7 +22,7 @@ public class TipoArticulo implements Serializable {
     private String descripción;
     @OneToMany(mappedBy = "tipoArticulo")
     private List<Envase> envases;
-    @OneToOne
+    @OneToOne(mappedBy = "tipo")
     private Articulo articulo;
 
     public TipoArticulo(){
