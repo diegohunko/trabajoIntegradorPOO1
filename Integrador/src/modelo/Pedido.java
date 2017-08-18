@@ -99,5 +99,9 @@ public class Pedido implements Serializable{
     public Integer getTotalDeEntregas(){
         return totalDeEntregas;
     }
+    
+    public void agregarEntrega(Entrega unaEntrega){
+        this.entregas.add(unaEntrega);
+    }
 
 }
