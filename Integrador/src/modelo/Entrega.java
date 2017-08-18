@@ -37,9 +37,14 @@ public class Entrega implements Serializable{
         this.detalle = new ArrayList<>();
     }
     
-    public Entrega(Pedido nroPedido, Date fechaEntrega){
+    /**
+     *
+     * @param pedido : Pedido al que pertenece la entrega
+     * @param fechaEntrega : Fecha en la que la entrega debe ser servida al cliente
+     */
+    public Entrega(Pedido pedido, Date fechaEntrega){
         this.detalle = new ArrayList<>();
-        this.nroPedido = nroPedido;
+        this.nroPedido = pedido;
         this.fechaEntrega = fechaEntrega;
     }
     
