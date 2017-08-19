@@ -102,6 +102,12 @@ public class Pedido implements Serializable{
     
     public void agregarEntrega(Entrega unaEntrega){
         this.entregas.add(unaEntrega);
+        this.fechasDeEntrega.add(unaEntrega.getFechaEntrega());
+    }
+    
+    public void removerEntrega(Entrega unaEntrega){
+        this.entregas.remove(unaEntrega);
+        this.fechasDeEntrega.remove(unaEntrega.getFechaEntrega());
     }
 
 }
