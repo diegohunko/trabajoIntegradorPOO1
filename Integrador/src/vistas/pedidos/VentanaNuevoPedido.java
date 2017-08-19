@@ -85,7 +85,7 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
         txtCuilPropietario.setToolTipText("Ingrese CUIL/CUIT sin guiones ni puntos");
 
         lstFechasEntregas.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "18/12/2017" };
+            String[] strings = { "18/12/2017", "19/01/2018", "18/02/2018" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
@@ -238,7 +238,7 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
             ve = new VentanaEntrega(this.controlador, this, 
                     formatoFecha.parse(this.lstFechasEntregas.getSelectedValue()),
                     1L); //? ver como pasar el pedido al que corresponde la entrega.
-            this.setVisible(false);
+            
             ve.setVisible(true);
         } catch (ParseException ex) {
             Logger.getLogger(VentanaNuevoPedido.class.getName()).log(Level.SEVERE, null, ex);
