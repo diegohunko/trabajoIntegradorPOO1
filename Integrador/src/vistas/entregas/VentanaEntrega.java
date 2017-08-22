@@ -7,6 +7,7 @@ package vistas.entregas;
 import controlador.Controlador;
 import javax.swing.JFrame;
 import java.util.Date;
+import modelo.Pedido;
 /**
  *
  * @author Acer
@@ -19,12 +20,12 @@ public class VentanaEntrega extends javax.swing.JFrame {
     private final Controlador controlador;
     private final JFrame previo;
     private final Date fechaEntrega;
-    private final Long idPedido;
-    public VentanaEntrega(Controlador c, JFrame p, Date fEnt, Long idPedido) {
+    private final Pedido pedido;
+    public VentanaEntrega(Controlador c, JFrame p, Date fEnt, Pedido pedido) {
         this.controlador = c;
         this.previo = p;
         this.fechaEntrega = fEnt;
-        this.idPedido = idPedido;
+        this.pedido = pedido;
         initComponents();
         this.lblFechaEntrega.setText(this.fechaEntrega.toString());
     }
@@ -188,7 +189,7 @@ public class VentanaEntrega extends javax.swing.JFrame {
 
     private void btnAgregarArtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarArtActionPerformed
         // TODO add your handling code here:
-        this.controlador.agregarLineaEntrega(this.fechaEntrega, this.idPedido,
+        this.controlador.agregarLineaEntrega(this.fechaEntrega, this.pedido,
                 Integer.parseInt(this.txtCantidad.getText()),
                 //this.cmbxTipoArticulo.getSelectedItem(),
                 this.cmbxArticulo.getSelectedItem(),
