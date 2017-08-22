@@ -70,6 +70,15 @@ public class Controlador {
     }
     
     //Controlador de Pedidos
+    public Pedido buscarPedido(Object criterioBusqueda){
+        return this.persistencia.buscar(Pedido.class, criterioBusqueda);
+    }
+
+    /**
+     *
+     * @param c
+     * @return
+     */
     public List listarPedidosCliente(Cliente c){
         return this.persistencia.buscarTodosOrdenadosPor(Pedido.class, Pedido_.propietario);
     }
@@ -80,8 +89,9 @@ public class Controlador {
      * @param entregaInicial
      * @param totalDeEntregas
      * @param periodicidad
+     * @return idPedido si tiene éxito o -1 en caso de error.
      */
-    public void nuevoPedido(String propietario, Date entregaInicial, 
+    public Long nuevoPedido(String propietario, Date entregaInicial, 
             Integer totalDeEntregas, char periodicidad){
         this.persistencia.iniciarTransaccion();
         try{
@@ -91,13 +101,15 @@ public class Controlador {
             Pedido unPedido;
             unPedido = new Pedido(unPropietario, entregaInicial,
                     totalDeEntregas, periodicidad);
-            unPedido.setPropietario(unPropietario);
+            //unPedido.setPropietario(unPropietario);
             unPropietario.agregarPedido(unPedido);
             this.persistencia.modificar(unPropietario);
             this.persistencia.insertar(unPedido);
             this.persistencia.confirmarTransaccion();
+            return unPedido.getIdPedido();
         } catch(Exception ex){
             this.persistencia.descartarTransaccion();
+            return (0xffffffffffffffffL);
         }
     }
     
