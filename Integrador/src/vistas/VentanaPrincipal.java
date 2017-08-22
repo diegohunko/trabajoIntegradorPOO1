@@ -40,6 +40,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnCerrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("VENTANA PRINCIPAL");
 
         btnVentClientes.setText("Customers' Management");
         btnVentClientes.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -77,6 +78,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnCerrar.setText("Toquemos los tarros");
         btnCerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.CROSSHAIR_CURSOR));
         btnCerrar.setName("btnCerrarAplicacion"); // NOI18N
+        btnCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -143,6 +149,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         VentanaArticulo vArt = new VentanaArticulo(this.controlador, this);
         vArt.setVisible(true);
     }//GEN-LAST:event_btnVentArticulosActionPerformed
+
+    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btnCerrarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

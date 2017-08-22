@@ -55,7 +55,8 @@ public class VentanaEntrega extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         cmbxEnvase = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("CONFIGURAR ENTREGA");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);

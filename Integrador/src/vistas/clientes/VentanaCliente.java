@@ -51,7 +51,8 @@ public class VentanaCliente extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("NUEVO CLIENTE");
 
         jLabel2.setText("Razon social");
 
@@ -79,6 +80,7 @@ public class VentanaCliente extends javax.swing.JFrame {
 
         txtProvincia.setName("txtProvincia"); // NOI18N
 
+        btnCrearCliente.setIcon(new javax.swing.ImageIcon("C:\\Users\\Diego Raul Fernandez\\Pictures\\UN_MAS.png")); // NOI18N
         btnCrearCliente.setText("Crear");
         btnCrearCliente.setName(""); // NOI18N
         btnCrearCliente.addActionListener(new java.awt.event.ActionListener() {
