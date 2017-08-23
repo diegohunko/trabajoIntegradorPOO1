@@ -6,12 +6,14 @@
 package vistas.pedidos;
 
 import controlador.Controlador;
+import java.awt.HeadlessException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import javax.swing.JFrame;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import vistas.entregas.VentanaEntrega;
 import modelo.Pedido;
 /**
@@ -227,7 +229,7 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
 
     private void btnNuevoPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoPedidoActionPerformed
         // TODO add your handling code here:
-        Long codigo = null;
+        Object codigo = null;
         SimpleDateFormat formatoFecha;
         formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
         //char periodicidad = this.cmbxPeriodicidad.getSelectedItem().toString();
@@ -236,16 +238,28 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
                 "/" + this.cmbxMes.getSelectedItem().toString() +
                 "/" + this.cmbxAnio.getSelectedItem().toString();
         try{
+            //JOptionPane.showMessageDialog(null, "No es posible eliminar el departamento", "Error", JOptionPane.ERROR_MESSAGE);
             codigo = this.controlador.nuevoPedido(this.txtCuilPropietario.getText(), 
                     formatoFecha.parse(fecha), 
                     Integer.parseInt(this.txtTotalDeEntregas.getText()),
                     (char) this.cmbxPeriodicidad.getSelectedIndex());
-            
+            //JOptionPane.showMessageDialog(null, codigo.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }catch(ParseException ex){
             
+        }catch(HeadlessException | NumberFormatException e){
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }finally{
-            if (codigo != -1L) {
-                this.lblIdPedido.setText(codigo.toString());
+            if (codigo == null) {
+                JOptionPane.showMessageDialog(null, "NULL", "Error", JOptionPane.ERROR_MESSAGE);
+                
+            }else{
+                if ((Long)codigo == -1L){
+                    JOptionPane.showMessageDialog(null, "NO ENCUENTRA Y DEVUELVE: "+codigo.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    JOptionPane.showMessageDialog(null, "ALGO DEVUELVE: "+codigo.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+                    this.lblIdPedido.setText(codigo.toString());
+                }
+                
             }
         }
         
