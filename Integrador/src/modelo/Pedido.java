@@ -11,9 +11,12 @@ import java.util.ArrayList;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Entity;
+import javax.persistence.GenerationType;
 import javax.persistence.Table;
 import javax.persistence.OneToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 /**
  *
@@ -23,7 +26,10 @@ import javax.persistence.Temporal;
 @Table(name="pedidos")
 public class Pedido implements Serializable{
     @Id
-    @GeneratedValue
+    @TableGenerator(name="TABLE_GENERATOR_PEDIDO", table="ID_TABLE_PEDIDO", pkColumnName="ID_TABLE_NAME",
+            pkColumnValue="PEDIDO_ID", valueColumnName="ID_TABLE_VALUE")
+    //@SequenceGenerator(name="sec_pedido", initialValue=1, allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.TABLE, generator="TABLE_GENERATOR_PEDIDO")
     private Long idPedido;
     private Integer totalDeEntregas;
     @Temporal(javax.persistence.TemporalType.DATE)
