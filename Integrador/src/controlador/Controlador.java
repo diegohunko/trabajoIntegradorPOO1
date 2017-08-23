@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JOptionPane;
 import modelo.*;
 import persistencia.*;
 /**
@@ -85,19 +86,20 @@ public class Controlador {
     
     /**
      *
+     * @param cuitOwner
      * @param propietario
      * @param entregaInicial
      * @param totalDeEntregas
      * @param periodicidad
      * @return idPedido si tiene éxito o -1 en caso de error.
      */
-    public Long nuevoPedido(String propietario, Date entregaInicial, 
+    public Object nuevoPedido(String cuitOwner, Date entregaInicial, 
             Integer totalDeEntregas, char periodicidad){
         this.persistencia.iniciarTransaccion();
         try{
             //DO SOMETHING
             Cliente unPropietario;
-            unPropietario = this.persistencia.buscar(Cliente.class, propietario);
+            unPropietario = this.persistencia.buscarClientePorCuit(cuitOwner);
             Pedido unPedido;
             unPedido = new Pedido(unPropietario, entregaInicial,
                     totalDeEntregas, periodicidad);
@@ -107,9 +109,15 @@ public class Controlador {
             this.persistencia.insertar(unPedido);
             this.persistencia.confirmarTransaccion();
             return unPedido.getIdPedido();
-        } catch(Exception ex){
+        } catch(IllegalArgumentException ex){
             this.persistencia.descartarTransaccion();
             return (0xffffffffffffffffL);
+        } catch (NullPointerException ex){
+            this.persistencia.descartarTransaccion();
+            return ex;
+        } catch (Exception ex){
+            this.persistencia.descartarTransaccion();
+            return ex;
         }
     }
     
