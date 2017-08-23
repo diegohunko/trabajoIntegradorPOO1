@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import java.util.Set;
 import java.util.HashSet;
+import javax.persistence.GenerationType;
 import javax.persistence.OneToMany;
 
 /**
@@ -23,7 +24,8 @@ import javax.persistence.OneToMany;
 @Table(name="envases")
 public class Envase implements Serializable{
     @Id
-    @GeneratedValue
+    //@GeneratedValue
+    @GeneratedValue(strategy=GenerationType.TABLE, generator="TABLE_GENERATOR")
     private Long idEnvase;
     private Double capacidad;
     @OneToMany(mappedBy="envase")

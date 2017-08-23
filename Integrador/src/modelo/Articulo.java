@@ -9,8 +9,10 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.OneToOne;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 /**
  *
  * @author Diego Raul Fernandez
@@ -19,7 +21,8 @@ import javax.persistence.ManyToOne;
 @Table(name="articulos")
 public class Articulo implements Serializable{
     @Id
-    @GeneratedValue
+    //@SequenceGenerator(name="sec_articulo", initialValue=1, allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.TABLE, generator="TABLE_GENERATOR")
     private Long idArticulo;
     private String descripcion;
     private Double largo;

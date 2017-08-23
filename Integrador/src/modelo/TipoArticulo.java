@@ -17,7 +17,7 @@ import java.util.ArrayList;
 @Table(name="tipos_articulos")
 public class TipoArticulo implements Serializable {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.TABLE, generator="TABLE_GENERATOR")
     private Long idTipoArticulo;
     private String descripción;
     @OneToMany(mappedBy = "tipoArticulo")

@@ -15,6 +15,8 @@ import javax.persistence.Table;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.SequenceGenerator;
 /**
  *
  * @author Diego Raul Fernandez
@@ -23,7 +25,8 @@ import javax.persistence.GeneratedValue;
 @Table(name="entregas")
 public class Entrega implements Serializable{
     @Id
-    @GeneratedValue
+    //@SequenceGenerator(name="sec_entrega", initialValue=1, allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.TABLE, generator="TABLE_GENERATOR")
     private Long idEntrega;
     @ManyToOne
     private Pedido nroPedido;

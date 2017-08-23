@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 /**
  *
  * @author Diego Raul Fernandez
@@ -23,8 +24,10 @@ import javax.persistence.Table;
 @Table(name="clientes")
 public class Cliente implements Serializable{
     @Id
-    @SequenceGenerator(name="sec_cliente", initialValue=1, allocationSize=1)
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="sec_cliente")
+    @TableGenerator(name="TABLE_GENERATOR", table="ID_TABLE", pkColumnName="ID_TABLE_NAME",
+            pkColumnValue="CLIENTE_ID", valueColumnName="ID_TABLE_VALUE")
+    //@SequenceGenerator(name="sec_cliente", initialValue=1, allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.TABLE, generator="TABLE_GENERATOR")
     private Long nroCliente;
     @OneToMany(mappedBy = "propietario")//
     private List<Pedido> pedidos;
