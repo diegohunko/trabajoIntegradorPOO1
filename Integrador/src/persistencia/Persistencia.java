@@ -13,6 +13,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
 import javax.persistence.metamodel.SingularAttribute;
+import modelo.*;
 
 
 /**
@@ -80,7 +81,16 @@ public class Persistencia  {
         Root<T> inicio = consulta.from(clase);
         consulta.orderBy(cb.asc(inicio.get(orden)));
         return em.createQuery(consulta).getResultList();
-    }      
+    }
+    
+    public Cliente buscarClientePorCuit(String cuit){
+        CriteriaBuilder cb = this.em.getCriteriaBuilder();
+        CriteriaQuery<Cliente> query = cb.createQuery(Cliente.class);
+        Root<Cliente> clienteRoot = query.from(Cliente.class);
+        query.where(cb.equal(clienteRoot.get(Cliente_.cuit), cuit));
+        Cliente retornoCliente = em.createQuery(query).getSingleResult();
+        return retornoCliente;
+    }
 }
 
 
