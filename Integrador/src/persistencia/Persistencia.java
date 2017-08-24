@@ -151,7 +151,7 @@ public class Persistencia  {
      * @param <T> : The type containing the represented attribute
      * @param <P> : The type of the represented attribute
      * @param clase : Clase/entidad en la que se quiere buscar
-     * @param metaModelField
+     * @param metaModelField : el parametro metaModelField se obtiene del metamodelo generado por EclipseLink
      * @param criterio
      * @return Lista 
      */
