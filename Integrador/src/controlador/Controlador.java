@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.metamodel.SingularAttribute;
 import javax.swing.JOptionPane;
 import modelo.*;
 import persistencia.*;
@@ -87,7 +88,6 @@ public class Controlador {
     /**
      *
      * @param cuitOwner
-     * @param propietario
      * @param entregaInicial
      * @param totalDeEntregas
      * @param periodicidad
@@ -184,5 +184,39 @@ public class Controlador {
         }catch(Exception ex){
             this.persistencia.descartarTransaccion();
         }
+    }
+    
+    /**
+     * Recupera todos los tipos de artículo de la base de datos.
+     * @return lista que contiene los tipos de artículo.
+     */
+    public List listarTipoArticulo(){
+        return this.persistencia.buscarTodosOrdenadosPor(TipoArticulo.class, TipoArticulo_.descripcion);
+    }
+    
+    /**
+     * Agrea un nuevo envase a la base de datos.
+     * @param capacidad
+     * @param tipoArticulo
+     */
+    public void agregarNuevoEnvase(Double capacidad, TipoArticulo tipoArticulo){
+        try{
+            this.persistencia.iniciarTransaccion();
+            Envase nuevoEnvase;
+            nuevoEnvase = new Envase(capacidad, tipoArticulo);
+            this.persistencia.insertar(nuevoEnvase);
+        } catch (Exception e){
+            
+        }
+        
+    }
+    
+    public Envase buscarEnvaseCapacidadTipo(Double capacidad, TipoArticulo ta){
+        return this.persistencia.buscarEnvaseCapTipo(capacidad, ta);
+    }
+
+    public List<Articulo> buscarArticulos(Object metaModelo, Object criterio) {
+        return this.persistencia.buscarPorClaseCampoYCriterio(Articulo.class, (SingularAttribute)metaModelo, criterio);
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -6,7 +6,11 @@
 package vistas.envases;
 
 import controlador.Controlador;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import modelo.Envase;
+import modelo.TipoArticulo;
 
 /**
  *
@@ -17,12 +21,13 @@ public class VentanaEnvase extends javax.swing.JFrame {
     /**
      * Creates new form VentanaEnvase
      */
-    private JFrame vp;
-    private Controlador controlador;
+    private final JFrame vp;
+    private final Controlador controlador;
     public VentanaEnvase(Controlador c, JFrame previo) {
         this.controlador = c;
         this.vp = previo;
         initComponents();
+        limpiar();
     }
 
     /**
@@ -34,23 +39,135 @@ public class VentanaEnvase extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        lblIdEnvase = new javax.swing.JLabel();
+        txtCapacidad = new javax.swing.JTextField();
+        cmbxTipoArticulo = new javax.swing.JComboBox<>();
+        btnNuevoEnvase = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        lstEnvases = new javax.swing.JList<>();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Envases");
+
+        jLabel1.setText("ID Envase");
+
+        jLabel2.setText("Capacidad");
+
+        jLabel3.setText("Tipo Artículo:");
+
+        lblIdEnvase.setText("jLabel4");
+
+        txtCapacidad.setText("jTextField1");
+
+        btnNuevoEnvase.setIcon(new javax.swing.ImageIcon("C:\\Users\\Diego Raul Fernandez\\Pictures\\UN_MAS.png")); // NOI18N
+        btnNuevoEnvase.setText("Nuevo Envase");
+        btnNuevoEnvase.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoEnvaseActionPerformed(evt);
+            }
+        });
+
+        lstEnvases.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane1.setViewportView(lstEnvases);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(34, 34, 34)
+                                .addComponent(lblIdEnvase, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(28, 28, 28)
+                                .addComponent(txtCapacidad))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                        .addComponent(cmbxTipoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnNuevoEnvase)))
+                .addGap(185, 185, 185))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(48, 48, 48)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(lblIdEnvase))
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2))
+                    .addComponent(txtCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(cmbxTipoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(btnNuevoEnvase)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnNuevoEnvaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoEnvaseActionPerformed
+        // TODO add your handling code here:
+        TipoArticulo ta;
+        ta = (TipoArticulo) this.cmbxTipoArticulo.getSelectedItem();
+        if (ta != null){
+            this.controlador.agregarNuevoEnvase(Double.parseDouble(this.txtCapacidad.getText()),
+                ta);
+            Envase enva;
+            enva = (Envase) this.controlador.buscarEnvaseCapacidadTipo(Double.parseDouble(this.txtCapacidad.getText()), ta);
+            limpiar();
+        }else{
+            JOptionPane.showMessageDialog(null, "DEBE seleccionar el tipo de artículo.", "Error", JOptionPane.ERROR_MESSAGE);
+            this.cmbxTipoArticulo.grabFocus();
+        }
+        
+    }//GEN-LAST:event_btnNuevoEnvaseActionPerformed
 
+
+    private void limpiar(){
+        this.lblIdEnvase.setText("");
+        this.txtCapacidad.setText("");
+        DefaultComboBoxModel modeloCombo;
+        modeloCombo = new DefaultComboBoxModel(this.controlador.listarTipoArticulo().toArray());
+        this.cmbxTipoArticulo.setModel(modeloCombo);
+        this.cmbxTipoArticulo.setSelectedIndex(-1);
+    }
+    // <editor-fold defaultstate="collapsed" desc="Componentes de la ventana">
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnNuevoEnvase;
+    private javax.swing.JComboBox<String> cmbxTipoArticulo;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblIdEnvase;
+    private javax.swing.JList<String> lstEnvases;
+    private javax.swing.JTextField txtCapacidad;
     // End of variables declaration//GEN-END:variables
+    // </editor-fold>
 }

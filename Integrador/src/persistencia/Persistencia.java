@@ -91,6 +91,80 @@ public class Persistencia  {
         Cliente retornoCliente = em.createQuery(query).getSingleResult();
         return retornoCliente;
     }
+    
+    /**
+     * Busca los articulos de cierto tipo.
+     * @param ta : tipo de artículo por el cual buscar
+     * @return : Lista de los artículos de tipo ta.
+     */
+    public List buscarArticuloPorTipoArticulo(TipoArticulo ta){
+        CriteriaBuilder builder = this.em.getCriteriaBuilder();
+        CriteriaQuery<Articulo> consulta = builder.createQuery(Articulo.class);
+        Root<Articulo> inicio = consulta.from(Articulo.class);
+        consulta.where(builder.equal(inicio.get(Articulo_.tipo), ta));
+        return em.createQuery(consulta).getResultList();
+    }
+    
+    /**
+     * Busca los Envases de cierto tipo.
+     * @param ta : : tipo de artículo por el cual buscar los envases
+     * @return : Lista de los Envases de tipo ta.
+     */
+    public List<Envase> buscarEnvasePorTipoArticulo(TipoArticulo ta){
+        CriteriaBuilder builder = this.em.getCriteriaBuilder();
+        CriteriaQuery<Envase> consulta = builder.createQuery(Envase.class);
+        Root<Envase> inicio = consulta.from(Envase.class);
+        consulta.where(builder.equal(inicio.get(Envase_.tipoArticulo), ta));
+        return em.createQuery(consulta).getResultList();
+    }
+    
+    /**
+     *
+     * @param <T> : The type containing the represented attribute
+     * @param <P> : The type of the represented attribute
+     * @param clase : Clase que se quiere obtener por tipo de artículo 
+     * @param orden : Campo de tipo TipoArticulo de la clase "clase"
+     * @param ta : tipo de artículo a buscar.
+     * @return : 
+     */
+    public <T extends Object, P extends Object> List<T> buscarPorTipoArticulo (Class<T> clase, 
+            SingularAttribute<T, P> orden, TipoArticulo ta) {
+        CriteriaBuilder cb = this.em.getCriteriaBuilder();
+        CriteriaQuery<T> consulta = cb.createQuery(clase);
+        Root<T> inicio = consulta.from(clase);
+        consulta.where(cb.equal(inicio.get(orden), ta));
+        return em.createQuery(consulta).getResultList();
+    }
+    
+    public Envase buscarEnvaseCapTipo(Double capacidad, TipoArticulo ta){
+        CriteriaBuilder builder = this.em.getCriteriaBuilder();
+        CriteriaQuery<Envase> consulta = builder.createQuery(Envase.class);
+        Root<Envase> inicio = consulta.from(Envase.class);
+        consulta.where(builder.and(
+                builder.equal(inicio.get(Envase_.tipoArticulo), ta)),
+                builder.equal(inicio.get(Envase_.capacidad), capacidad));
+        return em.createQuery(consulta).getSingleResult();
+    }
+    
+    /**
+     * Método genérico que busca en una clase, con un atributo de la clase y un algo 
+     * @param <T> : The type containing the represented attribute
+     * @param <P> : The type of the represented attribute
+     * @param clase : Clase/entidad en la que se quiere buscar
+     * @param metaModelField
+     * @param criterio
+     * @return Lista 
+     */
+    public <T extends Object, P extends Object> List<T> buscarPorClaseCampoYCriterio(Class<T> clase,
+            SingularAttribute<T,P> metaModelField, Object criterio){
+        CriteriaBuilder cb = this.em.getCriteriaBuilder();
+        CriteriaQuery<T> consulta = cb.createQuery(clase);
+        Root<T> inicio = consulta.from(clase);
+        consulta.where(cb.equal(inicio.get(metaModelField), criterio));
+        return em.createQuery(consulta).getResultList();
+//        return null;
+        
+    }
 }
 
 

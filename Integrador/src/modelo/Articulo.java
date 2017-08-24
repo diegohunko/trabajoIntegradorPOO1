@@ -30,7 +30,7 @@ public class Articulo implements Serializable{
     private Double diametro;
     @ManyToOne
     private Envase envase;
-    @OneToOne
+    @ManyToOne
     private TipoArticulo tipo;
     
     
