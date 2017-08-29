@@ -35,7 +35,7 @@ public class Pedido implements Serializable{
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date entregaInicial;
     private char periodicidad;
-    private List<Date> fechasDeEntrega;//es necesario este atributo?
+    //private List<Date> fechasDeEntrega;//es necesario este atributo?
     @ManyToOne
     private Cliente propietario;
     @OneToMany(mappedBy = "nroPedido")
@@ -44,13 +44,13 @@ public class Pedido implements Serializable{
     //Constructores de la clase
     public Pedido(){
         entregas = new ArrayList<>();
-        fechasDeEntrega = new ArrayList<>();
+        //fechasDeEntrega = new ArrayList<>();
     }
     
     public Pedido(Cliente propietario, Date entregaInicial, 
             Integer totalDeEntregas, char periodicidad){
         entregas = new ArrayList<>();
-        fechasDeEntrega = new ArrayList<>();
+        //fechasDeEntrega = new ArrayList<>();
         this.propietario = propietario;
         this.entregaInicial = entregaInicial;
         this.totalDeEntregas = totalDeEntregas;
@@ -94,9 +94,11 @@ public class Pedido implements Serializable{
         this.periodicidad = periodicidad;
     }
     
+    /*
     public List<Date> getFechasDeEntrega() {
         return fechasDeEntrega;
     }
+    */
     
     public void setTotalDeEntregas(Integer totalDeEntregas){
         this.totalDeEntregas = totalDeEntregas;
@@ -108,12 +110,12 @@ public class Pedido implements Serializable{
     
     public void agregarEntrega(Entrega unaEntrega){
         this.entregas.add(unaEntrega);
-        this.fechasDeEntrega.add(unaEntrega.getFechaEntrega());
+        //this.fechasDeEntrega.add(unaEntrega.getFechaEntrega());
     }
     
     public void removerEntrega(Entrega unaEntrega){
         this.entregas.remove(unaEntrega);
-        this.fechasDeEntrega.remove(unaEntrega.getFechaEntrega());
+        //this.fechasDeEntrega.remove(unaEntrega.getFechaEntrega());
     }
 
 }
