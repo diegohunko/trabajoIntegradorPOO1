@@ -13,9 +13,11 @@ import javax.swing.JFrame;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import vistas.entregas.VentanaEntrega;
 import modelo.Pedido;
+//import java.util.Calendar;
 /**
  *
  * @author Diego Raul Fernandez
@@ -31,8 +33,8 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
         this.controlador = c;
         this.previo = previo;
         initComponents();
-        this.lblIdPedido.setVisible(true);
-        this.lblIdPedido.setText("HOLA");
+        //this.lblIdPedido.setVisible(true);
+        //this.lblIdPedido.setText("HOLA");
     }
 
     /**
@@ -71,7 +73,12 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
 
         cmbxDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
 
-        cmbxMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" }));
+        cmbxMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" }));
+        cmbxMes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbxMesActionPerformed(evt);
+            }
+        });
 
         cmbxAnio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2017", "2018" }));
 
@@ -135,44 +142,47 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(226, 226, 226)
-                        .addComponent(btnNuevoPedido)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jLabel4)
+                        .addGap(87, 87, 87)
+                        .addComponent(cmbxPeriodicidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(59, 59, 59)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(73, 73, 73)
+                                .addComponent(btnNuevoPedido))
+                            .addComponent(txtTotalDeEntregas, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(41, 41, 41)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtCuilPropietario)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(lblIdPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(11, 11, 11)))
                             .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(cmbxMes, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(cmbxDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2))
-                                .addGap(41, 41, 41)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtCuilPropietario)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(27, 27, 27)
-                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(28, 28, 28)
-                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(cmbxDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(26, 26, 26)
-                                        .addComponent(cmbxMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(27, 27, 27)
-                                        .addComponent(cmbxAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(lblIdPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(59, 59, 59)
-                                .addComponent(txtTotalDeEntregas, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(87, 87, 87)
-                                .addComponent(cmbxPeriodicidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cmbxAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -194,14 +204,14 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
                                 .addGap(36, 36, 36)
                                 .addComponent(txtCuilPropietario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(11, 11, 11)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel6)
+                                    .addComponent(jLabel5)
                                     .addComponent(jLabel7))
                                 .addGap(6, 6, 6)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cmbxDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(cmbxMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cmbxDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(cmbxAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(8, 8, 8)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -235,7 +245,7 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
         //char periodicidad = this.cmbxPeriodicidad.getSelectedItem().toString();
         String fecha; 
         fecha = this.cmbxDia.getSelectedItem().toString() + 
-                "/" + this.cmbxMes.getSelectedItem().toString() +
+                "/" + Integer.toString(this.cmbxMes.getSelectedIndex() + 1) +
                 "/" + this.cmbxAnio.getSelectedItem().toString();
         try{
             //JOptionPane.showMessageDialog(null, "No es posible eliminar el departamento", "Error", JOptionPane.ERROR_MESSAGE);
@@ -287,6 +297,45 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
     private void lstFechasEntregasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstFechasEntregasMouseClicked
         // TODO add your handling code here:  
     }//GEN-LAST:event_lstFechasEntregasMouseClicked
+
+    private void cmbxMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbxMesActionPerformed
+        // TODO add your handling code here:
+        int indice = this.cmbxMes.getSelectedIndex();
+        if (indice == 0 || indice == 2 || indice == 4 || indice == 6 
+                || indice == 7 || indice == 9 || indice == 11){
+            //cambiar el modelo de cmbxDia para que tenga 31 dias
+            DefaultComboBoxModel modeloCombo;
+            modeloCombo = new DefaultComboBoxModel(new String[] { "01", "02",
+                "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13",
+                "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24",
+                "25", "26", "27", "28", "29", "30", "31" });
+            this.cmbxDia.setModel(modeloCombo);
+            this.cmbxDia.setSelectedIndex(0);
+        } else {
+            if (indice == 3 || indice == 5 || indice == 8 || indice == 10){
+                //cambiar el modelo de cmbxDia para que tenga 30 dias
+                DefaultComboBoxModel modeloCombo;
+                modeloCombo = new DefaultComboBoxModel(new String[] { "01", "02",
+                    "03", "04", "05", "06", "07", "08", "09", "10", "11", "12",
+                    "13", "14", "15", "16", "17", "18", "19", "20", "21", "22",
+                    "23", "24", "25", "26", "27", "28", "29", "30"});
+                this.cmbxDia.setModel(modeloCombo);
+                this.cmbxDia.setSelectedIndex(0);
+            } else {
+                if (indice == 1){
+                    //cmabiar el modelo para que tenga 28 0 29 dias
+                    
+                    DefaultComboBoxModel modeloCombo;
+                    modeloCombo = new DefaultComboBoxModel(new String[] { "01",
+                        "02", "03", "04", "05", "06", "07", "08", "09", "10",
+                        "11", "12", "13", "14", "15", "16", "17", "18", "19",
+                        "20", "21", "22", "23", "24", "25", "26", "27", "28"});
+                    this.cmbxDia.setModel(modeloCombo);
+                    this.cmbxDia.setSelectedIndex(0);
+                }
+            }
+        }
+    }//GEN-LAST:event_cmbxMesActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {                                   
         // TODO add your handling code here:
