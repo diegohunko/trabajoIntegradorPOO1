@@ -28,6 +28,7 @@ public class VentanaEntrega extends javax.swing.JFrame {
         this.pedido = pedido;
         initComponents();
         this.lblFechaEntrega.setText(this.fechaEntrega.toString());
+        this.lblNroPedido.setText(this.pedido.getIdPedido().toString());
     }
 
     /**
