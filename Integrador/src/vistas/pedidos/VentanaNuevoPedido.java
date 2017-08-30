@@ -241,7 +241,8 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
         // TODO add your handling code here:
         final Calendar marcaTemporal;
         marcaTemporal = Calendar.getInstance();
-        Object codigo = null;
+        Long codigo;
+        codigo = 0x0L;
         SimpleDateFormat formatoFecha;
         formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
         //char periodicidad = this.cmbxPeriodicidad.getSelectedItem().toString();
@@ -262,17 +263,23 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
         }catch(HeadlessException | NumberFormatException e){
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }finally{
-            if (codigo == null) {
+            if (codigo == 0x0L) {
                 JOptionPane.showMessageDialog(null, "NULL", "Error", JOptionPane.ERROR_MESSAGE);
-                
+                this.txtCuilPropietario.grabFocus();
+            }else if (codigo == 0xffffffffffffffffL){
+                JOptionPane.showMessageDialog(null, "Argumento Ilegal", "Error", JOptionPane.ERROR_MESSAGE);
+                this.txtCuilPropietario.grabFocus();
+            }else if(codigo == 0xfffffffffffffffeL){
+                JOptionPane.showMessageDialog(null, "no se encuentran resultados", "Error", JOptionPane.ERROR_MESSAGE);
+                this.txtCuilPropietario.grabFocus();
+            }else if(codigo == 0xfffffffffffffffdL){
+                JOptionPane.showMessageDialog(null, "Puntero a null", "Error", JOptionPane.ERROR_MESSAGE);
+                this.txtCuilPropietario.grabFocus();
+            }else if(codigo == 0xfffffffffffffffcL){
+                JOptionPane.showMessageDialog(null, "Error conocido solo por Dios", "Error", JOptionPane.ERROR_MESSAGE);
+                this.txtCuilPropietario.grabFocus();
             }else{
-                if ((Long)codigo == -1L){
-                    JOptionPane.showMessageDialog(null, "NO ENCUENTRA Y DEVUELVE: "+codigo.toString(), "Error", JOptionPane.ERROR_MESSAGE);
-                }else{
-                    JOptionPane.showMessageDialog(null, "ALGO DEVUELVE: "+codigo.toString(), "Error", JOptionPane.ERROR_MESSAGE);
-                    this.lblIdPedido.setText(codigo.toString());
-                }
-                
+                this.lblIdPedido.setText(Long.toString(codigo));
             }
         }
         

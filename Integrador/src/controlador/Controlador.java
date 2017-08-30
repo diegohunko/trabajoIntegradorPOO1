@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.NoResultException;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.swing.JOptionPane;
 import modelo.*;
@@ -93,9 +94,12 @@ public class Controlador {
      * @param totalDeEntregas
      * @param periodicidad
      * @param marcaTiempo
-     * @return idPedido si tiene éxito o -1 en caso de error.
+     * @return idPedido si tiene éxito; -1 en caso de argumento ilegal; 
+     * -2 si no se encuentran resultados;
+     * -3 en caso de puntero a null y
+     * -4 en cualquier otro caso.
      */
-    public Object nuevoPedido(String cuitOwner, Date entregaInicial, 
+    public Long nuevoPedido(String cuitOwner, Date entregaInicial, 
             Integer totalDeEntregas, char periodicidad, Calendar marcaTiempo){
         this.persistencia.iniciarTransaccion();
         try{
@@ -115,13 +119,16 @@ public class Controlador {
             return elMismoPedido.getIdPedido();
         } catch(IllegalArgumentException ex){
             this.persistencia.descartarTransaccion();
-            return (0xffffffffffffffffL);
-        } catch (NullPointerException ex){
+            return 0xffffffffffffffffL; //retorna -1
+        } catch(NoResultException ex){
             this.persistencia.descartarTransaccion();
-            return ex;
+            return 0xfffffffffffffffeL; //retorna -2
+        }catch (NullPointerException ex){
+            this.persistencia.descartarTransaccion();
+            return 0xfffffffffffffffdL; //retorna -3
         } catch (Exception ex){
             this.persistencia.descartarTransaccion();
-            return ex;
+            return 0xfffffffffffffffcL; //retorna -4
         }
     }
     
