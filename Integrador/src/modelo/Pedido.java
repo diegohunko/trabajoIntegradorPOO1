@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Calendar;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Entity;
@@ -35,7 +36,8 @@ public class Pedido implements Serializable{
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date entregaInicial;
     private char periodicidad;
-    //private List<Date> fechasDeEntrega;//es necesario este atributo?
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private final Calendar marcaDeTiempo;
     @ManyToOne
     private Cliente propietario;
     @OneToMany(mappedBy = "nroPedido")
@@ -44,13 +46,13 @@ public class Pedido implements Serializable{
     //Constructores de la clase
     public Pedido(){
         entregas = new ArrayList<>();
-        //fechasDeEntrega = new ArrayList<>();
+        marcaDeTiempo = Calendar.getInstance();
     }
     
     public Pedido(Cliente propietario, Date entregaInicial, 
-            Integer totalDeEntregas, char periodicidad){
+            Integer totalDeEntregas, char periodicidad, Calendar marcaTiempo){
         entregas = new ArrayList<>();
-        //fechasDeEntrega = new ArrayList<>();
+        this.marcaDeTiempo = marcaTiempo;
         this.propietario = propietario;
         this.entregaInicial = entregaInicial;
         this.totalDeEntregas = totalDeEntregas;
