@@ -6,6 +6,7 @@
 package controlador;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.metamodel.SingularAttribute;
@@ -91,24 +92,27 @@ public class Controlador {
      * @param entregaInicial
      * @param totalDeEntregas
      * @param periodicidad
+     * @param marcaTiempo
      * @return idPedido si tiene éxito o -1 en caso de error.
      */
     public Object nuevoPedido(String cuitOwner, Date entregaInicial, 
-            Integer totalDeEntregas, char periodicidad){
+            Integer totalDeEntregas, char periodicidad, Calendar marcaTiempo){
         this.persistencia.iniciarTransaccion();
         try{
             //DO SOMETHING
             Cliente unPropietario;
             unPropietario = this.persistencia.buscarClientePorCuit(cuitOwner);
-            Pedido unPedido;
+            Pedido unPedido, elMismoPedido;
             unPedido = new Pedido(unPropietario, entregaInicial,
-                    totalDeEntregas, periodicidad);
+                    totalDeEntregas, periodicidad, marcaTiempo);
             //unPedido.setPropietario(unPropietario);
             unPropietario.agregarPedido(unPedido);
             this.persistencia.modificar(unPropietario);
             this.persistencia.insertar(unPedido);
             this.persistencia.confirmarTransaccion();
-            return unPedido.getIdPedido();
+            elMismoPedido = this.persistencia.buscarPedidoPerdido(cuitOwner,
+                    entregaInicial, totalDeEntregas, periodicidad, marcaTiempo);
+            return elMismoPedido.getIdPedido();
         } catch(IllegalArgumentException ex){
             this.persistencia.descartarTransaccion();
             return (0xffffffffffffffffL);
