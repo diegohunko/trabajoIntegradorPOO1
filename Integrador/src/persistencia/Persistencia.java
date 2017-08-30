@@ -5,6 +5,8 @@
  */
 package persistencia;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -164,6 +166,27 @@ public class Persistencia  {
         return em.createQuery(consulta).getResultList();
 //        return null;
         
+    }
+    public Pedido buscarPedidoPerdido(String cuitOwner, Date entregaInicial, 
+            Integer totalDeEntregas, char periodicidad, Calendar marcaTiempo){
+        
+        CriteriaBuilder builder = this.em.getCriteriaBuilder();
+        CriteriaQuery<Pedido> consulta = builder.createQuery(Pedido.class);
+        Root<Pedido> tablaPedidos = consulta.from(Pedido.class);
+        
+        /*//subconsulata para
+        Subquery<Cliente> sq = consulta.subquery(Cliente.class);
+        Root tablaCliente = consulta.from(Cliente.class);
+        sq.where(tablaCliente.get(Cliente_.cuit), cuitOwner);*/
+        Cliente unCliente;
+        unCliente = this.buscarClientePorCuit(cuitOwner);
+        consulta.where(builder.and(
+                builder.equal(tablaPedidos.get(Pedido_.entregaInicial), entregaInicial),
+                builder.equal(tablaPedidos.get(Pedido_.totalDeEntregas), totalDeEntregas),
+                builder.equal(tablaPedidos.get(Pedido_.periodicidad), periodicidad),
+                builder.equal(tablaPedidos.get(Pedido_.marcaDeTiempo), marcaTiempo),
+                builder.equal(tablaPedidos.get(Pedido_.propietario), unCliente)));
+        return em.createQuery(consulta).getSingleResult();
     }
 }
 
