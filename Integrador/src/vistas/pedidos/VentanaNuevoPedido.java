@@ -17,7 +17,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import vistas.entregas.VentanaEntrega;
 import modelo.Pedido;
-//import java.util.Calendar;
+import java.util.Calendar;
 /**
  *
  * @author Diego Raul Fernandez
@@ -239,6 +239,8 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
 
     private void btnNuevoPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoPedidoActionPerformed
         // TODO add your handling code here:
+        final Calendar marcaTemporal;
+        marcaTemporal = Calendar.getInstance();
         Object codigo = null;
         SimpleDateFormat formatoFecha;
         formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
@@ -252,7 +254,8 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
             codigo = this.controlador.nuevoPedido(this.txtCuilPropietario.getText(), 
                     formatoFecha.parse(fecha), 
                     Integer.parseInt(this.txtTotalDeEntregas.getText()),
-                    (char) this.cmbxPeriodicidad.getSelectedIndex());
+                    (char) this.cmbxPeriodicidad.getSelectedIndex(),
+                    marcaTemporal);
             //JOptionPane.showMessageDialog(null, codigo.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }catch(ParseException ex){
             
