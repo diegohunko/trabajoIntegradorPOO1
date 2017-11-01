@@ -188,6 +188,18 @@ public class Persistencia  {
                 builder.equal(tablaPedidos.get(Pedido_.propietario), unCliente)));
         return em.createQuery(consulta).getSingleResult();
     }
+    
+    public List vistaPedido(){
+        CriteriaBuilder cb = this.em.getCriteriaBuilder();
+        CriteriaQuery<Pedido> consulta = cb.createQuery(Pedido.class);
+        Root<Pedido> tablaPedidos = consulta.from(Pedido.class);
+        consulta.select(
+                cb.construct(Pedido.class, tablaPedidos.get(Pedido_.idPedido),
+                tablaPedidos.get(Pedido_.propietario),
+                tablaPedidos.get(Pedido_.totalDeEntregas),
+                tablaPedidos.get(Pedido_.periodicidad)));
+        return em.createQuery(consulta).getResultList();
+    }
 }
 
 

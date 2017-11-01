@@ -99,11 +99,6 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
 
         txtCuilPropietario.setToolTipText("Ingrese CUIL/CUIT sin guiones ni puntos");
 
-        lstFechasEntregas.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "18/12/2017", "19/01/2018", "18/02/2018" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         lstFechasEntregas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         lstFechasEntregas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -250,12 +245,35 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
         fecha = this.cmbxDia.getSelectedItem().toString() + 
                 "/" + Integer.toString(this.cmbxMes.getSelectedIndex() + 1) +
                 "/" + this.cmbxAnio.getSelectedItem().toString();
+        char periodicidad = 0;
+        switch (this.cmbxPeriodicidad.getSelectedItem().toString()){
+            case "Unica vez":
+                if (Integer.parseInt(this.txtTotalDeEntregas.getText()) != 1){
+                    JOptionPane.showMessageDialog(null, "Que hacemo??!!!"+
+                        " 1 entrega", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                } else {
+                    periodicidad = 'U';
+                }
+                break;
+            case "Semanalmente":
+                periodicidad = 'S';
+                break;
+            case "Mensualmente":
+                periodicidad = 'M';
+                break;
+            default:
+                JOptionPane.showMessageDialog(null, "Seleccione periodicidad"+
+                        " de entrega", "Error", JOptionPane.ERROR_MESSAGE);
+                this.cmbxPeriodicidad.grabFocus();
+                break;
+        }
         try{
-            //JOptionPane.showMessageDialog(null, "No es posible eliminar el departamento", "Error", JOptionPane.ERROR_MESSAGE);
+            
             codigo = this.controlador.nuevoPedido(this.txtCuilPropietario.getText(), 
                     formatoFecha.parse(fecha), 
                     Integer.parseInt(this.txtTotalDeEntregas.getText()),
-                    (char) this.cmbxPeriodicidad.getSelectedIndex(),
+                    periodicidad,
                     marcaTemporal);
             //JOptionPane.showMessageDialog(null, codigo.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }catch(ParseException ex){
@@ -288,7 +306,13 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
 
     private void lstFechasEntregasValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstFechasEntregasValueChanged
         // TODO add your handling code here:
-        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+       
+        
+    }//GEN-LAST:event_lstFechasEntregasValueChanged
+
+    private void lstFechasEntregasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstFechasEntregasMouseClicked
+        // TODO add your handling code here:  
+         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
         VentanaEntrega ve;
         Pedido p;
         p = this.controlador.buscarPedido(Long.parseLong(this.lblIdPedido.getText()));
@@ -301,11 +325,6 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
         } catch (ParseException ex) {
             Logger.getLogger(VentanaNuevoPedido.class.getName()).log(Level.SEVERE, null, ex);
         } 
-        
-    }//GEN-LAST:event_lstFechasEntregasValueChanged
-
-    private void lstFechasEntregasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstFechasEntregasMouseClicked
-        // TODO add your handling code here:  
     }//GEN-LAST:event_lstFechasEntregasMouseClicked
 
     private void cmbxMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbxMesActionPerformed

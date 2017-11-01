@@ -32,6 +32,7 @@ public class Articulo implements Serializable{
     private Envase envase;
     @ManyToOne
     private TipoArticulo tipo;
+    private static final long serialVersionUID = 42L;
     
     
     public Articulo() {

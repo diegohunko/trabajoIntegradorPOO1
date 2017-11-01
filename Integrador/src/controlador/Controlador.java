@@ -6,6 +6,7 @@
 package controlador;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -95,7 +96,7 @@ public class Controlador {
      * @param periodicidad
      * @param marcaTiempo
      * @return idPedido si tiene éxito; -1 en caso de argumento ilegal; 
-     * -2 si no se encuentran resultados;
+     * -2 si no se encuentran resultados, al buscar el propietario del pedido;
      * -3 en caso de puntero a null y
      * -4 en cualquier otro caso.
      */
@@ -130,6 +131,10 @@ public class Controlador {
             this.persistencia.descartarTransaccion();
             return 0xfffffffffffffffcL; //retorna -4
         }
+    }
+    
+    public List mostrarPedidos(){
+        return this.persistencia.vistaPedido();
     }
     
     //Controlador de Entrega
@@ -216,8 +221,9 @@ public class Controlador {
             Envase nuevoEnvase;
             nuevoEnvase = new Envase(capacidad, tipoArticulo);
             this.persistencia.insertar(nuevoEnvase);
+            this.persistencia.confirmarTransaccion();
         } catch (Exception e){
-            
+            this.persistencia.descartarTransaccion();
         }
         
     }
@@ -226,8 +232,8 @@ public class Controlador {
         return this.persistencia.buscarEnvaseCapTipo(capacidad, ta);
     }
 
-    public List<Articulo> buscarArticulos(Object metaModelo, Object criterio) {
-        return this.persistencia.buscarPorClaseCampoYCriterio(Articulo.class, (SingularAttribute)metaModelo, criterio);
+    public ArrayList<Articulo> buscarArticulos(Object metaModelo, Object criterio) {
+        return (ArrayList<Articulo>) this.persistencia.buscarPorClaseCampoYCriterio(Articulo.class, (SingularAttribute)metaModelo, criterio);
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

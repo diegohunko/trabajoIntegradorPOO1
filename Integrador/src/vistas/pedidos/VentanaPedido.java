@@ -33,9 +33,15 @@ public class VentanaPedido extends javax.swing.JFrame {
     private void initComponents() {
 
         btnNuevoPedido = new javax.swing.JButton();
+        btnMostrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("PEDIDOS");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         btnNuevoPedido.setIcon(new javax.swing.ImageIcon("C:\\Users\\Diego Raul Fernandez\\Pictures\\UN_MAS.png")); // NOI18N
         btnNuevoPedido.setText("Nuevo Pedido");
@@ -45,13 +51,22 @@ public class VentanaPedido extends javax.swing.JFrame {
             }
         });
 
+        btnMostrar.setText("Mostrar");
+        btnMostrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMostrarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(57, 57, 57)
-                .addComponent(btnNuevoPedido)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnNuevoPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnMostrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(283, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -59,7 +74,9 @@ public class VentanaPedido extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(42, 42, 42)
                 .addComponent(btnNuevoPedido)
-                .addContainerGap(407, Short.MAX_VALUE))
+                .addGap(35, 35, 35)
+                .addComponent(btnMostrar)
+                .addContainerGap(349, Short.MAX_VALUE))
         );
 
         pack();
@@ -71,8 +88,23 @@ public class VentanaPedido extends javax.swing.JFrame {
         vnp.setVisible(true);
     }//GEN-LAST:event_btnNuevoPedidoActionPerformed
 
+    private void btnMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarActionPerformed
+        // TODO add your handling code here:
+        ABMPedidos vABMP = new ABMPedidos(this.controlador, this);
+        vABMP.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnMostrarActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        this.previo.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_formWindowClosing
+
+   
     // <editor-fold defaultstate="collapsed" desc="Elementos de la Ventana">
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnMostrar;
     private javax.swing.JButton btnNuevoPedido;
     // End of variables declaration//GEN-END:variables
     // </editor-fold>

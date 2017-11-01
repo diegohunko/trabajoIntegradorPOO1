@@ -42,13 +42,21 @@ public class Pedido implements Serializable{
     private Cliente propietario;
     @OneToMany(mappedBy = "nroPedido")
     private List<Entrega> entregas;
-    
+    private static final long serialVersionUID = 42L;
+
     //Constructores de la clase
     public Pedido(){
         entregas = new ArrayList<>();
         marcaDeTiempo = Calendar.getInstance();
     }
     
+    public Pedido(Long idpedido, Cliente propietario, Integer total, char periodicidad){
+        this.idPedido = idpedido;
+        this.propietario = propietario;
+        this.totalDeEntregas = total;
+        this.periodicidad = periodicidad;
+        this.marcaDeTiempo = Calendar.getInstance();
+    }
     public Pedido(Cliente propietario, Date entregaInicial, 
             Integer totalDeEntregas, char periodicidad, Calendar marcaTiempo){
         entregas = new ArrayList<>();
