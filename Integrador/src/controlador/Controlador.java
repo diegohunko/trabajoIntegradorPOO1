@@ -27,16 +27,35 @@ public class Controlador {
     }
     
     //Controlador de clientes
+
+    /**
+     *
+     * @param criterioBusqueda
+     * @return
+     */
     public Cliente buscarCliente(Object criterioBusqueda){
         return this.persistencia.buscar(Cliente.class, criterioBusqueda);
     }
     
+    /**
+     *
+     * @return
+     */
     public List listarClientes(){
         return this.persistencia.buscarTodosOrdenadosPor(Cliente.class, 
                 Cliente_.nroCliente);
         
     }
     
+    /**
+     *
+     * @param razonSocial
+     * @param cuit
+     * @param calle
+     * @param numero
+     * @param localidad
+     * @param provincia
+     */
     public void nuevoCliente(String razonSocial, String cuit, String calle, 
             String numero, String localidad, String provincia){
         Cliente cliente;
