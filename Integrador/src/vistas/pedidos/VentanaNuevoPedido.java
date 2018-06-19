@@ -366,6 +366,16 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cmbxMesActionPerformed
 
+    private void fechasDeEntrega(int dia, int mes, int anio,
+            char periodicidad, int te){
+        Calendar unaFecha = null;
+        unaFecha.set(anio, mes, dia);
+        if (periodicidad == 'S'){
+            for (int i=0; i<te; i++){
+                
+            }
+        }
+    }
     private void formWindowClosing(java.awt.event.WindowEvent evt) {                                   
         // TODO add your handling code here:
         this.previo.setVisible(true);
