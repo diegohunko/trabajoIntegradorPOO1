@@ -9,8 +9,9 @@ import controlador.Controlador;
 import java.awt.HeadlessException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 import javax.swing.JFrame;
-import java.util.Date;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
@@ -258,9 +259,19 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
                 break;
             case "Semanalmente":
                 periodicidad = 'S';
+                this.lstFechasEntregas.setListData(fechasDeEntrega(Integer.parseInt(this.cmbxDia.getSelectedItem().toString()), 
+                        this.cmbxMes.getSelectedIndex(),
+                        Integer.parseInt(this.cmbxAnio.getSelectedItem().toString()), 
+                        periodicidad,
+                        Integer.parseInt(this.txtTotalDeEntregas.getText())));
                 break;
             case "Mensualmente":
                 periodicidad = 'M';
+                this.lstFechasEntregas.setListData(fechasDeEntrega(Integer.parseInt(this.cmbxDia.getSelectedItem().toString()), 
+                        this.cmbxMes.getSelectedIndex(),
+                        Integer.parseInt(this.cmbxAnio.getSelectedItem().toString()), 
+                        periodicidad,
+                        Integer.parseInt(this.txtTotalDeEntregas.getText())));                
                 break;
             default:
                 JOptionPane.showMessageDialog(null, "Seleccione periodicidad"+
@@ -366,15 +377,30 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cmbxMesActionPerformed
 
-    private void fechasDeEntrega(int dia, int mes, int anio,
-            char periodicidad, int te){
-        Calendar unaFecha = null;
-        unaFecha.set(anio, mes, dia);
+    private String[] fechasDeEntrega(int dia, int mes, int anio,
+            char periodicidad, int totEnt){
+        String[] arrayFechas = new String[totEnt]; 
+        GregorianCalendar primerFecha = new GregorianCalendar(anio, mes, dia);
+        Date d = primerFecha.getTime();
+        DateFormat df = DateFormat.getDateInstance();
+        arrayFechas[0] = df.format(d);
         if (periodicidad == 'S'){
-            for (int i=0; i<te; i++){
-                
+            for (int i=1; i < totEnt; i++){
+                primerFecha.add(GregorianCalendar.DATE, 7);
+                d = primerFecha.getTime();
+                df = DateFormat.getDateInstance();
+                arrayFechas[i] = df.format(d);
+            }
+            
+        }else if (periodicidad == 'M'){
+            for (int i=1; i < totEnt; i++){
+                primerFecha.add(GregorianCalendar.DATE, 30);
+                d = primerFecha.getTime();
+                df = DateFormat.getDateInstance();
+                arrayFechas[i] = df.format(d);
             }
         }
+        return arrayFechas;
     }
     private void formWindowClosing(java.awt.event.WindowEvent evt) {                                   
         // TODO add your handling code here:
