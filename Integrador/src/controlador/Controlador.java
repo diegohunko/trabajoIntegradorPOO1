@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.metamodel.SingularAttribute;
-import javax.swing.JOptionPane;
+//import javax.swing.JOptionPane;
 import modelo.*;
 import persistencia.*;
 /**
@@ -39,7 +39,7 @@ public class Controlador {
     
     /**
      *
-     * @return
+     * @return Retorna una lista con los clientes
      */
     public List listarClientes(){
         return this.persistencia.buscarTodosOrdenadosPor(Cliente.class, 
@@ -159,31 +159,49 @@ public class Controlador {
     //Controlador de Entrega
 
     /**
-     *
-     * @param pedido
+     * Agrega una nueva entrega a la base de datos
+     * @param idPedido
      * @param fechaEntrega
      */
-    public void nuevaEntrega(Object pedido, Date fechaEntrega){
+    public void nuevaEntrega(Object idPedido, Date fechaEntrega){
         try{
             this.persistencia.iniciarTransaccion();
             Pedido unPedido;
             //recuperar el pedido al que pertenece la entrega
-            unPedido = (Pedido) this.persistencia.buscar(Pedido.class, pedido);
+            unPedido = (Pedido) this.persistencia.buscar(Pedido.class, idPedido);
             Entrega unaEntrega;
             //Crear una nueva entrega para el pedido
             unaEntrega = new Entrega(unPedido, fechaEntrega);
+            //Insertar la entrega en la base de datos y actualizar(?) el pedido
+            this.persistencia.insertar(unaEntrega);
             //Agregar la entrega al array de netregas del Pedido.
             unPedido.agregarEntrega(unaEntrega);
-            //Insertar la entregaen la base de datos y actualizar(?) el pedido
-            this.persistencia.insertar(unaEntrega);
             this.persistencia.refrescar(unPedido);
             this.persistencia.confirmarTransaccion();
+            //return unaEntrega;
         }catch(Exception ex){
             this.persistencia.descartarTransaccion();
+            //return null;
         }
     }
+    
+    public Entrega buscarEntrega(Object criterioBusqueda){
+        return this.persistencia.buscar(Entrega.class, criterioBusqueda);
+    }
+    
     /**
-     * 
+     * Busca una entrega dada la fecha y el id del pedido al que pertenece.
+     * @param fechaEnt
+     * @param idPedido
+     * @return Retorna la entrega que se busca.
+     */
+    public Entrega buscarEntrega(Date fechaEnt, Long idPedido){
+        return this.persistencia.buscarEntrega(fechaEnt, idPedido);
+        
+    }
+
+    /**
+     * Crea una nueva linea de articulo para una entraga.
      * @param fechaEntrega : Fecha en la que debe ser entregado el pedido
      * @param idEntrega : Entrega a la que pertenece esta linea
      * @param cantidad : Cantidad de un artículo para esta entrega
@@ -207,12 +225,10 @@ public class Controlador {
             //Creamos la linea para la entrega
             Linea unaLinea;
             unaLinea = new Linea(unaEntrega, unArticulo, cantidad, unEnvase);
-            
-            //Agregamos la linea a la entrega
-            unaEntrega.agregarLineaDetalle(unaLinea);
-            
             //Insertar la nueva linea en la tabla renglones en la base de datos
             this.persistencia.insertar(unaLinea);
+            //Agregamos la linea a la entrega
+            unaEntrega.agregarLineaDetalle(unaLinea);
             //actualizar la tabla entregas
             this.persistencia.refrescar(unaEntrega);
             this.persistencia.confirmarTransaccion();
@@ -247,6 +263,12 @@ public class Controlador {
         
     }
     
+    /**
+     * Devuelve un Envase segun su capacidad y tipo
+     * @param capacidad
+     * @param ta
+     * @return
+     */
     public Envase buscarEnvaseCapacidadTipo(Double capacidad, TipoArticulo ta){
         return this.persistencia.buscarEnvaseCapTipo(capacidad, ta);
     }
