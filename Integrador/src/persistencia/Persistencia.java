@@ -200,6 +200,24 @@ public class Persistencia  {
                 tablaPedidos.get(Pedido_.periodicidad)));
         return em.createQuery(consulta).getResultList();
     }
+    
+    /**
+     * Busca una entrega a partir de una fecha y un id de pedido.
+     * @param fecha fecha en la que se tiene que hacer la entrega.
+     * @param idPedido pedido al que pertenece la entrega que se busca.
+     * @return entrega que se busca.
+     */
+    public Entrega buscarEntrega(Date fecha, Long idPedido){
+        CriteriaBuilder builder = this.em.getCriteriaBuilder();
+        CriteriaQuery<Entrega> consulta = builder.createQuery(Entrega.class);
+        Root<Entrega> tablaEntregas = consulta.from(Entrega.class);
+        
+        consulta.where(builder.and(
+                builder.equal(tablaEntregas.get(Entrega_.fechaEntrega), fecha),
+                builder.equal(tablaEntregas.get(Entrega_.nroPedido),
+                        this.buscar(Pedido.class, idPedido))));
+        return em.createQuery(consulta).getSingleResult();
+    }
 }
 
 
