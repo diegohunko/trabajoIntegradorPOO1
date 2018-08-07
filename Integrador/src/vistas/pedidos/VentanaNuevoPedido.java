@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 import vistas.entregas.VentanaEntrega;
 import modelo.Pedido;
 import java.util.Calendar;
+import modelo.Entrega;
 /**
  *
  * @author Diego Raul Fernandez
@@ -30,6 +31,8 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
      */
     private final JFrame previo;
     private final Controlador controlador;
+    
+    
     public VentanaNuevoPedido(Controlador c, JFrame previo) {
         this.controlador = c;
         this.previo = previo;
@@ -230,24 +233,21 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
+        lblIdPedido.getAccessibleContext().setAccessibleName("Id");
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNuevoPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoPedidoActionPerformed
-        // TODO add your handling code here:
+
+        Long codigo = 0x0L;
         final Calendar marcaTemporal;
         marcaTemporal = Calendar.getInstance();
-        Long codigo;
-        codigo = 0x0L;
-        SimpleDateFormat formatoFecha;
-        formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-        //char periodicidad = this.cmbxPeriodicidad.getSelectedItem().toString();
-        String fecha; 
-        fecha = this.cmbxDia.getSelectedItem().toString() + 
-                "/" + Integer.toString(this.cmbxMes.getSelectedIndex() + 1) +
-                "/" + this.cmbxAnio.getSelectedItem().toString();
-        char periodicidad = 0;
-        switch (this.cmbxPeriodicidad.getSelectedItem().toString()){
+        GregorianCalendar fp;
+        Date fechaPedido;
+        char periodicidad = 'x';
+        try {
+            switch (this.cmbxPeriodicidad.getSelectedItem().toString()){
             case "Unica vez":
                 if (Integer.parseInt(this.txtTotalDeEntregas.getText()) != 1){
                     JOptionPane.showMessageDialog(null, "Que hacemo??!!!"+
@@ -259,39 +259,25 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
                 break;
             case "Semanalmente":
                 periodicidad = 'S';
-                this.lstFechasEntregas.setListData(fechasDeEntrega(Integer.parseInt(this.cmbxDia.getSelectedItem().toString()), 
-                        this.cmbxMes.getSelectedIndex(),
-                        Integer.parseInt(this.cmbxAnio.getSelectedItem().toString()), 
-                        periodicidad,
-                        Integer.parseInt(this.txtTotalDeEntregas.getText())));
                 break;
             case "Mensualmente":
-                periodicidad = 'M';
-                this.lstFechasEntregas.setListData(fechasDeEntrega(Integer.parseInt(this.cmbxDia.getSelectedItem().toString()), 
-                        this.cmbxMes.getSelectedIndex(),
-                        Integer.parseInt(this.cmbxAnio.getSelectedItem().toString()), 
-                        periodicidad,
-                        Integer.parseInt(this.txtTotalDeEntregas.getText())));                
+                periodicidad = 'M';         
                 break;
             default:
                 JOptionPane.showMessageDialog(null, "Seleccione periodicidad"+
                         " de entrega", "Error", JOptionPane.ERROR_MESSAGE);
                 this.cmbxPeriodicidad.grabFocus();
-                break;
-        }
-        try{
-            
+                return;
+            }
+            fp = new GregorianCalendar(Integer.parseInt(this.cmbxAnio.getSelectedItem().toString()),
+                this.cmbxMes.getSelectedIndex(),
+                Integer.parseInt(this.cmbxDia.getSelectedItem().toString()));
+            fechaPedido = fp.getTime();
             codigo = this.controlador.nuevoPedido(this.txtCuilPropietario.getText(), 
-                    formatoFecha.parse(fecha), 
+                    fechaPedido, 
                     Integer.parseInt(this.txtTotalDeEntregas.getText()),
                     periodicidad,
                     marcaTemporal);
-            //JOptionPane.showMessageDialog(null, codigo.toString(), "Error", JOptionPane.ERROR_MESSAGE);
-        }catch(ParseException ex){
-            
-        }catch(HeadlessException | NumberFormatException e){
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }finally{
             if (codigo == 0x0L) {
                 JOptionPane.showMessageDialog(null, "NULL", "Error", JOptionPane.ERROR_MESSAGE);
                 this.txtCuilPropietario.grabFocus();
@@ -310,9 +296,13 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
             }else{
                 this.lblIdPedido.setText(Long.toString(codigo));
             }
-        }
-        
-        
+            this.lstFechasEntregas.setListData(fechasDeEntrega(fp, 
+                    Integer.parseInt(this.txtTotalDeEntregas.getText()),
+                    periodicidad));         
+            
+       }catch(Exception ex){
+           
+       }
     }//GEN-LAST:event_btnNuevoPedidoActionPerformed
 
     private void lstFechasEntregasValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstFechasEntregasValueChanged
@@ -326,11 +316,11 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
          SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
         VentanaEntrega ve;
         Pedido p;
-        p = this.controlador.buscarPedido(Long.parseLong(this.lblIdPedido.getText()));
         try {
+            p = this.controlador.buscarPedido(Long.parseLong(this.lblIdPedido.getText()));
             ve = new VentanaEntrega(this.controlador, this, 
                     formatoFecha.parse(this.lstFechasEntregas.getSelectedValue()),
-                    p); //? ver como pasar el pedido al que corresponde la entrega.
+                    p);
             
             ve.setVisible(true);
         } catch (ParseException ex) {
@@ -377,30 +367,43 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cmbxMesActionPerformed
 
-    private String[] fechasDeEntrega(int dia, int mes, int anio,
-            char periodicidad, int totEnt){
-        String[] arrayFechas = new String[totEnt]; 
-        GregorianCalendar primerFecha = new GregorianCalendar(anio, mes, dia);
+    private String[] fechasDeEntrega(GregorianCalendar primerFecha,
+            int totEnt,
+            char period){
+        String[] aListFechas; 
+        aListFechas = new String[totEnt];
+        try{
+        //GregorianCalendar primerFecha = new GregorianCalendar(anio, mes, dia);
         Date d = primerFecha.getTime();
         DateFormat df = DateFormat.getDateInstance();
-        arrayFechas[0] = df.format(d);
-        if (periodicidad == 'S'){
-            for (int i=1; i < totEnt; i++){
-                primerFecha.add(GregorianCalendar.DATE, 7);
-                d = primerFecha.getTime();
-                df = DateFormat.getDateInstance();
-                arrayFechas[i] = df.format(d);
-            }
-            
-        }else if (periodicidad == 'M'){
-            for (int i=1; i < totEnt; i++){
-                primerFecha.add(GregorianCalendar.DATE, 30);
-                d = primerFecha.getTime();
-                df = DateFormat.getDateInstance();
-                arrayFechas[i] = df.format(d);
-            }
+        aListFechas[0]= df.format(d);
+        this.controlador.nuevaEntrega(Long.parseLong(this.lblIdPedido.getText()), d);
+        switch (period){
+            case 'M':
+                for (int i=1; i < totEnt; i++){
+                    primerFecha.add(GregorianCalendar.DATE, 30);
+                    d = primerFecha.getTime();
+                    aListFechas[i] = df.format(d);
+                    this.controlador.nuevaEntrega(Long.parseLong(this.lblIdPedido.getText()), d);
+                }
+                break;
+            case 'S':
+                for (int i=1; i < totEnt; i++){
+                    primerFecha.add(GregorianCalendar.DATE, 7);
+                    d = primerFecha.getTime();
+                    aListFechas[i] = df.format(d);
+                    this.controlador.nuevaEntrega(Long.parseLong(this.lblIdPedido.getText()), d);
+                }
+                break;
+            case 'U':
+                //this.controlador.nuevaEntrega(Long.parseLong(this.lblIdPedido.getText()), d);
+                break;
         }
-        return arrayFechas;
+
+        return aListFechas;
+        }catch (Exception e){
+            return aListFechas;
+        }
     }
     private void formWindowClosing(java.awt.event.WindowEvent evt) {                                   
         // TODO add your handling code here:
