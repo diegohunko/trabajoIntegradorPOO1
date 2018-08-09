@@ -5,11 +5,14 @@
  */
 package vistas.articulos;
 import controlador.Controlador;
+import java.awt.HeadlessException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 import modelo.Articulo;
 import modelo.Articulo_;
+import modelo.Envase;
+import modelo.TipoArticulo;
 /**
  *
  * @author Diego Raul Fernandez
@@ -26,6 +29,8 @@ public class VentanaArticulo extends javax.swing.JFrame {
         this.vp = previo;
         initComponents();
         limpiar();
+        //poblar el comboBox de tipo articulo.
+        
     }
 
     /**
@@ -51,12 +56,14 @@ public class VentanaArticulo extends javax.swing.JFrame {
         btnNuevoArticulo = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        lstArticulos = new javax.swing.JList<>();
         cmbxCriterioBusqueda = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         lblIdArticulo = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        cmbxEnvase = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Ventana articulos");
@@ -87,6 +94,12 @@ public class VentanaArticulo extends javax.swing.JFrame {
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel5.setText("Tipo de articulo");
 
+        cmbxTipoArticulo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbxTipoArticuloActionPerformed(evt);
+            }
+        });
+
         btnNuevoArticulo.setIcon(new javax.swing.ImageIcon("C:\\Users\\Diego Raul Fernandez\\Pictures\\UN_MAS.png")); // NOI18N
         btnNuevoArticulo.setText("Crear artículo");
         btnNuevoArticulo.addActionListener(new java.awt.event.ActionListener() {
@@ -98,12 +111,12 @@ public class VentanaArticulo extends javax.swing.JFrame {
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel6.setText("Buscar por:");
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        lstArticulos.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(lstArticulos);
 
         cmbxCriterioBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Nombre", "Largo", "Ancho", "Diámetro", "Tipo de Artículo" }));
 
@@ -118,6 +131,8 @@ public class VentanaArticulo extends javax.swing.JFrame {
         });
 
         lblIdArticulo.setText("jLabel8");
+
+        jLabel8.setText("Envase");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -158,14 +173,23 @@ public class VentanaArticulo extends javax.swing.JFrame {
                 .addComponent(txtAncho, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addComponent(jLabel5)
-                .addGap(17, 17, 17)
-                .addComponent(cmbxTipoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(120, 120, 120)
-                .addComponent(btnNuevoArticulo)
-                .addGap(131, 131, 131)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(90, 90, 90)
+                                .addComponent(btnNuevoArticulo)
+                                .addGap(131, 131, 131))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cmbxEnvase, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(123, 123, 123)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(17, 17, 17)
+                        .addComponent(cmbxTipoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,16 +232,21 @@ public class VentanaArticulo extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addComponent(jLabel4))
                     .addComponent(txtAncho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addComponent(cmbxTipoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(btnNuevoArticulo))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(25, 25, 25)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(cmbxEnvase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(35, 35, 35)
+                        .addComponent(btnNuevoArticulo))))
         );
 
         pack();
@@ -225,7 +254,7 @@ public class VentanaArticulo extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-        ArrayList<Articulo> resultado;
+        List resultado;
         switch (this.cmbxCriterioBusqueda.getSelectedIndex()){
             //ID, 
             case 0:
@@ -236,7 +265,7 @@ public class VentanaArticulo extends javax.swing.JFrame {
                 } else {
                   //mostrar el resultado en algun lado.  
                   Articulo articulo;
-                  articulo = resultado.get(0);
+                  articulo = (Articulo) resultado.get(0);
                   this.lblIdArticulo.setText(Long.toString(articulo.getIdArticulo()));
                   this.txtDiametro.setText(articulo.getDiametro().toString());
                   this.txtAncho.setText(articulo.getAncho().toString());
@@ -251,6 +280,8 @@ public class VentanaArticulo extends javax.swing.JFrame {
                         this.txtBuscar.getText());
                 if (resultado.isEmpty()){
                     JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    //this.lstArticulos.setListData(resultado.toArray());
                 }
                 break;
             //Largo,
@@ -279,7 +310,7 @@ public class VentanaArticulo extends javax.swing.JFrame {
                 break;
             //"Tipo de Artículo"
             case 5:
-                resultado = /*(ArrayList<Articulo>)*/ this.controlador.buscarArticulos(Articulo_.tipo,
+                resultado = this.controlador.buscarArticulos(Articulo_.tipo,
                         Double.parseDouble(this.txtBuscar.getText()));
                 if (resultado.isEmpty()){
                     JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.ERROR_MESSAGE);
@@ -293,8 +324,33 @@ public class VentanaArticulo extends javax.swing.JFrame {
 
     private void btnNuevoArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoArticuloActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null, Integer.toString(evt.hashCode()), "Error", JOptionPane.ERROR_MESSAGE);
+        try {
+            TipoArticulo ta;
+            ta = (TipoArticulo) this.cmbxTipoArticulo.getSelectedItem();
+            Envase env;
+            env = (Envase) this.cmbxEnvase.getSelectedItem();
+            this.controlador.nuevoArticulo(this.txtDescripcion.getText(),
+                    Double.parseDouble(this.txtLargo.getText()),
+                    Double.parseDouble(this.txtAncho.getText()),
+                    Double.parseDouble(this.txtDiametro.getText()),
+                    env,
+                    ta);
+            
+        } catch (NumberFormatException | HeadlessException numberFormatException) {
+            JOptionPane.showMessageDialog(null, Integer.toString(evt.hashCode()), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnNuevoArticuloActionPerformed
+
+    private void cmbxTipoArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbxTipoArticuloActionPerformed
+        // TODO add your handling code here:
+        TipoArticulo ta;
+        ta = (TipoArticulo) this.cmbxTipoArticulo.getSelectedItem();
+        DefaultComboBoxModel modeloCombo;
+            modeloCombo = new DefaultComboBoxModel(this.controlador.buscarEnvaseTipo(ta).toArray());
+            this.cmbxEnvase.setModel(modeloCombo);
+            this.cmbxEnvase.setSelectedIndex(0);
+        
+    }//GEN-LAST:event_cmbxTipoArticuloActionPerformed
 
 
     private void limpiar(){
@@ -308,10 +364,12 @@ public class VentanaArticulo extends javax.swing.JFrame {
         modeloCombo = new DefaultComboBoxModel(this.controlador.listarTipoArticulo().toArray());
         this.cmbxTipoArticulo.setModel(modeloCombo);
     }
+    //<editor-fold defaultstate="collapsed" desc="Elementos de la ventana">
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnNuevoArticulo;
     private javax.swing.JComboBox<String> cmbxCriterioBusqueda;
+    private javax.swing.JComboBox<String> cmbxEnvase;
     private javax.swing.JComboBox<String> cmbxTipoArticulo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -320,14 +378,16 @@ public class VentanaArticulo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JList<String> jList1;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblID;
     private javax.swing.JLabel lblIdArticulo;
+    private javax.swing.JList<String> lstArticulos;
     private javax.swing.JTextField txtAncho;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtDescripcion;
     private javax.swing.JTextField txtDiametro;
     private javax.swing.JTextField txtLargo;
     // End of variables declaration//GEN-END:variables
+    //</editor-fold>
 }

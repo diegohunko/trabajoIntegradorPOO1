@@ -273,8 +273,45 @@ public class Controlador {
         return this.persistencia.buscarEnvaseCapTipo(capacidad, ta);
     }
 
-    public ArrayList<Articulo> buscarArticulos(Object metaModelo, Object criterio) {
-        return (ArrayList<Articulo>) this.persistencia.buscarPorClaseCampoYCriterio(Articulo.class, (SingularAttribute)metaModelo, criterio);
+    public List buscarArticulos(Object metaModelo, Object criterio) {
+        return this.persistencia.buscarPorClaseCampoYCriterio(Articulo.class, (SingularAttribute)metaModelo, criterio);
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void nuevoArticulo(String descripcion, Double largo, Double ancho,
+             Double diametro, Envase envase, TipoArticulo tipo) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            this.persistencia.iniciarTransaccion();
+            Articulo unArticulo;
+            unArticulo = new Articulo(descripcion, largo, ancho,
+                    diametro, envase, tipo);
+            
+            this.persistencia.insertar(unArticulo);
+            tipo.agregarArticulo(unArticulo);
+            this.persistencia.modificar(tipo);
+            this.persistencia.confirmarTransaccion();
+        } catch (Exception e) {
+            this.persistencia.descartarTransaccion();
+        }
+    }
+
+    public List buscarEnvaseTipo(TipoArticulo ta) {
+        return this.persistencia.buscarPorClaseCampoYCriterio(Envase.class, Envase_.tipoArticulo, ta);
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void nuevoTipoArticulo(String text) {
+        try {
+            TipoArticulo ta;
+            ta = new TipoArticulo(text);
+            this.persistencia.iniciarTransaccion();
+            this.persistencia.insertar(ta);
+            this.persistencia.confirmarTransaccion();
+        } catch (Exception e) {
+            this.persistencia.descartarTransaccion();
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+        
     }
 }

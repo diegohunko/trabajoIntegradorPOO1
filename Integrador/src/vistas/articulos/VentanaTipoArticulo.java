@@ -59,6 +59,11 @@ public class VentanaTipoArticulo extends javax.swing.JFrame {
         txtDescripcion.setText("jTextField1");
 
         btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
 
         btnModificar.setText("Modificar");
 
@@ -115,6 +120,14 @@ public class VentanaTipoArticulo extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        // TODO add your handling code here:
+        try {
+            this.controlador.nuevoTipoArticulo(this.txtDescripcion.getText().toUpperCase());
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_btnNuevoActionPerformed
 
 
 
