@@ -295,10 +295,11 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
                 this.txtCuilPropietario.grabFocus();
             }else{
                 this.lblIdPedido.setText(Long.toString(codigo));
-            }
-            this.lstFechasEntregas.setListData(fechasDeEntrega(fp, 
+                this.lstFechasEntregas.setListData(fechasDeEntrega(fp, 
                     Integer.parseInt(this.txtTotalDeEntregas.getText()),
-                    periodicidad));         
+                    periodicidad));
+            }
+                     
             
        }catch(Exception ex){
            
