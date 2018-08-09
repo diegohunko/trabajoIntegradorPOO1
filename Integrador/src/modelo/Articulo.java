@@ -38,9 +38,8 @@ public class Articulo implements Serializable{
     public Articulo() {
     }
     
-     public Articulo(Long codigo, String descripcion, Double largo, Double ancho,
+     public Articulo(String descripcion, Double largo, Double ancho,
              Double diametro, Envase envase, TipoArticulo tipo) {
-        this.idArticulo = codigo;
         this.descripcion = descripcion;
         this.largo = largo;
         this.ancho = ancho;
