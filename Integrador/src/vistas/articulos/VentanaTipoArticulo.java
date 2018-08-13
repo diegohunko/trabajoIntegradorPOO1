@@ -8,8 +8,8 @@ import controlador.Controlador;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
-import modelo.Articulo;
-import modelo.Articulo_;
+import modelo.TipoArticulo;
+import modelo.TipoArticulo_;
 /**
  *
  * @author Diego Raul Fernandez
@@ -48,15 +48,14 @@ public class VentanaTipoArticulo extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         lstTiposArt = new javax.swing.JList<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Hi Führer, ABM ta");
 
         jLabel1.setText("ID Tipo Art");
 
         lblIDTipoArt.setText("jLabel2");
 
         jLabel3.setText("Descripción");
-
-        txtDescripcion.setText("jTextField1");
 
         btnNuevo.setText("Nuevo");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {

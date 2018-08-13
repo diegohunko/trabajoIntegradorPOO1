@@ -138,9 +138,9 @@ public class VentanaEnvase extends javax.swing.JFrame {
         if (ta != null){
             this.controlador.agregarNuevoEnvase(Double.parseDouble(this.txtCapacidad.getText()),
                 ta);
-            Envase enva;
+            /*Envase enva;
             enva = (Envase) this.controlador.buscarEnvaseCapacidadTipo(Double.parseDouble(this.txtCapacidad.getText()), ta);
-            limpiar();
+            */limpiar();
         }else{
             JOptionPane.showMessageDialog(null, "DEBE seleccionar el tipo de artículo.", "Error", JOptionPane.ERROR_MESSAGE);
             this.cmbxTipoArticulo.grabFocus();

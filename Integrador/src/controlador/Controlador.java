@@ -278,14 +278,23 @@ public class Controlador {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void nuevoArticulo(String descripcion, Double largo, Double ancho,
-             Double diametro, Envase envase, TipoArticulo tipo) {
+    public void nuevoArticulo(
+            String descripcion,
+            Double largo,
+            Double ancho,
+            Double diametro,
+            //Envase envase,
+            TipoArticulo tipo) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         try {
             this.persistencia.iniciarTransaccion();
             Articulo unArticulo;
-            unArticulo = new Articulo(descripcion, largo, ancho,
-                    diametro, envase, tipo);
+            unArticulo = new Articulo(
+                    descripcion,
+                    largo,
+                    ancho,
+                    diametro,
+                    tipo);
             
             this.persistencia.insertar(unArticulo);
             tipo.agregarArticulo(unArticulo);
@@ -314,4 +323,8 @@ public class Controlador {
         }
         
     }
+
+    /*public void nuevoArticulo(String text, double parseDouble, double parseDouble0, double parseDouble1, List<Envase> env, TipoArticulo ta) {
+    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }*/
 }

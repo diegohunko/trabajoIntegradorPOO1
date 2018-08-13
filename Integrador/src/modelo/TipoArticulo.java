@@ -85,4 +85,9 @@ public class TipoArticulo implements Serializable {
     public void eliminarArticulo(Articulo viejoArticulo){
         this.articulos.remove(viejoArticulo);
     }
+    
+    @Override
+    public String toString(){
+        return this.idTipoArticulo + " " +this.descripcion;
+    }
 }

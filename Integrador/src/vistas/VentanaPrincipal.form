@@ -35,7 +35,8 @@
                   <Component id="btnVentEnvases" alignment="0" max="32767" attributes="0"/>
                   <Component id="btnVentPedidos" alignment="0" max="32767" attributes="0"/>
                   <Component id="btnVentClientes" max="32767" attributes="0"/>
-                  <Component id="btnVentArticulos" alignment="0" min="-2" pref="212" max="-2" attributes="0"/>
+                  <Component id="btnVentArticulos" alignment="0" pref="212" max="32767" attributes="0"/>
+                  <Component id="btnTipoArt" max="32767" attributes="0"/>
               </Group>
               <EmptySpace pref="255" max="32767" attributes="0"/>
           </Group>
@@ -52,7 +53,9 @@
               <Component id="btnVentEnvases" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btnVentArticulos" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="177" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+              <Component id="btnTipoArt" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="128" max="32767" attributes="0"/>
               <Component id="btnCerrar" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -103,6 +106,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCerrarActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnTipoArt">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Tipos de articulos"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTipoArtActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

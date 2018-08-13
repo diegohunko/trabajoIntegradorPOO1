@@ -5,6 +5,7 @@
  */
 package modelo;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Id;
@@ -45,6 +46,15 @@ public class Articulo implements Serializable{
         this.ancho = ancho;
         this.diametro = diametro;
         this.envase = envase;
+        this.tipo = tipo;
+    }
+     
+     public Articulo(String descripcion, Double largo, Double ancho,
+             Double diametro, TipoArticulo tipo) {
+        this.descripcion = descripcion;
+        this.largo = largo;
+        this.ancho = ancho;
+        this.diametro = diametro;
         this.tipo = tipo;
     }
     
@@ -102,5 +112,10 @@ public class Articulo implements Serializable{
 
     public void setTipo(TipoArticulo tipo) {
         this.tipo = tipo;
+    }
+    
+    @Override
+    public String toString(){
+        return this.idArticulo + " " +this.descripcion;
     }
 }

@@ -56,14 +56,15 @@ public class VentanaArticulo extends javax.swing.JFrame {
         btnNuevoArticulo = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        lstArticulos = new javax.swing.JList<>();
+        lstArticulos = new javax.swing.JList();
         cmbxCriterioBusqueda = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         lblIdArticulo = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        cmbxEnvase = new javax.swing.JComboBox<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        lstEnvases = new javax.swing.JList();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Ventana articulos");
@@ -111,11 +112,7 @@ public class VentanaArticulo extends javax.swing.JFrame {
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel6.setText("Buscar por:");
 
-        lstArticulos.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        lstArticulos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(lstArticulos);
 
         cmbxCriterioBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Nombre", "Largo", "Ancho", "Diámetro", "Tipo de Artículo" }));
@@ -134,62 +131,67 @@ public class VentanaArticulo extends javax.swing.JFrame {
 
         jLabel8.setText("Envase");
 
+        lstEnvases.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jScrollPane2.setViewportView(lstEnvases);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(lblID, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
-                .addComponent(lblIdArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(162, 162, 162)
-                .addComponent(jLabel6)
-                .addGap(30, 30, 30)
-                .addComponent(cmbxCriterioBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(46, 46, 46)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtLargo, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDiametro, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(134, 134, 134)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addComponent(btnBuscar))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(60, 60, 60)
-                .addComponent(jLabel4)
-                .addGap(30, 30, 30)
-                .addComponent(txtAncho, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(90, 90, 90)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                .addGap(105, 105, 105))
+                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnNuevoArticulo)
-                                .addGap(131, 131, 131))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cmbxEnvase, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(123, 123, 123)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addGap(17, 17, 17)
-                        .addComponent(cmbxTipoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(cmbxTipoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(lblID, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(46, 46, 46)
+                        .addComponent(lblIdArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(162, 162, 162)
+                        .addComponent(jLabel6)
+                        .addGap(30, 30, 30)
+                        .addComponent(cmbxCriterioBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(46, 46, 46)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtLargo, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDiametro, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(134, 134, 134)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(49, 49, 49)
+                                .addComponent(btnBuscar))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(jLabel4)
+                        .addGap(30, 30, 30)
+                        .addComponent(txtAncho, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 82, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,7 +234,7 @@ public class VentanaArticulo extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addComponent(jLabel4))
                     .addComponent(txtAncho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addComponent(cmbxTipoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -241,12 +243,16 @@ public class VentanaArticulo extends javax.swing.JFrame {
                         .addGap(25, 25, 25)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel8))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(11, 11, 11)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8)
-                            .addComponent(cmbxEnvase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(35, 35, 35)
-                        .addComponent(btnNuevoArticulo))))
+                        .addComponent(btnNuevoArticulo)))
+                .addContainerGap(118, Short.MAX_VALUE))
         );
 
         pack();
@@ -258,7 +264,7 @@ public class VentanaArticulo extends javax.swing.JFrame {
         switch (this.cmbxCriterioBusqueda.getSelectedIndex()){
             //ID, 
             case 0:
-                resultado = /*(ArrayList<Articulo>)*/ this.controlador.buscarArticulos(Articulo_.idArticulo, 
+                resultado = this.controlador.buscarArticulos(Articulo_.idArticulo, 
                         Long.parseLong(this.txtBuscar.getText()));
                 if (resultado.isEmpty()){
                     JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.ERROR_MESSAGE);
@@ -276,36 +282,42 @@ public class VentanaArticulo extends javax.swing.JFrame {
                 break;
             //Nombre, 
             case 1:
-                resultado = /*(ArrayList<Articulo>)*/ this.controlador.buscarArticulos(Articulo_.descripcion,
+                resultado = this.controlador.buscarArticulos(Articulo_.descripcion,
                         this.txtBuscar.getText());
                 if (resultado.isEmpty()){
                     JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.ERROR_MESSAGE);
                 }else{
-                    //this.lstArticulos.setListData(resultado.toArray());
+                    this.lstArticulos.setListData(resultado.toArray());
                 }
                 break;
             //Largo,
             case 2:
-                resultado = /*(ArrayList<Articulo>)*/ this.controlador.buscarArticulos(Articulo_.largo,
+                resultado = this.controlador.buscarArticulos(Articulo_.largo,
                         Double.parseDouble(this.txtBuscar.getText()));
                 if (resultado.isEmpty()){
                     JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    this.lstArticulos.setListData(resultado.toArray());
                 }
                 break;
             //Ancho,
             case 3:
-                resultado = /*(ArrayList<Articulo>)*/ this.controlador.buscarArticulos(Articulo_.ancho,
+                resultado = this.controlador.buscarArticulos(Articulo_.ancho,
                         Double.parseDouble(this.txtBuscar.getText()));
                 if (resultado.isEmpty()){
                     JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    this.lstArticulos.setListData(resultado.toArray());
                 }
                 break;
             //"Diámetro",
             case 4:
-                resultado = /*(ArrayList<Articulo>)*/ this.controlador.buscarArticulos(Articulo_.diametro,
+                resultado = this.controlador.buscarArticulos(Articulo_.diametro,
                         Double.parseDouble(this.txtBuscar.getText()));
                 if (resultado.isEmpty()){
                     JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    this.lstArticulos.setListData(resultado.toArray());
                 }
                 break;
             //"Tipo de Artículo"
@@ -314,6 +326,8 @@ public class VentanaArticulo extends javax.swing.JFrame {
                         Double.parseDouble(this.txtBuscar.getText()));
                 if (resultado.isEmpty()){
                     JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    this.lstArticulos.setListData(resultado.toArray());
                 }
                 break;
             default:         
@@ -327,13 +341,13 @@ public class VentanaArticulo extends javax.swing.JFrame {
         try {
             TipoArticulo ta;
             ta = (TipoArticulo) this.cmbxTipoArticulo.getSelectedItem();
-            Envase env;
-            env = (Envase) this.cmbxEnvase.getSelectedItem();
+            /*Envase env;
+            env = (Envase) this.cmbxEnvase.getSelectedItem();*/
             this.controlador.nuevoArticulo(this.txtDescripcion.getText(),
                     Double.parseDouble(this.txtLargo.getText()),
                     Double.parseDouble(this.txtAncho.getText()),
                     Double.parseDouble(this.txtDiametro.getText()),
-                    env,
+                    //env,
                     ta);
             
         } catch (NumberFormatException | HeadlessException numberFormatException) {
@@ -345,10 +359,11 @@ public class VentanaArticulo extends javax.swing.JFrame {
         // TODO add your handling code here:
         TipoArticulo ta;
         ta = (TipoArticulo) this.cmbxTipoArticulo.getSelectedItem();
-        DefaultComboBoxModel modeloCombo;
-            modeloCombo = new DefaultComboBoxModel(this.controlador.buscarEnvaseTipo(ta).toArray());
-            this.cmbxEnvase.setModel(modeloCombo);
-            this.cmbxEnvase.setSelectedIndex(0);
+        /*DefaultComboBoxModel modeloCombo;
+        modeloCombo = new DefaultComboBoxModel(this.controlador.buscarEnvaseTipo(ta).toArray());
+        this.cmbxEnvase.setModel(modeloCombo);
+        this.cmbxEnvase.setSelectedIndex(0);*/
+        this.lstEnvases.setListData(this.controlador.buscarEnvaseTipo(ta).toArray());
         
     }//GEN-LAST:event_cmbxTipoArticuloActionPerformed
 
@@ -369,7 +384,6 @@ public class VentanaArticulo extends javax.swing.JFrame {
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnNuevoArticulo;
     private javax.swing.JComboBox<String> cmbxCriterioBusqueda;
-    private javax.swing.JComboBox<String> cmbxEnvase;
     private javax.swing.JComboBox<String> cmbxTipoArticulo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -380,9 +394,11 @@ public class VentanaArticulo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblID;
     private javax.swing.JLabel lblIdArticulo;
-    private javax.swing.JList<String> lstArticulos;
+    private javax.swing.JList lstArticulos;
+    private javax.swing.JList lstEnvases;
     private javax.swing.JTextField txtAncho;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtDescripcion;

@@ -88,4 +88,9 @@ public class Envase implements Serializable{
     public void quitarArticulo(Articulo articulo){
         this.articulos.remove(articulo);
     }
+    
+    @Override
+    public String toString(){
+        return this.idEnvase + " " +this.capacidad;
+    }
 }

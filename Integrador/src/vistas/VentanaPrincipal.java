@@ -9,6 +9,7 @@ import vistas.envases.VentanaEnvase;
 import vistas.clientes.VentanaCliente;
 import vistas.pedidos.VentanaPedido;
 import controlador.Controlador;
+import vistas.articulos.VentanaTipoArticulo;
 /**
  *
  * @author Diego Raul Fernandez
@@ -38,6 +39,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnVentEnvases = new javax.swing.JButton();
         btnVentArticulos = new javax.swing.JButton();
         btnCerrar = new javax.swing.JButton();
+        btnTipoArt = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("VENTANA PRINCIPAL");
@@ -84,6 +86,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnTipoArt.setText("Tipos de articulos");
+        btnTipoArt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTipoArtActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -98,7 +107,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                     .addComponent(btnVentEnvases, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnVentPedidos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnVentClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnVentArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnVentArticulos, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+                    .addComponent(btnTipoArt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(255, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -112,7 +122,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addComponent(btnVentEnvases)
                 .addGap(18, 18, 18)
                 .addComponent(btnVentArticulos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 177, Short.MAX_VALUE)
+                .addGap(26, 26, 26)
+                .addComponent(btnTipoArt)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 128, Short.MAX_VALUE)
                 .addComponent(btnCerrar)
                 .addContainerGap())
         );
@@ -155,9 +167,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnCerrarActionPerformed
 
+    private void btnTipoArtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTipoArtActionPerformed
+        // TODO add your handling code here:
+        VentanaTipoArticulo vTipArt = new VentanaTipoArticulo(this.controlador, this);
+        vTipArt.setVisible(true);
+    }//GEN-LAST:event_btnTipoArtActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrar;
+    private javax.swing.JButton btnTipoArt;
     private javax.swing.JButton btnVentArticulos;
     private javax.swing.JButton btnVentClientes;
     private javax.swing.JButton btnVentEnvases;
