@@ -85,6 +85,11 @@ public class Persistencia  {
         return em.createQuery(consulta).getResultList();
     }
     
+    /**
+     *
+     * @param cuit
+     * @return
+     */
     public Cliente buscarClientePorCuit(String cuit){
         CriteriaBuilder cb = this.em.getCriteriaBuilder();
         CriteriaQuery<Cliente> query = cb.createQuery(Cliente.class);
@@ -138,6 +143,12 @@ public class Persistencia  {
         return em.createQuery(consulta).getResultList();
     }
     
+    /**
+     *
+     * @param capacidad
+     * @param ta
+     * @return
+     */
     public Envase buscarEnvaseCapTipo(Double capacidad, TipoArticulo ta){
         CriteriaBuilder builder = this.em.getCriteriaBuilder();
         CriteriaQuery<Envase> consulta = builder.createQuery(Envase.class);
@@ -167,6 +178,16 @@ public class Persistencia  {
 //        return null;
         
     }
+    
+    /**
+     *
+     * @param cuitOwner
+     * @param entregaInicial
+     * @param totalDeEntregas
+     * @param periodicidad
+     * @param marcaTiempo
+     * @return
+     */
     public Pedido buscarPedidoPerdido(String cuitOwner, Date entregaInicial, 
             Integer totalDeEntregas, char periodicidad, Calendar marcaTiempo){
         
@@ -189,6 +210,10 @@ public class Persistencia  {
         return em.createQuery(consulta).getSingleResult();
     }
     
+    /**
+     *
+     * @return
+     */
     public List vistaPedido(){
         CriteriaBuilder cb = this.em.getCriteriaBuilder();
         CriteriaQuery<Pedido> consulta = cb.createQuery(Pedido.class);
