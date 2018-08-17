@@ -238,7 +238,7 @@ public class Controlador {
     }
     
     public List listarDetalleEntrega(Entrega entrega){
-        return entrega.getDetalle();//this.persistencia.buscar(Entrega.class, entrega.getIdEntrega());
+        return this.persistencia.buscarPorClaseCampoYCriterio(Linea.class, Linea_.entrega, entrega);
     }
     
     /**

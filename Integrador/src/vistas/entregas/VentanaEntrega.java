@@ -241,8 +241,8 @@ public class VentanaEntrega extends javax.swing.JFrame {
         modeloCombo = new DefaultComboBoxModel(this.controlador.listarArticulos().toArray());
         this.cmbxArticulo.setModel(modeloCombo);
         this.cmbxArticulo.setSelectedIndex(0);
-        Entrega unaEntrega = this.controlador.buscarEntrega(this.entrega.getIdEntrega());
-        this.lstDetalle.setListData(unaEntrega.getDetalle().toArray());
+        //Entrega unaEntrega = this.controlador.buscarEntrega(this.entrega.getIdEntrega());
+        this.lstDetalle.setListData(this.controlador.listarDetalleEntrega(entrega).toArray());
         //this.cmbxEnvase.setSelectedIndex(0);
         
         
