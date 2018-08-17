@@ -27,6 +27,7 @@ public class VentanaTipoArticulo extends javax.swing.JFrame {
         this.controlador = c;
         this.vp = previo;
         initComponents();
+        limpiar();
     }
 
     /**
@@ -46,18 +47,16 @@ public class VentanaTipoArticulo extends javax.swing.JFrame {
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        lstTiposArt = new javax.swing.JList<>();
+        lstTiposArt = new javax.swing.JList();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Hi Führer, ABM ta");
 
         jLabel1.setText("ID Tipo Art");
 
-        lblIDTipoArt.setText("jLabel2");
-
         jLabel3.setText("Descripción");
 
-        btnNuevo.setText("Nuevo");
+        btnNuevo.setText("Guardadlo");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNuevoActionPerformed(evt);
@@ -66,7 +65,7 @@ public class VentanaTipoArticulo extends javax.swing.JFrame {
 
         btnModificar.setText("Modificar");
 
-        btnEliminar.setText("Eliminar");
+        btnEliminar.setText("Eliminadlo");
 
         jScrollPane1.setViewportView(lstTiposArt);
 
@@ -92,7 +91,7 @@ public class VentanaTipoArticulo extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnEliminar)))
                 .addGap(50, 50, 50)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -124,11 +123,17 @@ public class VentanaTipoArticulo extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             this.controlador.nuevoTipoArticulo(this.txtDescripcion.getText().toUpperCase());
+            limpiar();
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnNuevoActionPerformed
 
 
+    private void limpiar(){
+        this.lblIDTipoArt.setText("");
+        this.txtDescripcion.setText("");
+        this.lstTiposArt.setListData(this.controlador.listarTipoArticulo().toArray());
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminar;
@@ -138,7 +143,7 @@ public class VentanaTipoArticulo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblIDTipoArt;
-    private javax.swing.JList<String> lstTiposArt;
+    private javax.swing.JList lstTiposArt;
     private javax.swing.JTextField txtDescripcion;
     // End of variables declaration//GEN-END:variables
 
