@@ -62,4 +62,12 @@ public class Direccion implements Serializable{
     public void setProvincia(String provincia) {
         this.provincia = provincia;
     }
+    
+    @Override
+    public String toString(){
+        return this.calle + " " +
+                this.numero + ", " +
+                this.localidad + " " +
+                this.provincia;
+    }
 }

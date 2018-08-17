@@ -5,6 +5,7 @@
  */
 package modelo;
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
@@ -50,11 +51,12 @@ public class Pedido implements Serializable{
         marcaDeTiempo = Calendar.getInstance();
     }
     
-    public Pedido(Long idpedido, Cliente propietario, Integer total, char periodicidad){
+    public Pedido(Long idpedido, Cliente propietario, Integer total, char periodicidad, Date entregaInicial){
         this.idPedido = idpedido;
         this.propietario = propietario;
         this.totalDeEntregas = total;
         this.periodicidad = periodicidad;
+        this.entregaInicial = entregaInicial;
         this.marcaDeTiempo = Calendar.getInstance();
     }
     public Pedido(Cliente propietario, Date entregaInicial, 
@@ -126,6 +128,14 @@ public class Pedido implements Serializable{
     public void removerEntrega(Entrega unaEntrega){
         this.entregas.remove(unaEntrega);
         //this.fechasDeEntrega.remove(unaEntrega.getFechaEntrega());
+    }
+    
+    @Override
+    public String toString(){
+        DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
+        return this.idPedido +" "+
+                this.propietario.getRazonSocial()+" "+
+                df.format(this.entregaInicial);
     }
 
 }

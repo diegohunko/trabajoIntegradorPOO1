@@ -197,7 +197,8 @@ public class Persistencia  {
                 cb.construct(Pedido.class, tablaPedidos.get(Pedido_.idPedido),
                 tablaPedidos.get(Pedido_.propietario),
                 tablaPedidos.get(Pedido_.totalDeEntregas),
-                tablaPedidos.get(Pedido_.periodicidad)));
+                tablaPedidos.get(Pedido_.periodicidad),
+                tablaPedidos.get(Pedido_.entregaInicial)));
         return em.createQuery(consulta).getResultList();
     }
     

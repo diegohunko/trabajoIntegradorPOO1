@@ -203,38 +203,42 @@ public class Controlador {
     /**
      * Crea una nueva linea de articulo para una entraga.
      * @param fechaEntrega : Fecha en la que debe ser entregado el pedido
-     * @param idEntrega : Entrega a la que pertenece esta linea
+     * @param entrega : Entrega a la que pertenece esta linea 
      * @param cantidad : Cantidad de un artículo para esta entrega
      * @param articulo : El artículo para esta entrega
      * @param envase : envase para este artículo
      */
-    public void agregarLineaEntrega(Date fechaEntrega, Object idEntrega,
+    public void agregarLineaEntrega(Date fechaEntrega, Entrega entrega,
             Integer cantidad, //Object tipoArticulo,
-            Object articulo, Object envase){
+            Articulo articulo, Envase envase){
         try{
             //Inicia la transaccion
             this.persistencia.iniciarTransaccion();
             //Recuperar los objetos para crear un objeto de tipo Linea
-            Entrega unaEntrega;
-            unaEntrega = (Entrega) this.persistencia.buscar(Entrega.class, idEntrega);
-            Articulo unArticulo;
+            /*Entrega unaEntrega;
+            unaEntrega = (Entrega) this.persistencia.buscar(Entrega.class, idEntrega);*/
+            /*Articulo unArticulo;
             unArticulo = (Articulo) this.persistencia.buscar(Articulo.class, articulo);
             Envase unEnvase;
-            unEnvase = (Envase) this.persistencia.buscar(Envase.class, envase);
+            unEnvase = (Envase) this.persistencia.buscar(Envase.class, envase);*/
             
             //Creamos la linea para la entrega
             Linea unaLinea;
-            unaLinea = new Linea(unaEntrega, unArticulo, cantidad, unEnvase);
+            unaLinea = new Linea(entrega, articulo, cantidad, envase);
             //Insertar la nueva linea en la tabla renglones en la base de datos
             this.persistencia.insertar(unaLinea);
             //Agregamos la linea a la entrega
-            unaEntrega.agregarLineaDetalle(unaLinea);
+            entrega.agregarLineaDetalle(unaLinea);
             //actualizar la tabla entregas
-            this.persistencia.refrescar(unaEntrega);
+            this.persistencia.refrescar(entrega);
             this.persistencia.confirmarTransaccion();
         }catch(Exception ex){
             this.persistencia.descartarTransaccion();
         }
+    }
+    
+    public List listarDetalleEntrega(Entrega entrega){
+        return entrega.getDetalle();//this.persistencia.buscar(Entrega.class, entrega.getIdEntrega());
     }
     
     /**
@@ -327,4 +331,9 @@ public class Controlador {
     /*public void nuevoArticulo(String text, double parseDouble, double parseDouble0, double parseDouble1, List<Envase> env, TipoArticulo ta) {
     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }*/
+    
+    public List listarArticulos(){
+        return this.persistencia.buscarTodos(Articulo.class);
+    }
+    
 }

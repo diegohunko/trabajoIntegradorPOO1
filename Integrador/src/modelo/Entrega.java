@@ -5,6 +5,7 @@
  */
 package modelo;
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
@@ -90,5 +91,11 @@ public class Entrega implements Serializable{
     
     public void quitarLineaDetalle(Linea l){
         this.detalle.remove(l);
+    }
+    
+    @Override
+    public String toString(){
+        DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
+        return this.idEntrega +" "+ df.format(fechaEntrega);
     }
 }

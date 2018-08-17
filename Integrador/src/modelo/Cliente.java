@@ -98,4 +98,9 @@ public class Cliente implements Serializable{
     public void quitarPedido(Pedido p){
         this.pedidos.remove(p);
     }
+    
+    @Override
+    public String toString(){
+        return this.cuit+" "+this.razonSocial;
+    }
 }

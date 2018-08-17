@@ -82,4 +82,11 @@ public class Linea implements Serializable{
     public void setEnvase(Envase envase) {
         this.envase = envase;
     }
+    
+     @Override
+    public String toString(){
+        return this.idLinea + " " + this.cantidad.toString() + " " + 
+                this.descripcion.getDescripcion() + " " +
+                this.entrega.toString() + " " + this.envase.toString();
+    }
 }

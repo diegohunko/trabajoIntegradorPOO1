@@ -5,10 +5,15 @@
  */
 package vistas.entregas;
 import controlador.Controlador;
+import java.text.DateFormat;
 import javax.swing.JFrame;
 import java.util.Date;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.table.TableModel;
+import modelo.Articulo;
 import modelo.Entrega;
+import modelo.Envase;
 import modelo.Pedido;
 /**
  *
@@ -24,18 +29,23 @@ public class VentanaEntrega extends javax.swing.JFrame {
     private final Date fechaEntrega;
     private final Pedido pedido;
     private final Entrega entrega;
-    
+    private DefaultListModel lsm;
     //Constructor de la Clase.
     public VentanaEntrega(Controlador c, JFrame p, Date fEnt, Pedido pedido) {
         this.controlador = c;
         this.previo = p;
+        DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
+        String s = df.format(fEnt);
         this.fechaEntrega = fEnt;
         this.pedido = pedido;
         initComponents();
         this.entrega = this.controlador.buscarEntrega(fechaEntrega, pedido.getIdPedido());
+        limpiar();
+        lsm = new DefaultListModel();
+        
         //Establecer el id de la entrega en la etiqueta.
         this.lblIDentrega.setText(this.entrega.getIdEntrega().toString());
-        this.lblFechaEntrega.setText(this.fechaEntrega.toString());
+        this.lblFechaEntrega.setText(s);
         this.lblNroPedido.setText(this.pedido.getIdPedido().toString());
     }
 
@@ -56,15 +66,13 @@ public class VentanaEntrega extends javax.swing.JFrame {
         btnAgregarArt = new javax.swing.JButton();
         lblNroPedido = new javax.swing.JLabel();
         lblFechaEntrega = new javax.swing.JLabel();
-        cmbxArticulo = new javax.swing.JComboBox<>();
-        cmbxTipoArticulo = new javax.swing.JComboBox<>();
-        jLabel7 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        cmbxArticulo = new javax.swing.JComboBox();
         jLabel5 = new javax.swing.JLabel();
-        cmbxEnvase = new javax.swing.JComboBox<>();
+        cmbxEnvase = new javax.swing.JComboBox();
         jLabel6 = new javax.swing.JLabel();
         lblIDentrega = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        lstDetalle = new javax.swing.JList();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("CONFIGURAR ENTREGA");
@@ -96,82 +104,66 @@ public class VentanaEntrega extends javax.swing.JFrame {
 
         lblFechaEntrega.setText("- Fecha -");
 
-        cmbxArticulo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cmbxTipoArticulo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jLabel7.setText("Tipo de artículo");
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
+        cmbxArticulo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbxArticuloActionPerformed(evt);
             }
         });
-        jScrollPane2.setViewportView(jTable1);
 
         jLabel5.setText("Envase");
-
-        cmbxEnvase.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel6.setText("ID Entrga");
 
         lblIDentrega.setText("- Id Entrega -");
 
+        lstDetalle.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane1.setViewportView(lstDetalle);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblNroPedido, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                            .addComponent(lblFechaEntrega, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblIDentrega, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(96, 96, 96))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(53, 53, 53)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnAgregarArt)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnAgregarArt)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cmbxTipoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(cmbxEnvase, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(cmbxArticulo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblFechaEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblNroPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(18, 18, 18)
-                                .addComponent(lblIDentrega, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(18, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(cmbxEnvase, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cmbxArticulo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(96, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(lblNroPedido))
@@ -183,14 +175,10 @@ public class VentanaEntrega extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(lblIDentrega))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbxTipoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -199,11 +187,11 @@ public class VentanaEntrega extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(cmbxEnvase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(41, 41, 41)
+                .addGap(18, 18, 18)
                 .addComponent(btnAgregarArt)
-                .addGap(38, 38, 38)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(30, 30, 30)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(126, Short.MAX_VALUE))
         );
 
         pack();
@@ -213,13 +201,18 @@ public class VentanaEntrega extends javax.swing.JFrame {
         // TODO add your handling code here:
         try{
             
-            this.controlador.agregarLineaEntrega(this.fechaEntrega, this.pedido,
-                Integer.parseInt(this.txtCantidad.getText()),
+            this.controlador.agregarLineaEntrega(
+                    this.fechaEntrega,
+                    this.entrega,
+                    Integer.parseInt(this.txtCantidad.getText()),
                 //this.cmbxTipoArticulo.getSelectedItem(),
-                this.cmbxArticulo.getSelectedItem(),
-                this.cmbxEnvase.getSelectedItem());
-        } catch (Exception e) {
-            
+                    (Articulo) this.cmbxArticulo.getSelectedItem(),
+                    (Envase) this.cmbxEnvase.getSelectedItem());
+            this.txtCantidad.setText("");
+            limpiar();
+        } catch (NumberFormatException e) {
+            this.txtCantidad.setText("");
+            this.txtCantidad.grabFocus();
         }
         
         
@@ -231,29 +224,46 @@ public class VentanaEntrega extends javax.swing.JFrame {
         this.previo.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+    private void cmbxArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbxArticuloActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTable1MouseClicked
+        Articulo art;
+        art = (Articulo) this.cmbxArticulo.getSelectedItem();
+        DefaultComboBoxModel modeloCombo;
+        modeloCombo = new DefaultComboBoxModel(this.controlador.buscarEnvaseTipo(art.getTipo()).toArray());
+        this.cmbxEnvase.setModel(modeloCombo);
+    }//GEN-LAST:event_cmbxArticuloActionPerformed
 
+    private void limpiar(){
+        /*this.lblFechaEntrega.setText("");
+        this.lblIDentrega.setText("");
+        this.lblNroPedido.setText("");*/
+        DefaultComboBoxModel modeloCombo;
+        modeloCombo = new DefaultComboBoxModel(this.controlador.listarArticulos().toArray());
+        this.cmbxArticulo.setModel(modeloCombo);
+        this.cmbxArticulo.setSelectedIndex(0);
+        Entrega unaEntrega = this.controlador.buscarEntrega(this.entrega.getIdEntrega());
+        this.lstDetalle.setListData(unaEntrega.getDetalle().toArray());
+        //this.cmbxEnvase.setSelectedIndex(0);
+        
+        
+    }
 
     // <editor-fold defaultstate="collapsed" desc="Elementos de la ventana">
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarArt;
-    private javax.swing.JComboBox<String> cmbxArticulo;
-    private javax.swing.JComboBox<String> cmbxEnvase;
-    private javax.swing.JComboBox<String> cmbxTipoArticulo;
+    private javax.swing.JComboBox cmbxArticulo;
+    private javax.swing.JComboBox cmbxEnvase;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblFechaEntrega;
     private javax.swing.JLabel lblIDentrega;
     private javax.swing.JLabel lblNroPedido;
+    private javax.swing.JList lstDetalle;
     private javax.swing.JTextField txtCantidad;
     // End of variables declaration//GEN-END:variables
     // </editor-fold>

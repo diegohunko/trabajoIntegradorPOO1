@@ -299,8 +299,7 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
                     Integer.parseInt(this.txtTotalDeEntregas.getText()),
                     periodicidad));
             }
-                     
-            
+                        
        }catch(Exception ex){
            
        }
@@ -406,6 +405,7 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
             return aListFechas;
         }
     }
+    
     private void formWindowClosing(java.awt.event.WindowEvent evt) {                                   
         // TODO add your handling code here:
         this.previo.setVisible(true);
