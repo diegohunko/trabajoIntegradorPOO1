@@ -53,7 +53,7 @@ public class VentanaArticulo extends javax.swing.JFrame {
         txtAncho = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         cmbxTipoArticulo = new javax.swing.JComboBox<>();
-        btnNuevoArticulo = new javax.swing.JButton();
+        btnGuardarArticulo = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstArticulos = new javax.swing.JList();
@@ -65,12 +65,14 @@ public class VentanaArticulo extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         lstEnvases = new javax.swing.JList();
+        btnEliminArt = new javax.swing.JButton();
+        cmbxTipArt = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Ventana articulos");
 
-        lblID.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblID.setText("ID:");
+        lblID.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblID.setText("-- ID --");
         lblID.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -105,11 +107,11 @@ public class VentanaArticulo extends javax.swing.JFrame {
             }
         });
 
-        btnNuevoArticulo.setIcon(new javax.swing.ImageIcon("C:\\Users\\Diego Raul Fernandez\\Pictures\\UN_MAS.png")); // NOI18N
-        btnNuevoArticulo.setText("Crear artículo");
-        btnNuevoArticulo.addActionListener(new java.awt.event.ActionListener() {
+        btnGuardarArticulo.setIcon(new javax.swing.ImageIcon("C:\\Users\\Diego Raul Fernandez\\Pictures\\UN_MAS.png")); // NOI18N
+        btnGuardarArticulo.setText("Guardar");
+        btnGuardarArticulo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNuevoArticuloActionPerformed(evt);
+                btnGuardarArticuloActionPerformed(evt);
             }
         });
 
@@ -117,9 +119,19 @@ public class VentanaArticulo extends javax.swing.JFrame {
         jLabel6.setText("Buscar por:");
 
         lstArticulos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lstArticulos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstArticulosValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(lstArticulos);
 
         cmbxCriterioBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Nombre", "Largo", "Ancho", "Diámetro", "Tipo de Artículo" }));
+        cmbxCriterioBusqueda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbxCriterioBusquedaActionPerformed(evt);
+            }
+        });
 
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel7.setText("Criterio");
@@ -131,13 +143,20 @@ public class VentanaArticulo extends javax.swing.JFrame {
             }
         });
 
-        lblIdArticulo.setText("jLabel8");
+        lblIdArticulo.setText("ID Artículo");
 
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel8.setText("Envase");
 
         lstEnvases.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPane2.setViewportView(lstEnvases);
+
+        btnEliminArt.setText("Eliminar");
+        btnEliminArt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminArtActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -148,7 +167,6 @@ public class VentanaArticulo extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblID, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
@@ -158,8 +176,11 @@ public class VentanaArticulo extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
-                            .addComponent(jLabel5))))
-                .addGap(31, 31, 31)
+                            .addComponent(jLabel5)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblIdArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -170,23 +191,28 @@ public class VentanaArticulo extends javax.swing.JFrame {
                             .addComponent(cmbxTipoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(38, 38, 38))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(243, 243, 243)
-                                .addComponent(btnBuscar)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(243, 243, 243)
+                                        .addComponent(btnBuscar))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(192, 192, 192)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(cmbxTipArt, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblIdArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(162, 162, 162)
+                        .addComponent(lblID, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(134, 134, 134)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(30, 30, 30)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cmbxCriterioBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cmbxCriterioBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,31 +222,32 @@ public class VentanaArticulo extends javax.swing.JFrame {
                         .addGap(31, 31, 31)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(47, 47, 47)
-                        .addComponent(btnNuevoArticulo)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(80, 80, 80)
+                        .addComponent(btnGuardarArticulo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnEliminArt, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(419, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(5, 5, 5)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cmbxCriterioBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblIdArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblID)))
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblID)
+                        .addComponent(lblIdArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbxCriterioBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7))
-                        .addGap(18, 18, 18)
+                            .addComponent(jLabel7)
+                            .addComponent(cmbxTipArt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnBuscar))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -250,7 +277,9 @@ public class VentanaArticulo extends javax.swing.JFrame {
                             .addComponent(jLabel8)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(36, 36, 36)
-                .addComponent(btnNuevoArticulo)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGuardarArticulo)
+                    .addComponent(btnEliminArt))
                 .addContainerGap(142, Short.MAX_VALUE))
         );
 
@@ -259,102 +288,117 @@ public class VentanaArticulo extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-        List resultado;
-        switch (this.cmbxCriterioBusqueda.getSelectedIndex()){
-            //ID, 
-            case 0:
-                resultado = this.controlador.buscarArticulos(Articulo_.idArticulo, 
-                        Long.parseLong(this.txtBuscar.getText()));
-                if (resultado.isEmpty()){
-                    JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.ERROR_MESSAGE);
-                } else {
-                  //mostrar el resultado en algun lado.  
-                  Articulo articulo;
+        try {
+            List resultado;
+            switch (this.cmbxCriterioBusqueda.getSelectedIndex()) {
+                //ID, 
+                case 0:
+                    resultado = this.controlador.buscarArticulos(Articulo_.idArticulo,
+                            Long.parseLong(this.txtBuscar.getText()));
+                    if (resultado.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        //mostrar el resultado en algun lado. 
+                        this.lstArticulos.setListData(resultado.toArray());
+                        /*Articulo articulo;
                   articulo = (Articulo) resultado.get(0);
                   this.lblIdArticulo.setText(Long.toString(articulo.getIdArticulo()));
                   this.txtDiametro.setText(articulo.getDiametro().toString());
                   this.txtAncho.setText(articulo.getAncho().toString());
                   this.txtDescripcion.setText(articulo.getDescripcion());
                   this.txtLargo.setText(articulo.getLargo().toString());
-                  this.cmbxTipoArticulo.setSelectedItem(articulo.getTipo());
-                }
-                break;
-            //Nombre, 
-            case 1:
-                resultado = this.controlador.buscarArticulos(Articulo_.descripcion,
-                        this.txtBuscar.getText());
-                if (resultado.isEmpty()){
-                    JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.ERROR_MESSAGE);
-                }else{
-                    this.lstArticulos.setListData(resultado.toArray());
-                }
-                break;
-            //Largo,
-            case 2:
-                resultado = this.controlador.buscarArticulos(Articulo_.largo,
-                        Double.parseDouble(this.txtBuscar.getText()));
-                if (resultado.isEmpty()){
-                    JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.ERROR_MESSAGE);
-                }else{
-                    this.lstArticulos.setListData(resultado.toArray());
-                }
-                break;
-            //Ancho,
-            case 3:
-                resultado = this.controlador.buscarArticulos(Articulo_.ancho,
-                        Double.parseDouble(this.txtBuscar.getText()));
-                if (resultado.isEmpty()){
-                    JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.ERROR_MESSAGE);
-                }else{
-                    this.lstArticulos.setListData(resultado.toArray());
-                }
-                break;
-            //"Diámetro",
-            case 4:
-                resultado = this.controlador.buscarArticulos(Articulo_.diametro,
-                        Double.parseDouble(this.txtBuscar.getText()));
-                if (resultado.isEmpty()){
-                    JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.ERROR_MESSAGE);
-                }else{
-                    this.lstArticulos.setListData(resultado.toArray());
-                }
-                break;
-            //"Tipo de Artículo"
-            case 5:
-                resultado = this.controlador.buscarArticulos(Articulo_.tipo,
-                        Double.parseDouble(this.txtBuscar.getText()));
-                if (resultado.isEmpty()){
-                    JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.ERROR_MESSAGE);
-                }else{
-                    this.lstArticulos.setListData(resultado.toArray());
-                }
-                break;
-            default:         
+                  this.cmbxTipoArticulo.setSelectedItem(articulo.getTipo());*/
+                    }
+                    break;
+                //Nombre, 
+                case 1:
+                    resultado = this.controlador.buscarArticulos(Articulo_.descripcion,
+                            this.txtBuscar.getText());
+                    if (resultado.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        this.lstArticulos.setListData(resultado.toArray());
+                    }
+                    break;
+                //Largo,
+                case 2:
+                    resultado = this.controlador.buscarArticulos(Articulo_.largo,
+                            Double.parseDouble(this.txtBuscar.getText()));
+                    if (resultado.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        this.lstArticulos.setListData(resultado.toArray());
+                    }
+                    break;
+                //Ancho,
+                case 3:
+                    resultado = this.controlador.buscarArticulos(Articulo_.ancho,
+                            Double.parseDouble(this.txtBuscar.getText()));
+                    if (resultado.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        this.lstArticulos.setListData(resultado.toArray());
+                    }
+                    break;
+                //"Diámetro",
+                case 4:
+                    resultado = this.controlador.buscarArticulos(Articulo_.diametro,
+                            Double.parseDouble(this.txtBuscar.getText()));
+                    if (resultado.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        this.lstArticulos.setListData(resultado.toArray());
+                    }
+                    break;
+                //"Tipo de Artículo"
+                case 5:
+                    resultado = this.controlador.buscarArticulos(Articulo_.tipo,
+                            (TipoArticulo)this.cmbxTipArt.getSelectedItem());
+                    if (resultado.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        this.lstArticulos.setListData(resultado.toArray());
+                    }
+                    break;
+                default:                
+            }
+        } catch (NumberFormatException numberFormatException) {
+        } catch (HeadlessException headlessException) {
         }
         
         
     }//GEN-LAST:event_btnBuscarActionPerformed
 
-    private void btnNuevoArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoArticuloActionPerformed
+    private void btnGuardarArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarArticuloActionPerformed
         // TODO add your handling code here:
         try {
             TipoArticulo ta;
             ta = (TipoArticulo) this.cmbxTipoArticulo.getSelectedItem();
-            /*Envase env;
+            if (this.lstArticulos.isSelectionEmpty()){
+                /*Envase env;
             env = (Envase) this.cmbxEnvase.getSelectedItem();*/
-            this.controlador.nuevoArticulo(this.txtDescripcion.getText(),
-                    Double.parseDouble(this.txtLargo.getText()),
-                    Double.parseDouble(this.txtAncho.getText()),
-                    Double.parseDouble(this.txtDiametro.getText()),
-                    //env,
-                    ta);
-            limpiar();
+                this.controlador.nuevoArticulo(this.txtDescripcion.getText().toUpperCase(),
+                        Double.parseDouble(this.txtLargo.getText()),
+                        Double.parseDouble(this.txtAncho.getText()),
+                        Double.parseDouble(this.txtDiametro.getText()),
+                        //env,
+                        ta);
+                limpiar();
+            } else {
+                Articulo art = (Articulo) this.lstArticulos.getSelectedValue();
+                this.controlador.editarArticulo(art, this.txtDescripcion.getText().toUpperCase(),
+                        Double.parseDouble(this.txtLargo.getText()),
+                        Double.parseDouble(this.txtAncho.getText()),
+                        Double.parseDouble(this.txtDiametro.getText()));
+                limpiar();
+            }
         } catch (NumberFormatException | HeadlessException numberFormatException) {
-            JOptionPane.showMessageDialog(null, Integer.toString(evt.hashCode()), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No es un Número", "Error", JOptionPane.ERROR_MESSAGE);
+            this.txtLargo.grabFocus();
         }catch (Exception usop){
             JOptionPane.showMessageDialog(null, "tipo articulo no creado.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_btnNuevoArticuloActionPerformed
+    }//GEN-LAST:event_btnGuardarArticuloActionPerformed
 
     private void cmbxTipoArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbxTipoArticuloActionPerformed
         // TODO add your handling code here:
@@ -368,27 +412,69 @@ public class VentanaArticulo extends javax.swing.JFrame {
         
     }//GEN-LAST:event_cmbxTipoArticuloActionPerformed
 
+    private void btnEliminArtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminArtActionPerformed
+        // TODO add your handling code here:
+        try {
+            Articulo articulo = (Articulo) this.lstArticulos.getSelectedValue();
+            if (articulo != null) {
+                this.controlador.eliminarArticulo(articulo);
+            }
+        } catch (Exception e) {
+            System.out.println("No cha, no se puede eliminar viteh!!!");
+        }
+        limpiar();
+    }//GEN-LAST:event_btnEliminArtActionPerformed
+
+    private void lstArticulosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstArticulosValueChanged
+        // TODO add your handling code here:
+        if (!this.lstArticulos.isSelectionEmpty()) {
+            Articulo a = (Articulo) this.lstArticulos.getSelectedValue();
+            this.lblID.setText(a.getIdArticulo().toString());
+            this.txtDescripcion.setText(a.getDescripcion());
+            this.txtLargo.setText(a.getLargo().toString());
+            this.txtAncho.setText(a.getAncho().toString());
+            this.txtDiametro.setText(a.getDiametro().toString());
+            this.cmbxTipoArticulo.setSelectedItem(a.getTipo());
+        }
+    }//GEN-LAST:event_lstArticulosValueChanged
+
+    private void cmbxCriterioBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbxCriterioBusquedaActionPerformed
+        // TODO add your handling code here:
+        if (this.cmbxCriterioBusqueda.getSelectedIndex() == 5){
+            this.cmbxTipArt.setVisible(true);
+            this.txtBuscar.setVisible(false);
+            //mosatrar los tipos de articulos en un combobox nuevo.
+            DefaultComboBoxModel modeloCombo;
+            modeloCombo = new DefaultComboBoxModel(this.controlador.listarTipoArticulo().toArray());
+            this.cmbxTipArt.setModel(modeloCombo);
+        }else{
+            this.txtBuscar.setVisible(true);
+            this.cmbxTipArt.setVisible(false);
+        }
+    }//GEN-LAST:event_cmbxCriterioBusquedaActionPerformed
+
 
     private void limpiar(){
-        this.lblIdArticulo.setText("");
+        this.txtBuscar.setVisible(true);
+        this.cmbxTipArt.setVisible(false);
+        //this.lblIdArticulo.setText("");
         this.txtDiametro.setText("");
         this.txtAncho.setText("");
         this.txtBuscar.setText("");
         this.txtDescripcion.setText("");
         this.txtLargo.setText("");
-        try {
-            DefaultComboBoxModel modeloCombo;
-            modeloCombo = new DefaultComboBoxModel(this.controlador.listarTipoArticulo().toArray());
-            this.cmbxTipoArticulo.setModel(modeloCombo);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Primero cree los tipos de artículos", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        DefaultComboBoxModel modeloCombo;
+        modeloCombo = new DefaultComboBoxModel(this.controlador.listarTipoArticulo().toArray());
+        this.cmbxTipoArticulo.setModel(modeloCombo);
+        this.lstArticulos.clearSelection();
     }
     //<editor-fold defaultstate="collapsed" desc="Elementos de la ventana">
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnNuevoArticulo;
+    private javax.swing.JButton btnEliminArt;
+    private javax.swing.JButton btnGuardarArticulo;
     private javax.swing.JComboBox<String> cmbxCriterioBusqueda;
+    private javax.swing.JComboBox cmbxTipArt;
     private javax.swing.JComboBox<String> cmbxTipoArticulo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
