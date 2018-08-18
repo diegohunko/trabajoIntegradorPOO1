@@ -306,6 +306,8 @@ public class Controlador {
             this.persistencia.confirmarTransaccion();
         } catch (Exception e) {
             this.persistencia.descartarTransaccion();
+            System.out.println("Error, en nuevo articulo.");
+            throw e;
         }
     }
 
