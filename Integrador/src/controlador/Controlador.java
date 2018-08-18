@@ -337,5 +337,28 @@ public class Controlador {
     public List listarArticulos(){
         return this.persistencia.buscarTodos(Articulo.class);
     }
+
+    public void eliminarArticulo(Articulo articulo) {
+        try {
+            this.persistencia.iniciarTransaccion();
+            this.persistencia.eliminar(articulo);
+            this.persistencia.confirmarTransaccion();
+        } catch (Exception e) {
+            this.persistencia.descartarTransaccion();
+            throw e;
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void editarArticulo(Articulo art, String toUpperCase,
+            double newLargo, double newAncho,
+            double newDiametro) {
+        this.persistencia.iniciarTransaccion();
+        art.setDescripcion(toUpperCase);
+        art.setLargo(newLargo);
+        art.setAncho(newAncho);
+        art.setDiametro(newDiametro);
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
