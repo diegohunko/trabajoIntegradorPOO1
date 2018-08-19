@@ -245,6 +245,12 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
         marcaTemporal = Calendar.getInstance();
         GregorianCalendar fp;
         Date fechaPedido;
+        fp = new GregorianCalendar(Integer.parseInt(this.cmbxAnio.getSelectedItem().toString()),
+                this.cmbxMes.getSelectedIndex(),
+                Integer.parseInt(this.cmbxDia.getSelectedItem().toString()));
+        fechaPedido = fp.getTime();
+        int totalEntregas;
+        totalEntregas = Integer.parseInt(this.txtTotalDeEntregas.getText());
         char periodicidad = 'x';
         try {
             switch (this.cmbxPeriodicidad.getSelectedItem().toString()){
@@ -269,13 +275,9 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
                 this.cmbxPeriodicidad.grabFocus();
                 return;
             }
-            fp = new GregorianCalendar(Integer.parseInt(this.cmbxAnio.getSelectedItem().toString()),
-                this.cmbxMes.getSelectedIndex(),
-                Integer.parseInt(this.cmbxDia.getSelectedItem().toString()));
-            fechaPedido = fp.getTime();
             codigo = this.controlador.nuevoPedido(this.txtCuilPropietario.getText(), 
                     fechaPedido, 
-                    Integer.parseInt(this.txtTotalDeEntregas.getText()),
+                    totalEntregas,
                     periodicidad,
                     marcaTemporal);
             if (codigo == 0x0L) {
@@ -295,8 +297,8 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
                 this.txtCuilPropietario.grabFocus();
             }else{
                 this.lblIdPedido.setText(Long.toString(codigo));
-                this.lstFechasEntregas.setListData(fechasDeEntrega(fp, 
-                    Integer.parseInt(this.txtTotalDeEntregas.getText()),
+                this.lstFechasEntregas.setListData(fechasDeEntrega(fp, codigo,
+                    totalEntregas,
                     periodicidad));
             }
                         
@@ -367,7 +369,7 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cmbxMesActionPerformed
 
-    private String[] fechasDeEntrega(GregorianCalendar primerFecha,
+    private String[] fechasDeEntrega(GregorianCalendar primerFecha, Long codigoPedido,
             int totEnt,
             char period){
         String[] aListFechas; 
@@ -377,7 +379,7 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
         Date d = primerFecha.getTime();
         DateFormat df = DateFormat.getDateInstance();
         aListFechas[0]= df.format(d);
-        this.controlador.nuevaEntrega(Long.parseLong(this.lblIdPedido.getText()), d);
+        this.controlador.nuevaEntrega(codigoPedido, d);
         switch (period){
             case 'M':
                 for (int i=1; i < totEnt; i++){
