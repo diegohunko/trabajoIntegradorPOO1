@@ -43,8 +43,8 @@ public class VentanaTipoArticulo extends javax.swing.JFrame {
         lblIDTipoArt = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtDescripcion = new javax.swing.JTextField();
+        btnGuardar = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
-        btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstTiposArt = new javax.swing.JList();
@@ -56,17 +56,33 @@ public class VentanaTipoArticulo extends javax.swing.JFrame {
 
         jLabel3.setText("Descripción");
 
-        btnNuevo.setText("Guardadlo");
+        btnGuardar.setText("Guardadlo");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+
+        btnNuevo.setText("Nuevo");
+        btnNuevo.setToolTipText("Limpia la caja de texto, la selección de la lista y coso");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNuevoActionPerformed(evt);
             }
         });
 
-        btnModificar.setText("Modificar");
-
         btnEliminar.setText("Eliminadlo");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
+        lstTiposArt.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstTiposArtValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(lstTiposArt);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -85,13 +101,13 @@ public class VentanaTipoArticulo extends javax.swing.JFrame {
                             .addComponent(txtDescripcion, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
                             .addComponent(lblIDTipoArt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnNuevo)
+                        .addComponent(btnGuardar)
                         .addGap(18, 18, 18)
-                        .addComponent(btnModificar)
+                        .addComponent(btnNuevo)
                         .addGap(18, 18, 18)
                         .addComponent(btnEliminar)))
                 .addGap(50, 50, 50)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -110,8 +126,8 @@ public class VentanaTipoArticulo extends javax.swing.JFrame {
                             .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(44, 44, 44)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnGuardar)
                             .addComponent(btnNuevo)
-                            .addComponent(btnModificar)
                             .addComponent(btnEliminar))))
                 .addContainerGap(254, Short.MAX_VALUE))
         );
@@ -119,29 +135,63 @@ public class VentanaTipoArticulo extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
         try {
-            if (!"".equals(this.txtDescripcion.getText())) {
-                this.controlador.nuevoTipoArticulo(this.txtDescripcion.getText().toUpperCase());
-                limpiar();
+            if (this.lstTiposArt.isSelectionEmpty()) {
+                if (!"".equals(this.txtDescripcion.getText())) {
+                    this.controlador.nuevoTipoArticulo(this.txtDescripcion.getText().toUpperCase());
+                    limpiar();
+                } else {
+                    System.out.println("Te está faltando la descripción viteh!!!!!!!!");
+                }
             } else {
-                System.out.println("Te está faltando la descripción viteh!!!!!!!!");
+                //editar? tipo articulo Handling code.
             }
         } catch (Exception e) {
         }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        limpiar();
     }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        try {
+            TipoArticulo ta = (TipoArticulo) this.lstTiposArt.getSelectedValue();
+            if (ta != null) {
+                this.controlador.eliminarTipoArticulo(ta);
+                limpiar();
+                //System.out.println(ta.toString());
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            limpiar();
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void lstTiposArtValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstTiposArtValueChanged
+        if (!this.lstTiposArt.isSelectionEmpty()) {
+            TipoArticulo ta = (TipoArticulo) this.lstTiposArt.getSelectedValue();
+            this.lblIDTipoArt.setText(ta.getIdTipoArticulo().toString());
+            //System.out.println("en lstCHVal id: " + ta.getIdTipoArticulo());
+            this.txtDescripcion.setText(ta.getDescripcion());
+        }
+    }//GEN-LAST:event_lstTiposArtValueChanged
 
 
     private void limpiar(){
+        this.lstTiposArt.clearSelection();
         this.lblIDTipoArt.setText("");
         this.txtDescripcion.setText("");
+        this.txtDescripcion.grabFocus();
         this.lstTiposArt.setListData(this.controlador.listarTipoArticulo().toArray());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
