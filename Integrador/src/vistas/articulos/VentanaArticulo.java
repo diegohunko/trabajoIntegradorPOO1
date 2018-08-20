@@ -377,13 +377,19 @@ public class VentanaArticulo extends javax.swing.JFrame {
             if (this.lstArticulos.isSelectionEmpty()){
                 /*Envase env;
             env = (Envase) this.cmbxEnvase.getSelectedItem();*/
-                this.controlador.nuevoArticulo(this.txtDescripcion.getText().toUpperCase(),
-                        Double.parseDouble(this.txtLargo.getText()),
-                        Double.parseDouble(this.txtAncho.getText()),
-                        Double.parseDouble(this.txtDiametro.getText()),
-                        //env,
-                        ta);
-                limpiar();
+                
+                if (!"".equals(this.txtDescripcion.getText())) {
+                    this.controlador.nuevoArticulo(this.txtDescripcion.getText().toUpperCase(),
+                            Double.parseDouble(this.txtLargo.getText()),
+                            Double.parseDouble(this.txtAncho.getText()),
+                            Double.parseDouble(this.txtDiametro.getText()),
+                            //env,
+                            ta);
+                    limpiar();
+                } else {
+                    System.out.println("Te olvidaste poner una descripción al ertículo. :@");
+                }
+                
             } else {
                 Articulo art = (Articulo) this.lstArticulos.getSelectedValue();
                 this.controlador.editarArticulo(art, this.txtDescripcion.getText().toUpperCase(),
