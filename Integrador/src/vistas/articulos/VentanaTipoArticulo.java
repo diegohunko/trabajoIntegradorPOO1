@@ -122,8 +122,12 @@ public class VentanaTipoArticulo extends javax.swing.JFrame {
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
         try {
-            this.controlador.nuevoTipoArticulo(this.txtDescripcion.getText().toUpperCase());
-            limpiar();
+            if (!"".equals(this.txtDescripcion.getText())) {
+                this.controlador.nuevoTipoArticulo(this.txtDescripcion.getText().toUpperCase());
+                limpiar();
+            } else {
+                System.out.println("Te está faltando la descripción viteh!!!!!!!!");
+            }
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnNuevoActionPerformed
