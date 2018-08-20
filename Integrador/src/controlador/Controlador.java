@@ -4,9 +4,13 @@
  * and open the template in the editor.
  */
 package controlador;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.NoResultException;
 import javax.persistence.metamodel.SingularAttribute;
 //import javax.swing.JOptionPane;
@@ -26,12 +30,16 @@ public class Controlador {
     //Controlador de clientes
 
     /**
-     *
-     * @param criterioBusqueda
-     * @return
+     * Busca un cliente dado su ID.
+     * @param criterioBusqueda : ID del cliente a buscar.
+     * @return Cliente.
      */
     public Cliente buscarCliente(Object criterioBusqueda){
         return this.persistencia.buscar(Cliente.class, criterioBusqueda);
+    }
+    
+    public Cliente buscarClienteCUIT(String cuit){
+        return this.persistencia.buscarClientePorCuit(cuit);
     }
     
     /**
@@ -151,6 +159,16 @@ public class Controlador {
     
     public List mostrarPedidos(){
         return this.persistencia.vistaPedido();
+    }
+    
+    public List buscarPedidos(Object metaModelo, Object criterio){
+        try{
+            return this.persistencia.buscarPorClaseCampoYCriterio(Pedido.class, (SingularAttribute)metaModelo, criterio);
+        }catch(Exception e){
+            
+        }
+            
+       throw new UnsupportedOperationException("Not supported yet."); 
     }
     
     //Controlador de Entrega
@@ -358,4 +376,18 @@ public class Controlador {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    /**
+     * Convierte un String a Date.
+     * @param fecha cadena de texto a ser convertida en fecha
+     * @return Date
+     * @throws ParseException
+     */
+    public Date dateParser(String fecha) throws ParseException{
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            return sdf.parse(fecha);
+        } catch (ParseException ex) {
+            throw ex;
+        }
+    }
 }
