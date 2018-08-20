@@ -8,6 +8,7 @@ import controlador.Controlador;
 import java.text.ParseException;
 import java.util.Date;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import modelo.Cliente;
 import modelo.Pedido_;
 /**
@@ -64,6 +65,11 @@ public class ABMPedidos extends javax.swing.JFrame {
         cmbxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "CUIT", "Fecha" }));
 
         btnBorrar.setText("Borar?");
+        btnBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBorrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -141,6 +147,11 @@ public class ABMPedidos extends javax.swing.JFrame {
         this.previo.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_formWindowClosing
+
+    private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null, "Pronto...", "Error", JOptionPane.ERROR_MESSAGE);
+    }//GEN-LAST:event_btnBorrarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
