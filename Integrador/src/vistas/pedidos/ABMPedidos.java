@@ -5,7 +5,11 @@
  */
 package vistas.pedidos;
 import controlador.Controlador;
+import java.text.ParseException;
+import java.util.Date;
 import javax.swing.JFrame;
+import modelo.Cliente;
+import modelo.Pedido_;
 /**
  *
  * @author Acer
@@ -33,13 +37,15 @@ public class ABMPedidos extends javax.swing.JFrame {
     private void initComponents() {
 
         btnMostrarPedidos = new javax.swing.JButton();
-        jToggleButton1 = new javax.swing.JToggleButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstVistaPedidos = new javax.swing.JList();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cmbxCriterio = new javax.swing.JComboBox<>();
         txtCriterio = new javax.swing.JTextField();
+        btnBorrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Buscar la felicidad!!! o pedidos.");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -53,47 +59,45 @@ public class ABMPedidos extends javax.swing.JFrame {
             }
         });
 
-        jToggleButton1.setText("Borrar");
-
         jScrollPane1.setViewportView(lstVistaPedidos);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "CUIT", "Fecha" }));
+        cmbxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "CUIT", "Fecha" }));
+
+        btnBorrar.setText("Borar?");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 16, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 505, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmbxCriterio, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)
                         .addComponent(txtCriterio, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 160, Short.MAX_VALUE)
                         .addComponent(btnMostrarPedidos)
-                        .addGap(18, 18, 18)
-                        .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28))))
+                        .addGap(16, 16, 16)
+                        .addComponent(btnBorrar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(44, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnMostrarPedidos)
-                        .addComponent(jToggleButton1))
+                        .addComponent(btnBorrar))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtCriterio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(84, 84, 84)
+                        .addComponent(cmbxCriterio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pack();
@@ -101,7 +105,35 @@ public class ABMPedidos extends javax.swing.JFrame {
 
     private void btnMostrarPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarPedidosActionPerformed
         // TODO add your handling code here:
-        this.lstVistaPedidos.setListData(this.contro.mostrarPedidos().toArray());
+        //
+        try{
+            
+            if (!"".equals(this.txtCriterio.getText())) {
+                switch (this.cmbxCriterio.getSelectedIndex()) {
+                    //ID Pedido
+                    case 0:
+                        //do something
+                        this.lstVistaPedidos.setListData(this.contro.buscarPedidos(Pedido_.idPedido, Long.parseLong(this.txtCriterio.getText())).toArray());
+                        break;
+                    //CUIT propietario
+                    case 1:
+                        Cliente propietario;
+                        propietario = this.contro.buscarClienteCUIT(this.txtCriterio.getText());
+                        this.lstVistaPedidos.setListData(this.contro.buscarPedidos(Pedido_.propietario, propietario).toArray());
+                        break;
+                    //FECHA PRIMER ENTREGA
+                    case 2:
+                        
+                        Date d = this.contro.dateParser(this.txtCriterio.getText());
+                        this.lstVistaPedidos.setListData(this.contro.buscarPedidos(Pedido_.entregaInicial, d).toArray());
+                        break;
+                }
+            } else {
+                this.lstVistaPedidos.setListData(this.contro.mostrarPedidos().toArray());
+            }
+        }catch (ParseException | NumberFormatException e){
+            System.out.println("Hubo un error, pero no te preocupes. :D");
+        }
     }//GEN-LAST:event_btnMostrarPedidosActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -112,10 +144,10 @@ public class ABMPedidos extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBorrar;
     private javax.swing.JButton btnMostrarPedidos;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> cmbxCriterio;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JList lstVistaPedidos;
     private javax.swing.JTextField txtCriterio;
     // End of variables declaration//GEN-END:variables
