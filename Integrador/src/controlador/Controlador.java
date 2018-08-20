@@ -275,6 +275,8 @@ public class Controlador {
             Envase nuevoEnvase;
             nuevoEnvase = new Envase(capacidad, tipoArticulo);
             this.persistencia.insertar(nuevoEnvase);
+            tipoArticulo.agregarEnvase(nuevoEnvase);
+            this.persistencia.modificar(tipoArticulo);
             this.persistencia.confirmarTransaccion();
         } catch (Exception e){
             this.persistencia.descartarTransaccion();
@@ -388,6 +390,16 @@ public class Controlador {
             return sdf.parse(fecha);
         } catch (ParseException ex) {
             throw ex;
+        }
+    }
+
+    public void eliminarTipoArticulo(TipoArticulo ta) {
+        if (ta.getArticulo().isEmpty() && ta.getEnvases().isEmpty()) {
+            this.persistencia.iniciarTransaccion();
+            this.persistencia.eliminar(ta);
+            this.persistencia.confirmarTransaccion();
+        }else{
+            throw new UnsupportedOperationException("No se pudo eliminar, hay elementos relacionados.");
         }
     }
 }
