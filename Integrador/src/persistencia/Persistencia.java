@@ -244,6 +244,32 @@ public class Persistencia  {
                         this.buscar(Pedido.class, idPedido))));
         return em.createQuery(consulta).getSingleResult();
     }
+    
+    /**
+     * Retorna una lista con todos los pedidos que tienen fecha de primer entrega
+     * igual y posterior a la fecha pasada como parámetro.
+     * @param fecha fecha desde la que se quiere buscar.
+     * @return Lista de los pedidos que concuerdan.
+     */
+    public List buscarPostFecha(Date fecha){
+        CriteriaBuilder builder = this.em.getCriteriaBuilder();
+        CriteriaQuery<Pedido> consulta = builder.createQuery(Pedido.class);
+        Root<Pedido> tablaPedidos = consulta.from(Pedido.class);
+        
+        consulta.where(builder.or(
+                builder.equal(tablaPedidos.get(Pedido_.entregaInicial),fecha), //fecha de primer entrega sea igual a la fecha pasada
+                builder.isTrue(fecha.after(tablaPedidos.get(Pedido_.entregaInicial)))));
+        return em.createQuery(consulta).getResultList();
+    }
+    
+    /*public List buscarEntreFechas(Date desde, Date hasta){
+    CriteriaBuilder builder = this.em.getCriteriaBuilder();
+    CriteriaQuery<Pedido> consulta = builder.createQuery(Pedido.class);
+    Root<Pedido> tablaPedidos = consulta.from(Pedido.class);
+    
+    consulta.where(builder.between(tablaPedidos.fetch(Pedido_.entregaInicial), desde, hasta));
+    return em.createQuery(consulta).getResultList();
+    }*/
 }
 
 
