@@ -428,6 +428,7 @@ public class VentanaArticulo extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println("No cha, no se puede eliminar viteh!!!");
         }
+        
         limpiar();
     }//GEN-LAST:event_btnEliminArtActionPerformed
 
@@ -463,7 +464,7 @@ public class VentanaArticulo extends javax.swing.JFrame {
     private void limpiar(){
         this.txtBuscar.setVisible(true);
         this.cmbxTipArt.setVisible(false);
-        //this.lblIdArticulo.setText("");
+        this.lblID.setText("");
         this.txtDiametro.setText("");
         this.txtAncho.setText("");
         this.txtBuscar.setText("");
@@ -472,6 +473,8 @@ public class VentanaArticulo extends javax.swing.JFrame {
         DefaultComboBoxModel modeloCombo;
         modeloCombo = new DefaultComboBoxModel(this.controlador.listarTipoArticulo().toArray());
         this.cmbxTipoArticulo.setModel(modeloCombo);
+        DefaultListModel modeloLista = new DefaultListModel();
+        this.lstArticulos.setModel(modeloLista);
         this.lstArticulos.clearSelection();
     }
     //<editor-fold defaultstate="collapsed" desc="Elementos de la ventana">
