@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import modelo.Cliente;
+import modelo.Pedido;
 import modelo.Pedido_;
 /**
  *
@@ -60,6 +61,11 @@ public class ABMPedidos extends javax.swing.JFrame {
             }
         });
 
+        lstVistaPedidos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstVistaPedidosValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(lstVistaPedidos);
 
         cmbxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "CUIT", "Fecha" }));
@@ -152,6 +158,15 @@ public class ABMPedidos extends javax.swing.JFrame {
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null, "Pronto...", "Error", JOptionPane.ERROR_MESSAGE);
     }//GEN-LAST:event_btnBorrarActionPerformed
+
+    private void lstVistaPedidosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstVistaPedidosValueChanged
+        // Cuando se hace click en un resultado, se abre una ventana para poder ver
+        // las entregas que dorresponden a ese pedido.
+        if (!this.lstVistaPedidos.isSelectionEmpty()){
+            Pedido unPedido = (Pedido) this.lstVistaPedidos.getSelectedValue();
+            
+        }
+    }//GEN-LAST:event_lstVistaPedidosValueChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
