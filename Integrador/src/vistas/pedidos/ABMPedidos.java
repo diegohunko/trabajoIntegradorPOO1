@@ -164,7 +164,9 @@ public class ABMPedidos extends javax.swing.JFrame {
         // las entregas que dorresponden a ese pedido.
         if (!this.lstVistaPedidos.isSelectionEmpty()){
             Pedido unPedido = (Pedido) this.lstVistaPedidos.getSelectedValue();
-            
+            VentanaNuevoPedido vnp;
+            vnp = new VentanaNuevoPedido(this.contro, this, unPedido);
+            vnp.setVisible(true);
         }
     }//GEN-LAST:event_lstVistaPedidosValueChanged
 

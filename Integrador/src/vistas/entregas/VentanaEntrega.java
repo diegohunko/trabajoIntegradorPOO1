@@ -48,6 +48,24 @@ public class VentanaEntrega extends javax.swing.JFrame {
         this.lblFechaEntrega.setText(s);
         this.lblNroPedido.setText(this.pedido.getIdPedido().toString());
     }
+    
+    public VentanaEntrega(Controlador c, JFrame p, Pedido pedido, Entrega entrega){
+        this.fechaEntrega = null;
+        this.controlador = c;
+        this.previo = p;
+        this.pedido = pedido;
+        this.entrega = entrega;
+        initComponents();
+        //COMPLETAR LOS ELEMENTOS DE LA VENTANA.
+        //Establecer el id de la entrega en la etiqueta.
+        this.lblIDentrega.setText(this.entrega.getIdEntrega().toString());
+        DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
+        String s = df.format(this.entrega.getFechaEntrega());
+        this.lblFechaEntrega.setText(s);
+        this.lblNroPedido.setText(this.pedido.getIdPedido().toString());
+        this.lstDetalle.setListData(this.controlador.listarDetalleEntrega(entrega).toArray());
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

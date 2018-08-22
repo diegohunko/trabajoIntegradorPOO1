@@ -14,6 +14,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import vistas.entregas.VentanaEntrega;
 import modelo.Pedido;
+import modelo.Entrega;
 import java.util.Calendar;
 /**
  *
@@ -26,14 +27,41 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
      */
     private final JFrame previo;
     private final Controlador controlador;
+    private final Pedido pedidoExtranjero;
     
     
     public VentanaNuevoPedido(Controlador c, JFrame previo) {
         this.controlador = c;
         this.previo = previo;
+        this.pedidoExtranjero = null;
         initComponents();
         //this.lblIdPedido.setVisible(true);
         //this.lblIdPedido.setText("HOLA");
+    }
+    
+    public VentanaNuevoPedido(Controlador c, JFrame previo, Pedido p){
+        this.controlador = c;
+        this.previo = previo;
+        this.pedidoExtranjero = p;
+        
+        String titulo;
+        titulo = "Modificación de Pedido: " + Long.toString(this.pedidoExtranjero.getIdPedido());
+        initComponents();
+        //Cambiar el titulo de la ventana
+        this.setTitle(titulo);
+        
+        //Cargar los elementos de la ventana.
+        this.lblIdPedido.setText(Long.toString(this.pedidoExtranjero.getIdPedido()));
+        this.txtCuilPropietario.setText(this.pedidoExtranjero.getPropietario().getCuit());
+        this.txtTotalDeEntregas.setText(Integer.toString(this.pedidoExtranjero.getTotalDeEntregas()));
+        this.cmbxPeriodicidad.setSelectedItem(this.pedidoExtranjero.getPeriodicidad());
+        this.lstFechasEntregas.setListData(this.pedidoExtranjero.getEntregas().toArray());
+        //DESACTIVAR O DESHABILITAR LOSS COMPONENTES PARA QUE NO SEAN MODIFICADOS.
+        this.txtCuilPropietario.setEditable(false);
+        this.txtTotalDeEntregas.setEditable(false);
+        this.btnNuevoPedido.setEnabled(false);
+        this.cmbxPeriodicidad.setEnabled(false);
+        
     }
 
     /**
@@ -57,7 +85,7 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         txtCuilPropietario = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        lstFechasEntregas = new javax.swing.JList<>();
+        lstFechasEntregas = new javax.swing.JList();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -234,7 +262,7 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNuevoPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoPedidoActionPerformed
-
+        try {
         Long codigo = 0x0L;
         final Calendar marcaTemporal;
         marcaTemporal = Calendar.getInstance();
@@ -247,7 +275,7 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
         int totalEntregas;
         totalEntregas = Integer.parseInt(this.txtTotalDeEntregas.getText());
         char periodicidad = 'x';
-        try {
+        
             switch (this.cmbxPeriodicidad.getSelectedItem().toString()){
             case "Unica vez":
                 if (Integer.parseInt(this.txtTotalDeEntregas.getText()) != 1){
@@ -296,9 +324,9 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
                     totalEntregas,
                     periodicidad));
             }
-                        
+            this.btnNuevoPedido.setEnabled(false);
        }catch(Exception ex){
-           
+           JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
        }
     }//GEN-LAST:event_btnNuevoPedidoActionPerformed
 
@@ -311,19 +339,26 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
     private void lstFechasEntregasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstFechasEntregasMouseClicked
         // TODO add your handling code here:  
          //SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-        VentanaEntrega ve;
-        Pedido p;
-        try {
-            p = this.controlador.buscarPedido(Long.parseLong(this.lblIdPedido.getText()));
-            ve = new VentanaEntrega(this.controlador, this, 
-                    this.controlador.dateParser((String)this.lstFechasEntregas.getSelectedValue()),
-                    p);
-            
-            ve.setVisible(true);
-        } catch (ParseException ex) {
-            JOptionPane.showMessageDialog(null, "No se pudo Parsear la fecha =(", "Error", JOptionPane.ERROR_MESSAGE);
-        }catch (NumberFormatException ex){
-            
+        if (this.pedidoExtranjero == null) {
+            VentanaEntrega ve;
+            Pedido p;
+            try {
+                p = this.controlador.buscarPedido(Long.parseLong(this.lblIdPedido.getText()));
+                ve = new VentanaEntrega(this.controlador, this,
+                        this.controlador.dateParser((String) this.lstFechasEntregas.getSelectedValue()),
+                        p);
+                
+                ve.setVisible(true);
+            } catch (ParseException ex) {
+                JOptionPane.showMessageDialog(null, "No se pudo Parsear la fecha =(", "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (NumberFormatException ex) {
+                
+            }
+        } else {
+            Entrega unaEntrega = (Entrega) this.lstFechasEntregas.getSelectedValue();
+            VentanaEntrega ve1;
+            ve1 = new VentanaEntrega(this.controlador, this, this.pedidoExtranjero, unaEntrega);
+            ve1.setVisible(true);
         }
     }//GEN-LAST:event_lstFechasEntregasMouseClicked
 
@@ -383,7 +418,7 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
                     primerFecha.add(GregorianCalendar.DATE, 30);
                     d = primerFecha.getTime();
                     aListFechas[i] = df.format(d);
-                    this.controlador.nuevaEntrega(Long.parseLong(this.lblIdPedido.getText()), d);
+                    this.controlador.nuevaEntrega(codigoPedido, d);
                 }
                 break;
             case 'S':
@@ -391,7 +426,7 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
                     primerFecha.add(GregorianCalendar.DATE, 7);
                     d = primerFecha.getTime();
                     aListFechas[i] = df.format(d);
-                    this.controlador.nuevaEntrega(Long.parseLong(this.lblIdPedido.getText()), d);
+                    this.controlador.nuevaEntrega(codigoPedido, d);
                 }
                 break;
             case 'U':
@@ -429,7 +464,7 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblIdPedido;
-    private javax.swing.JList<String> lstFechasEntregas;
+    private javax.swing.JList lstFechasEntregas;
     private javax.swing.JTextField txtCuilPropietario;
     private javax.swing.JTextField txtTotalDeEntregas;
     // End of variables declaration//GEN-END:variables
