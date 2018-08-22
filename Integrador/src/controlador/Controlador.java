@@ -9,8 +9,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.NoResultException;
 import javax.persistence.metamodel.SingularAttribute;
 //import javax.swing.JOptionPane;
@@ -199,7 +197,7 @@ public class Controlador {
             this.persistencia.insertar(unaEntrega);
             //Agregar la entrega al array de netregas del Pedido.
             unPedido.agregarEntrega(unaEntrega);
-            this.persistencia.refrescar(unPedido);
+            this.persistencia.modificar(unPedido);
             this.persistencia.confirmarTransaccion();
             //return unaEntrega;
         }catch(Exception ex){
@@ -253,7 +251,7 @@ public class Controlador {
             //Agregamos la linea a la entrega
             entrega.agregarLineaDetalle(unaLinea);
             //actualizar la tabla entregas
-            this.persistencia.refrescar(entrega);
+            this.persistencia.modificar(entrega);
             this.persistencia.confirmarTransaccion();
         }catch(Exception ex){
             this.persistencia.descartarTransaccion();
@@ -375,11 +373,11 @@ public class Controlador {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void editarArticulo(Articulo art, String toUpperCase,
+    public void editarArticulo(Articulo art, String newDescripcion,
             double newLargo, double newAncho,
             double newDiametro) {
         this.persistencia.iniciarTransaccion();
-        art.setDescripcion(toUpperCase);
+        art.setDescripcion(newDescripcion);
         art.setLargo(newLargo);
         art.setAncho(newAncho);
         art.setDiametro(newDiametro);
