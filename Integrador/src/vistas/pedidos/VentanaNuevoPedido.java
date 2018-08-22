@@ -6,20 +6,15 @@
 package vistas.pedidos;
 
 import controlador.Controlador;
-import java.awt.HeadlessException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.text.DateFormat;
 import javax.swing.JFrame;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import vistas.entregas.VentanaEntrega;
 import modelo.Pedido;
 import java.util.Calendar;
-import modelo.Entrega;
 /**
  *
  * @author Diego Raul Fernandez
