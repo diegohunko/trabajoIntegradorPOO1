@@ -94,7 +94,15 @@ public class Controlador {
         }
     }
     
-    public void eliminarCliente(){
+    public void eliminarCliente(Cliente c) throws Exception{
+        if (c.getPedidos().isEmpty()){
+            this.persistencia.iniciarTransaccion();
+            this.persistencia.eliminar(c);
+            this.persistencia.confirmarTransaccion();
+        } else {
+            throw new Exception("El cliente aún tiene pedidos");
+            
+        }
         
     }
     
