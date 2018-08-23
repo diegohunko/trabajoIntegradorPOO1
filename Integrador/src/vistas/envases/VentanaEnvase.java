@@ -47,7 +47,8 @@ public class VentanaEnvase extends javax.swing.JFrame {
         cmbxTipoArticulo = new javax.swing.JComboBox<>();
         btnNuevoEnvase = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        lstEnvases = new javax.swing.JList<>();
+        lstEnvases = new javax.swing.JList();
+        btnEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Envases");
@@ -71,7 +72,19 @@ public class VentanaEnvase extends javax.swing.JFrame {
         });
 
         lstEnvases.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lstEnvases.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstEnvasesValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(lstEnvases);
+
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -94,12 +107,14 @@ public class VentanaEnvase extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                         .addComponent(cmbxTipoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnNuevoEnvase)))
-                .addGap(185, 185, 185))
+                .addGap(18, 18, 18)
+                .addComponent(btnEliminar)
+                .addGap(94, 94, 94))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -122,7 +137,9 @@ public class VentanaEnvase extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(cmbxTipoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(btnNuevoEnvase)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnNuevoEnvase)
+                    .addComponent(btnEliminar))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(21, Short.MAX_VALUE))
@@ -133,20 +150,45 @@ public class VentanaEnvase extends javax.swing.JFrame {
 
     private void btnNuevoEnvaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoEnvaseActionPerformed
         // TODO add your handling code here:
-        TipoArticulo ta;
-        ta = (TipoArticulo) this.cmbxTipoArticulo.getSelectedItem();
-        if (ta != null){
-            this.controlador.agregarNuevoEnvase(Double.parseDouble(this.txtCapacidad.getText()),
-                ta);
-            /*Envase enva;
+        if (this.lstEnvases.isSelectionEmpty()) {
+            TipoArticulo ta;
+            ta = (TipoArticulo) this.cmbxTipoArticulo.getSelectedItem();
+            if (!"".equals(this.txtCapacidad.getText()) && ta != null)  {
+                this.controlador.agregarNuevoEnvase(Double.parseDouble(this.txtCapacidad.getText()),
+                        ta);
+                /*Envase enva;
             enva = (Envase) this.controlador.buscarEnvaseCapacidadTipo(Double.parseDouble(this.txtCapacidad.getText()), ta);
-            */limpiar();
-        }else{
-            JOptionPane.showMessageDialog(null, "DEBE seleccionar el tipo de artículo.", "Error", JOptionPane.ERROR_MESSAGE);
-            this.cmbxTipoArticulo.grabFocus();
+                 */
+                limpiar();
+            } else {
+                JOptionPane.showMessageDialog(null, "DEBE seleccionar el tipo de artículo.", "Error", JOptionPane.ERROR_MESSAGE);
+                this.cmbxTipoArticulo.grabFocus();
+            }
+        } else {
+            limpiar();
         }
         
     }//GEN-LAST:event_btnNuevoEnvaseActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        if (!this.lstEnvases.isSelectionEmpty()){
+            Envase viejo = (Envase) this.lstEnvases.getSelectedValue();
+            this.controlador.eliminarEnvase(viejo);
+            limpiar();
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void lstEnvasesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstEnvasesValueChanged
+        // TODO add your handling code here:
+        if (!this.lstEnvases.isSelectionEmpty()) {
+            Envase ta = (Envase) this.lstEnvases.getSelectedValue();
+            this.lblIdEnvase.setText(ta.getIdEnvase().toString());
+            //System.out.println("en lstCHVal id: " + ta.getIdTipoArticulo());
+            this.txtCapacidad.setText(ta.getCapacidad().toString());
+            this.cmbxTipoArticulo.setSelectedItem(ta.getTipoArticulo());
+        }
+    }//GEN-LAST:event_lstEnvasesValueChanged
 
 
     private void limpiar(){
@@ -156,9 +198,12 @@ public class VentanaEnvase extends javax.swing.JFrame {
         modeloCombo = new DefaultComboBoxModel(this.controlador.listarTipoArticulo().toArray());
         this.cmbxTipoArticulo.setModel(modeloCombo);
         this.cmbxTipoArticulo.setSelectedIndex(-1);
+        this.lstEnvases.setListData(this.controlador.listarEnvases().toArray());
+        this.lstEnvases.clearSelection();
     }
     // <editor-fold defaultstate="collapsed" desc="Componentes de la ventana">
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnNuevoEnvase;
     private javax.swing.JComboBox<String> cmbxTipoArticulo;
     private javax.swing.JLabel jLabel1;
@@ -166,7 +211,7 @@ public class VentanaEnvase extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblIdEnvase;
-    private javax.swing.JList<String> lstEnvases;
+    private javax.swing.JList lstEnvases;
     private javax.swing.JTextField txtCapacidad;
     // End of variables declaration//GEN-END:variables
     // </editor-fold>
