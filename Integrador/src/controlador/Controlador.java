@@ -425,4 +425,14 @@ public class Controlador {
             throw new UnsupportedOperationException("No se pudo eliminar, hay elementos relacionados.");
         }
     }
+
+    public List listarEnvases() {
+        return this.persistencia.buscarTodosOrdenadosPor(Envase.class, Envase_.idEnvase);
+    }
+    
+    public void eliminarEnvase(Envase envaseNoDeseado){
+        this.persistencia.iniciarTransaccion();
+        this.persistencia.eliminar(envaseNoDeseado);
+        this.persistencia.confirmarTransaccion();
+    }
 }
