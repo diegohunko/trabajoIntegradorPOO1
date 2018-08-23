@@ -258,6 +258,20 @@ public class Controlador {
         }
     }
     
+    public void eliminarLinea(Linea linea) {
+        try {
+            Entrega entregaOrig = linea.getEntrega();
+            this.persistencia.iniciarTransaccion();
+            entregaOrig.quitarLineaDetalle(linea);
+            this.persistencia.modificar(entregaOrig);
+            this.persistencia.eliminar(linea);
+            this.persistencia.confirmarTransaccion();
+        } catch (Exception e) {
+            throw e;
+        }
+        
+    }
+    
     /**
      * Devuelve el detalle de una entrega.
      * @param entrega Entrega de la que se quiere recuperar el detalle.
@@ -435,4 +449,6 @@ public class Controlador {
         this.persistencia.eliminar(envaseNoDeseado);
         this.persistencia.confirmarTransaccion();
     }
+
+    
 }

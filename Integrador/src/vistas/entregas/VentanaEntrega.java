@@ -14,6 +14,7 @@ import javax.swing.table.TableModel;
 import modelo.Articulo;
 import modelo.Entrega;
 import modelo.Envase;
+import modelo.Linea;
 import modelo.Pedido;
 /**
  *
@@ -91,6 +92,7 @@ public class VentanaEntrega extends javax.swing.JFrame {
         lblIDentrega = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstDetalle = new javax.swing.JList();
+        btnEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("CONFIGURAR ENTREGA");
@@ -110,7 +112,7 @@ public class VentanaEntrega extends javax.swing.JFrame {
 
         jLabel4.setText("Fecha");
 
-        btnAgregarArt.setText("Agregar articulo");
+        btnAgregarArt.setText("Agregar");
         btnAgregarArt.setName("BotonBuscar"); // NOI18N
         btnAgregarArt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -135,7 +137,19 @@ public class VentanaEntrega extends javax.swing.JFrame {
         lblIDentrega.setText("- Id Entrega -");
 
         lstDetalle.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lstDetalle.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstDetalleValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(lstDetalle);
+
+        btnEliminar.setText("Quitar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -160,7 +174,6 @@ public class VentanaEntrega extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(53, 53, 53)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnAgregarArt)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -170,9 +183,15 @@ public class VentanaEntrega extends javax.swing.JFrame {
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(cmbxEnvase, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cmbxArticulo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addComponent(btnAgregarArt)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnEliminar))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(cmbxEnvase, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cmbxArticulo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(96, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
@@ -206,7 +225,9 @@ public class VentanaEntrega extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(cmbxEnvase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(btnAgregarArt)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAgregarArt)
+                    .addComponent(btnEliminar))
                 .addGap(30, 30, 30)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(126, Short.MAX_VALUE))
@@ -217,20 +238,22 @@ public class VentanaEntrega extends javax.swing.JFrame {
 
     private void btnAgregarArtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarArtActionPerformed
         // TODO add your handling code here:
-        try{
-            
-            this.controlador.agregarLineaEntrega(
-                    this.fechaEntrega,
-                    this.entrega,
-                    Integer.parseInt(this.txtCantidad.getText()),
-                //this.cmbxTipoArticulo.getSelectedItem(),
-                    (Articulo) this.cmbxArticulo.getSelectedItem(),
-                    (Envase) this.cmbxEnvase.getSelectedItem());
-            this.txtCantidad.setText("");
-            limpiar();
-        } catch (NumberFormatException e) {
-            this.txtCantidad.setText("");
-            this.txtCantidad.grabFocus();
+        if (this.lstDetalle.isSelectionEmpty()) {
+            try {
+                
+                this.controlador.agregarLineaEntrega(
+                        this.fechaEntrega,
+                        this.entrega,
+                        Integer.parseInt(this.txtCantidad.getText()),
+                        //this.cmbxTipoArticulo.getSelectedItem(),
+                        (Articulo) this.cmbxArticulo.getSelectedItem(),
+                        (Envase) this.cmbxEnvase.getSelectedItem());
+                this.txtCantidad.setText("");
+                limpiar();
+            } catch (NumberFormatException e) {
+                this.txtCantidad.setText("");
+                this.txtCantidad.grabFocus();
+            }
         }
         
         
@@ -251,6 +274,33 @@ public class VentanaEntrega extends javax.swing.JFrame {
         this.cmbxEnvase.setModel(modeloCombo);
     }//GEN-LAST:event_cmbxArticuloActionPerformed
 
+    private void lstDetalleValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstDetalleValueChanged
+        // TODO add your handling code here:
+        if (!this.lstDetalle.isSelectionEmpty()){
+            DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
+            String s = df.format(this.entrega.getFechaEntrega());
+            this.lblFechaEntrega.setText(s);
+            Linea linea = (Linea) this.lstDetalle.getSelectedValue();
+            this.lblIDentrega.setText(linea.getEntrega().getIdEntrega().toString());
+            this.lblNroPedido.setText(this.pedido.getIdPedido().toString());
+            this.cmbxArticulo.setSelectedItem(linea.getDescripcion());
+            this.cmbxEnvase.setSelectedItem(linea.getEnvase());
+            this.txtCantidad.setText(linea.getCantidad().toString());
+        }
+    }//GEN-LAST:event_lstDetalleValueChanged
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        if (!this.lstDetalle.isSelectionEmpty()){
+            try {
+                Linea linea = (Linea) this.lstDetalle.getSelectedValue();
+                this.controlador.eliminarLinea(linea);
+                limpiar();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
     private void limpiar(){
         /*this.lblFechaEntrega.setText("");
         this.lblIDentrega.setText("");
@@ -269,6 +319,7 @@ public class VentanaEntrega extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Elementos de la ventana">
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarArt;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JComboBox cmbxArticulo;
     private javax.swing.JComboBox cmbxEnvase;
     private javax.swing.JLabel jLabel1;
