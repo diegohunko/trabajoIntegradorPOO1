@@ -6,7 +6,6 @@
 package vistas.articulos;
 import controlador.Controlador;
 import java.awt.HeadlessException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 import modelo.Articulo;
@@ -402,7 +401,7 @@ public class VentanaArticulo extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "No es un Número", "Error", JOptionPane.ERROR_MESSAGE);
             this.txtLargo.grabFocus();
         }catch (Exception usop){
-            JOptionPane.showMessageDialog(null, "tipo articulo no creado.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, usop.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnGuardarArticuloActionPerformed
 
