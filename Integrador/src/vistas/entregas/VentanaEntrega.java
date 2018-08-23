@@ -50,7 +50,7 @@ public class VentanaEntrega extends javax.swing.JFrame {
     }
     
     public VentanaEntrega(Controlador c, JFrame p, Pedido pedido, Entrega entrega){
-        this.fechaEntrega = null;
+        this.fechaEntrega = entrega.getFechaEntrega();
         this.controlador = c;
         this.previo = p;
         this.pedido = pedido;

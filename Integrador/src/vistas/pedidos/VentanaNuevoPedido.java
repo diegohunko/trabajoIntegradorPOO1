@@ -56,11 +56,9 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
         this.txtTotalDeEntregas.setText(Integer.toString(this.pedidoExtranjero.getTotalDeEntregas()));
         this.cmbxPeriodicidad.setSelectedItem(this.pedidoExtranjero.getPeriodicidad());
         this.lstFechasEntregas.setListData(this.pedidoExtranjero.getEntregas().toArray());
+        this.txtFechaPrimerEntrega.setText(this.pedidoExtranjero.getEntregaInicial().toString());
         //DESACTIVAR O DESHABILITAR LOSS COMPONENTES PARA QUE NO SEAN MODIFICADOS.
-        this.txtCuilPropietario.setEditable(false);
-        this.txtTotalDeEntregas.setEditable(false);
-        this.btnNuevoPedido.setEnabled(false);
-        this.cmbxPeriodicidad.setEnabled(false);
+        freezeForm();
         
     }
 
@@ -74,9 +72,6 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        cmbxDia = new javax.swing.JComboBox<>();
-        cmbxMes = new javax.swing.JComboBox<>();
-        cmbxAnio = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         txtTotalDeEntregas = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -86,28 +81,15 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
         txtCuilPropietario = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstFechasEntregas = new javax.swing.JList();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         lblIdPedido = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        txtFechaPrimerEntrega = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("NUEVO PEDIDO");
 
         jLabel1.setText("CUIL/CUIT Cliente");
-
-        cmbxDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
-
-        cmbxMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" }));
-        cmbxMes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbxMesActionPerformed(evt);
-            }
-        });
-
-        cmbxAnio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2017", "2018" }));
 
         jLabel2.setText("Fecha primer entrega");
 
@@ -139,21 +121,15 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(lstFechasEntregas);
 
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("Día");
-
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("Mes");
-
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("Año");
-
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("Fechas de entrega para el pedido");
 
         lblIdPedido.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         jLabel9.setText("ID Pedido");
+
+        txtFechaPrimerEntrega.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtFechaPrimerEntrega.setToolTipText("dd/mm/aaaa");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -162,52 +138,43 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3))
-                        .addGap(227, 227, 227))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel3))
+                                .addGap(227, 227, 227))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                                         .addComponent(lblIdPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(11, 11, 11))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(cmbxMes, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                                                .addComponent(cmbxDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGap(18, 18, 18)
+                                        .addGap(23, 23, 23)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(cmbxAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                            .addComponent(txtCuilPropietario, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(cmbxPeriodicidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtTotalDeEntregas, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(23, 23, 23)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtTotalDeEntregas, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtCuilPropietario, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cmbxPeriodicidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap()
+                                .addComponent(txtFechaPrimerEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(194, 194, 194)
+                                .addComponent(btnNuevoPedido)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(194, 194, 194)
-                .addComponent(btnNuevoPedido)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,31 +182,18 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(67, 67, 67)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel7))
-                                .addGap(6, 6, 6)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(cmbxMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cmbxDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cmbxAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(17, 17, 17))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel9)
-                                    .addComponent(lblIdPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel1)
-                                    .addComponent(txtCuilPropietario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel2)
-                                .addGap(30, 30, 30)))
-                        .addGap(3, 3, 3)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(lblIdPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(txtCuilPropietario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(29, 29, 29)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(txtFechaPrimerEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(30, 30, 30)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(txtTotalDeEntregas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -263,19 +217,19 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
 
     private void btnNuevoPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoPedidoActionPerformed
         try {
-        Long codigo = 0x0L;
-        final Calendar marcaTemporal;
-        marcaTemporal = Calendar.getInstance();
-        GregorianCalendar fp;
-        Date fechaPedido;
-        fp = new GregorianCalendar(Integer.parseInt(this.cmbxAnio.getSelectedItem().toString()),
-                this.cmbxMes.getSelectedIndex(),
-                Integer.parseInt(this.cmbxDia.getSelectedItem().toString()));
-        fechaPedido = fp.getTime();
-        int totalEntregas;
-        totalEntregas = Integer.parseInt(this.txtTotalDeEntregas.getText());
-        char periodicidad = 'x';
-        
+            Long codigo = 0x0L;
+            final Calendar marcaTemporal;
+            marcaTemporal = Calendar.getInstance();
+            //GregorianCalendar fp;
+            Date fechaPedido;
+            /*fp = new GregorianCalendar(Integer.parseInt(this.cmbxAnio.getSelectedItem().toString()),
+            this.cmbxMes.getSelectedIndex(),
+            Integer.parseInt(this.cmbxDia.getSelectedItem().toString()));*/
+            fechaPedido = this.controlador.dateParser(this.txtFechaPrimerEntrega.getText());//fp.getTime();
+            int totalEntregas;
+            totalEntregas = Integer.parseInt(this.txtTotalDeEntregas.getText());
+            char periodicidad = 'x';
+            
             switch (this.cmbxPeriodicidad.getSelectedItem().toString()){
             case "Unica vez":
                 if (Integer.parseInt(this.txtTotalDeEntregas.getText()) != 1){
@@ -320,7 +274,7 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
                 this.txtCuilPropietario.grabFocus();
             }else{
                 this.lblIdPedido.setText(Long.toString(codigo));
-                this.lstFechasEntregas.setListData(fechasDeEntrega(fp, codigo,
+                this.lstFechasEntregas.setListData(fechasDeEntrega(fechaPedido, codigo,
                     totalEntregas,
                     periodicidad));
             }
@@ -362,71 +316,33 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_lstFechasEntregasMouseClicked
 
-    private void cmbxMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbxMesActionPerformed
-        // TODO add your handling code here:
-        int indice = this.cmbxMes.getSelectedIndex();
-        if (indice == 0 || indice == 2 || indice == 4 || indice == 6
-            || indice == 7 || indice == 9 || indice == 11){
-            //cambiar el modelo de cmbxDia para que tenga 31 dias
-            DefaultComboBoxModel modeloCombo;
-            modeloCombo = new DefaultComboBoxModel(new String[] { "01", "02",
-                "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13",
-                "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24",
-                "25", "26", "27", "28", "29", "30", "31" });
-        this.cmbxDia.setModel(modeloCombo);
-        this.cmbxDia.setSelectedIndex(0);
-        } else {
-            if (indice == 3 || indice == 5 || indice == 8 || indice == 10){
-                //cambiar el modelo de cmbxDia para que tenga 30 dias
-                DefaultComboBoxModel modeloCombo;
-                modeloCombo = new DefaultComboBoxModel(new String[] { "01", "02",
-                    "03", "04", "05", "06", "07", "08", "09", "10", "11", "12",
-                    "13", "14", "15", "16", "17", "18", "19", "20", "21", "22",
-                    "23", "24", "25", "26", "27", "28", "29", "30"});
-            this.cmbxDia.setModel(modeloCombo);
-            this.cmbxDia.setSelectedIndex(0);
-        } else {
-            if (indice == 1){
-                //cmabiar el modelo para que tenga 28 0 29 dias
-
-                DefaultComboBoxModel modeloCombo;
-                modeloCombo = new DefaultComboBoxModel(new String[] { "01",
-                    "02", "03", "04", "05", "06", "07", "08", "09", "10",
-                    "11", "12", "13", "14", "15", "16", "17", "18", "19",
-                    "20", "21", "22", "23", "24", "25", "26", "27", "28"});
-            this.cmbxDia.setModel(modeloCombo);
-            this.cmbxDia.setSelectedIndex(0);
-        }
-        }
-        }
-    }//GEN-LAST:event_cmbxMesActionPerformed
-
-    private String[] fechasDeEntrega(GregorianCalendar primerFecha, Long codigoPedido,
+    private String[] fechasDeEntrega(Date primerFecha, Long codigoPedido,
             int totEnt,
             char period){
         String[] aListFechas; 
         aListFechas = new String[totEnt];
         try{
         //GregorianCalendar primerFecha = new GregorianCalendar(anio, mes, dia);
-        Date d = primerFecha.getTime();
+        Calendar d = Calendar.getInstance();
+        d.setTime(primerFecha);
         DateFormat df = DateFormat.getDateInstance();
-        aListFechas[0]= df.format(d);
-        this.controlador.nuevaEntrega(codigoPedido, d);
+        aListFechas[0]= df.format(d.getTime());
+        this.controlador.nuevaEntrega(codigoPedido, d.getTime());
         switch (period){
             case 'M':
                 for (int i=1; i < totEnt; i++){
-                    primerFecha.add(GregorianCalendar.DATE, 30);
-                    d = primerFecha.getTime();
-                    aListFechas[i] = df.format(d);
-                    this.controlador.nuevaEntrega(codigoPedido, d);
+                    d.add(Calendar.DATE, 30);
+                    //d = primerFecha.getTime();
+                    aListFechas[i] = df.format(d.getTime());
+                    this.controlador.nuevaEntrega(codigoPedido, d.getTime());
                 }
                 break;
             case 'S':
                 for (int i=1; i < totEnt; i++){
-                    primerFecha.add(GregorianCalendar.DATE, 7);
-                    d = primerFecha.getTime();
-                    aListFechas[i] = df.format(d);
-                    this.controlador.nuevaEntrega(codigoPedido, d);
+                    d.add(Calendar.DATE, 7);
+                    //d = primerFecha.getTime();
+                    aListFechas[i] = df.format(d.getTime());
+                    this.controlador.nuevaEntrega(codigoPedido, d.getTime());
                 }
                 break;
             case 'U':
@@ -436,7 +352,8 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
 
         return aListFechas;
         }catch (Exception e){
-            return aListFechas;
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            throw e;//return aListFechas;
         }
     }
     
@@ -444,28 +361,31 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.previo.setVisible(true);
         this.dispose();
-    }                                  
+    }  
+    
+    private void freezeForm(){
+        this.txtCuilPropietario.setEditable(false);
+        this.txtTotalDeEntregas.setEditable(false);
+        this.btnNuevoPedido.setEnabled(false);
+        this.cmbxPeriodicidad.setEnabled(false);
+        this.txtFechaPrimerEntrega.setEditable(false);
+    }
 
      // <editor-fold defaultstate="collapsed" desc="Elementos de la ventana">
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnNuevoPedido;
-    private javax.swing.JComboBox<String> cmbxAnio;
-    private javax.swing.JComboBox<String> cmbxDia;
-    private javax.swing.JComboBox<String> cmbxMes;
     private javax.swing.JComboBox<String> cmbxPeriodicidad;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblIdPedido;
     private javax.swing.JList lstFechasEntregas;
     private javax.swing.JTextField txtCuilPropietario;
+    private javax.swing.JTextField txtFechaPrimerEntrega;
     private javax.swing.JTextField txtTotalDeEntregas;
     // End of variables declaration//GEN-END:variables
 
