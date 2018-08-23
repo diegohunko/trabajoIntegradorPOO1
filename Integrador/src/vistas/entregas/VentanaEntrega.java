@@ -63,8 +63,8 @@ public class VentanaEntrega extends javax.swing.JFrame {
         String s = df.format(this.entrega.getFechaEntrega());
         this.lblFechaEntrega.setText(s);
         this.lblNroPedido.setText(this.pedido.getIdPedido().toString());
-        this.lstDetalle.setListData(this.controlador.listarDetalleEntrega(entrega).toArray());
-        
+        //this.lstDetalle.setListData(this.controlador.listarDetalleEntrega(entrega).toArray());
+        limpiar();
     }
 
     /**

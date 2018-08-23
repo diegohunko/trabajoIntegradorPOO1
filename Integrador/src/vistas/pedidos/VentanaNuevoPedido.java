@@ -49,14 +49,16 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
         initComponents();
         //Cambiar el titulo de la ventana
         this.setTitle(titulo);
-        
+        //Damos formato a la fecha.
+        DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
+        String s = df.format(this.pedidoExtranjero.getEntregaInicial());
         //Cargar los elementos de la ventana.
         this.lblIdPedido.setText(Long.toString(this.pedidoExtranjero.getIdPedido()));
         this.txtCuilPropietario.setText(this.pedidoExtranjero.getPropietario().getCuit());
         this.txtTotalDeEntregas.setText(Integer.toString(this.pedidoExtranjero.getTotalDeEntregas()));
         this.cmbxPeriodicidad.setSelectedItem(this.pedidoExtranjero.getPeriodicidad());
         this.lstFechasEntregas.setListData(this.pedidoExtranjero.getEntregas().toArray());
-        this.txtFechaPrimerEntrega.setText(this.pedidoExtranjero.getEntregaInicial().toString());
+        this.txtFechaPrimerEntrega.setText(s);
         //DESACTIVAR O DESHABILITAR LOSS COMPONENTES PARA QUE NO SEAN MODIFICADOS.
         freezeForm();
         
@@ -226,59 +228,65 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
             this.cmbxMes.getSelectedIndex(),
             Integer.parseInt(this.cmbxDia.getSelectedItem().toString()));*/
             fechaPedido = this.controlador.dateParser(this.txtFechaPrimerEntrega.getText());//fp.getTime();
-            int totalEntregas;
-            totalEntregas = Integer.parseInt(this.txtTotalDeEntregas.getText());
-            char periodicidad = 'x';
             
-            switch (this.cmbxPeriodicidad.getSelectedItem().toString()){
-            case "Unica vez":
-                if (Integer.parseInt(this.txtTotalDeEntregas.getText()) != 1){
-                    JOptionPane.showMessageDialog(null, "Que hacemo??!!!"+
-                        " 1 entrega", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                } else {
-                    periodicidad = 'U';
+            if (fechaPedido.after(marcaTemporal.getTime())) {
+                int totalEntregas;
+                totalEntregas = Integer.parseInt(this.txtTotalDeEntregas.getText());
+                char periodicidad = 'x';
+                
+                switch (this.cmbxPeriodicidad.getSelectedItem().toString()) {
+                    case "Unica vez":
+                        if (Integer.parseInt(this.txtTotalDeEntregas.getText()) != 1) {
+                            JOptionPane.showMessageDialog(null, "Que hacemo??!!!"
+                                    + " 1 entrega", "Error", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        } else {
+                            periodicidad = 'U';
+                        }
+                        break;
+                    case "Semanalmente":
+                        periodicidad = 'S';
+                        break;
+                    case "Mensualmente":
+                        periodicidad = 'M';                        
+                        break;
+                    default:
+                        JOptionPane.showMessageDialog(null, "Seleccione periodicidad"
+                                + " de entrega", "Error", JOptionPane.ERROR_MESSAGE);
+                        this.cmbxPeriodicidad.grabFocus();
+                        return;
                 }
-                break;
-            case "Semanalmente":
-                periodicidad = 'S';
-                break;
-            case "Mensualmente":
-                periodicidad = 'M';         
-                break;
-            default:
-                JOptionPane.showMessageDialog(null, "Seleccione periodicidad"+
-                        " de entrega", "Error", JOptionPane.ERROR_MESSAGE);
-                this.cmbxPeriodicidad.grabFocus();
-                return;
-            }
-            codigo = this.controlador.nuevoPedido(this.txtCuilPropietario.getText(), 
-                    fechaPedido, 
-                    totalEntregas,
-                    periodicidad,
-                    marcaTemporal);
-            if (codigo == 0x0L) {
-                JOptionPane.showMessageDialog(null, "NULL", "Error", JOptionPane.ERROR_MESSAGE);
-                this.txtCuilPropietario.grabFocus();
-            }else if (codigo == 0xffffffffffffffffL){
-                JOptionPane.showMessageDialog(null, "Argumento Ilegal", "Error", JOptionPane.ERROR_MESSAGE);
-                this.txtCuilPropietario.grabFocus();
-            }else if(codigo == 0xfffffffffffffffeL){
-                JOptionPane.showMessageDialog(null, "no se encuentran resultados", "Error", JOptionPane.ERROR_MESSAGE);
-                this.txtCuilPropietario.grabFocus();
-            }else if(codigo == 0xfffffffffffffffdL){
-                JOptionPane.showMessageDialog(null, "Puntero a null", "Error", JOptionPane.ERROR_MESSAGE);
-                this.txtCuilPropietario.grabFocus();
-            }else if(codigo == 0xfffffffffffffffcL){
-                JOptionPane.showMessageDialog(null, "Error conocido solo por Dios", "Error", JOptionPane.ERROR_MESSAGE);
-                this.txtCuilPropietario.grabFocus();
+                codigo = this.controlador.nuevoPedido(this.txtCuilPropietario.getText(),
+                        fechaPedido,
+                        totalEntregas,
+                        periodicidad,
+                        marcaTemporal);
+                if (codigo == 0x0L) {
+                    JOptionPane.showMessageDialog(null, "NULL", "Error", JOptionPane.ERROR_MESSAGE);
+                    this.txtCuilPropietario.grabFocus();
+                } else if (codigo == 0xffffffffffffffffL) {
+                    JOptionPane.showMessageDialog(null, "Argumento Ilegal", "Error", JOptionPane.ERROR_MESSAGE);
+                    this.txtCuilPropietario.grabFocus();
+                } else if (codigo == 0xfffffffffffffffeL) {
+                    JOptionPane.showMessageDialog(null, "no se encuentran resultados", "Error", JOptionPane.ERROR_MESSAGE);
+                    this.txtCuilPropietario.grabFocus();
+                } else if (codigo == 0xfffffffffffffffdL) {
+                    JOptionPane.showMessageDialog(null, "Puntero a null", "Error", JOptionPane.ERROR_MESSAGE);
+                    this.txtCuilPropietario.grabFocus();
+                } else if (codigo == 0xfffffffffffffffcL) {
+                    JOptionPane.showMessageDialog(null, "Error conocido solo por Dios", "Error", JOptionPane.ERROR_MESSAGE);
+                    this.txtCuilPropietario.grabFocus();
+                } else {
+                    this.lblIdPedido.setText(Long.toString(codigo));
+                    this.lstFechasEntregas.setListData(fechasDeEntrega(fechaPedido, codigo,
+                            totalEntregas,
+                            periodicidad));
+                    this.btnNuevoPedido.setEnabled(false);
+                }
             }else{
-                this.lblIdPedido.setText(Long.toString(codigo));
-                this.lstFechasEntregas.setListData(fechasDeEntrega(fechaPedido, codigo,
-                    totalEntregas,
-                    periodicidad));
+                JOptionPane.showMessageDialog(null, "Fecha igual o anterior al día de hoy", "Error", JOptionPane.ERROR_MESSAGE);
             }
-            this.btnNuevoPedido.setEnabled(false);
+            
        }catch(Exception ex){
            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
        }

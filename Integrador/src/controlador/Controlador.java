@@ -258,6 +258,11 @@ public class Controlador {
         }
     }
     
+    /**
+     * Devuelve el detalle de una entrega.
+     * @param entrega Entrega de la que se quiere recuperar el detalle.
+     * @return Lista conteniendo el detalle de la entrega pasada como parámetro.
+     */
     public List listarDetalleEntrega(Entrega entrega){
         return this.persistencia.buscarPorClaseCampoYCriterio(Linea.class, Linea_.entrega, entrega);
     }
@@ -267,7 +272,7 @@ public class Controlador {
      * @return lista que contiene los tipos de artículo.
      */
     public List listarTipoArticulo(){
-        return this.persistencia.buscarTodosOrdenadosPor(TipoArticulo.class, TipoArticulo_.descripcion);
+        return this.persistencia.buscarTodosOrdenadosPor(TipoArticulo.class, TipoArticulo_.idTipoArticulo);
     }
     
     /**
@@ -300,9 +305,14 @@ public class Controlador {
         return this.persistencia.buscarEnvaseCapTipo(capacidad, ta);
     }
 
+    /**
+     * Busca los artículos según una columna de la tabla.
+     * @param metaModelo Se obtiene del metamodelo generado por EclipseLink
+     * @param criterio Lo que se quiere buscar
+     * @return List de artículos que coinciden con criterio.
+     */
     public List buscarArticulos(Object metaModelo, Object criterio) {
         return this.persistencia.buscarPorClaseCampoYCriterio(Articulo.class, (SingularAttribute)metaModelo, criterio);
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public void nuevoArticulo(
@@ -312,7 +322,6 @@ public class Controlador {
             Double diametro,
             //Envase envase,
             TipoArticulo tipo) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         try {
             this.persistencia.iniciarTransaccion();
             Articulo unArticulo;
@@ -381,6 +390,7 @@ public class Controlador {
         art.setLargo(newLargo);
         art.setAncho(newAncho);
         art.setDiametro(newDiametro);
+        
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
