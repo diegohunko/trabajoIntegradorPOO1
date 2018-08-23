@@ -385,13 +385,20 @@ public class Controlador {
     public void editarArticulo(Articulo art, String newDescripcion,
             double newLargo, double newAncho,
             double newDiametro) {
-        this.persistencia.iniciarTransaccion();
-        art.setDescripcion(newDescripcion);
-        art.setLargo(newLargo);
-        art.setAncho(newAncho);
-        art.setDiametro(newDiametro);
         
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            this.persistencia.iniciarTransaccion();
+            art.setDescripcion(newDescripcion);
+            art.setLargo(newLargo);
+            art.setAncho(newAncho);
+            art.setDiametro(newDiametro);
+            this.persistencia.modificar(art);
+            this.persistencia.confirmarTransaccion();
+        } catch (Exception ex) {
+            this.persistencia.descartarTransaccion();
+            throw ex;
+        }
+ //To change body of generated methods, choose Tools | Templates.
     }
     
     /**
