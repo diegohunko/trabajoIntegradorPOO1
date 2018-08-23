@@ -61,6 +61,7 @@ public class ABMPedidos extends javax.swing.JFrame {
             }
         });
 
+        lstVistaPedidos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         lstVistaPedidos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 lstVistaPedidosValueChanged(evt);

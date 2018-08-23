@@ -38,7 +38,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnVentPedidos = new javax.swing.JButton();
         btnVentEnvases = new javax.swing.JButton();
         btnVentArticulos = new javax.swing.JButton();
-        btnCerrar = new javax.swing.JButton();
         btnTipoArt = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -77,15 +76,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnCerrar.setText("Toquemos los tarros");
-        btnCerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.CROSSHAIR_CURSOR));
-        btnCerrar.setName("btnCerrarAplicacion"); // NOI18N
-        btnCerrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCerrarActionPerformed(evt);
-            }
-        });
-
         btnTipoArt.setText("Tipos de articulos");
         btnTipoArt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -97,10 +87,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCerrar)
-                .addGap(24, 24, 24))
             .addGroup(layout.createSequentialGroup()
                 .addGap(136, 136, 136)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -124,9 +110,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addComponent(btnVentArticulos)
                 .addGap(26, 26, 26)
                 .addComponent(btnTipoArt)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 128, Short.MAX_VALUE)
-                .addComponent(btnCerrar)
-                .addContainerGap())
+                .addContainerGap(162, Short.MAX_VALUE))
         );
 
         pack();
@@ -162,11 +146,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         vArt.setVisible(true);
     }//GEN-LAST:event_btnVentArticulosActionPerformed
 
-    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_btnCerrarActionPerformed
-
     private void btnTipoArtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTipoArtActionPerformed
         // TODO add your handling code here:
         VentanaTipoArticulo vTipArt = new VentanaTipoArticulo(this.controlador, this);
@@ -175,7 +154,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCerrar;
     private javax.swing.JButton btnTipoArt;
     private javax.swing.JButton btnVentArticulos;
     private javax.swing.JButton btnVentClientes;

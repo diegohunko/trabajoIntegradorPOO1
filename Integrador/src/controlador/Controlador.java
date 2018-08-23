@@ -28,12 +28,15 @@ public class Controlador {
     //Controlador de clientes
 
     /**
-     * Busca un cliente dado su ID.
-     * @param criterioBusqueda : ID del cliente a buscar.
-     * @return Cliente.
+     * retorna un monton de clientes.
+     * @param metaModelo donde se quiere buscar
+     * @param criterio lo que se desea buscar
+     * 
+     * @return clientes que coinciden con criterio.
      */
-    public Cliente buscarCliente(Object criterioBusqueda){
-        return this.persistencia.buscar(Cliente.class, criterioBusqueda);
+    public List buscarClientes(SingularAttribute metaModelo, Object criterio){
+        //return this.persistencia.buscar(Cliente.class, criterioBusqueda);
+        return this.persistencia.buscarPorClaseCampoYCriterio(Pedido.class, (SingularAttribute)metaModelo, criterio);
     }
     
     public Cliente buscarClienteCUIT(String cuit){
@@ -78,11 +81,11 @@ public class Controlador {
             this.persistencia.iniciarTransaccion();
             try{
                 Direccion nuevoDomicilio = c.getDomicilioFiscal();
-                nuevoDomicilio.setCalle(calle.toUpperCase());
-                nuevoDomicilio.setNumero(numero.toUpperCase());
-                nuevoDomicilio.setLocalidad(localidad.toUpperCase());
-                nuevoDomicilio.setProvincia(provincia.toUpperCase());
-                c.setRazonSocial(razonSocial.toUpperCase());
+                nuevoDomicilio.setCalle(calle);
+                nuevoDomicilio.setNumero(numero);
+                nuevoDomicilio.setLocalidad(localidad);
+                nuevoDomicilio.setProvincia(provincia);
+                c.setRazonSocial(razonSocial);
                 c.setDomicilioFiscal(nuevoDomicilio);
                 this.persistencia.modificar(c);
                 this.persistencia.confirmarTransaccion();
