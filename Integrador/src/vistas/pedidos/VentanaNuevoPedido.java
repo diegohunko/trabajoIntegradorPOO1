@@ -50,8 +50,9 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
         //Cambiar el titulo de la ventana
         this.setTitle(titulo);
         //Damos formato a la fecha.
-        DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
-        String s = df.format(this.pedidoExtranjero.getEntregaInicial());
+        //DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
+        String s;//df.format(this.pedidoExtranjero.getEntregaInicial());
+        s = this.controlador.dateFormater(this.pedidoExtranjero.getEntregaInicial());
         //Cargar los elementos de la ventana.
         this.lblIdPedido.setText(Long.toString(this.pedidoExtranjero.getIdPedido()));
         this.txtCuilPropietario.setText(this.pedidoExtranjero.getPropietario().getCuit());
@@ -333,15 +334,15 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
         //GregorianCalendar primerFecha = new GregorianCalendar(anio, mes, dia);
         Calendar d = Calendar.getInstance();
         d.setTime(primerFecha);
-        DateFormat df = DateFormat.getDateInstance();
-        aListFechas[0]= df.format(d.getTime());
+        //DateFormat df = DateFormat.getDateInstance();
+        aListFechas[0]= this.controlador.dateFormater(d.getTime());//df.format(d.getTime());
         this.controlador.nuevaEntrega(codigoPedido, d.getTime());
         switch (period){
             case 'M':
                 for (int i=1; i < totEnt; i++){
                     d.add(Calendar.DATE, 30);
                     //d = primerFecha.getTime();
-                    aListFechas[i] = df.format(d.getTime());
+                    aListFechas[i] = this.controlador.dateFormater(d.getTime());//df.format(d.getTime());
                     this.controlador.nuevaEntrega(codigoPedido, d.getTime());
                 }
                 break;
@@ -349,7 +350,7 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
                 for (int i=1; i < totEnt; i++){
                     d.add(Calendar.DATE, 7);
                     //d = primerFecha.getTime();
-                    aListFechas[i] = df.format(d.getTime());
+                    aListFechas[i] = this.controlador.dateFormater(d.getTime());
                     this.controlador.nuevaEntrega(codigoPedido, d.getTime());
                 }
                 break;

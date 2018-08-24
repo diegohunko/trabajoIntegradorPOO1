@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import modelo.Cliente;
 import modelo.Cliente_;
+import org.eclipse.persistence.exceptions.QueryException;
 
 /**
  *
@@ -128,7 +129,7 @@ public class VentanaCliente extends javax.swing.JFrame {
             }
         });
 
-        cmbxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "CUIT", "Razón Social", "calle" }));
+        cmbxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "CUIT", "Razón Social" }));
 
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -310,28 +311,28 @@ public class VentanaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        switch (this.cmbxCriterio.getSelectedIndex()) {
-                    //ID
-                    case 0:
-                        //do something
-                        this.lstClientes.setListData(this.controlador.buscarClientes(Cliente_.nroCliente, Long.parseLong(this.txtCriterio.getText())).toArray());
-                        break;
-                    //CUIT
-                    case 1:
-                        Cliente propietario;
-                        propietario = this.controlador.buscarClienteCUIT(this.txtCriterio.getText());
-                        this.lstClientes.setListData(this.controlador.buscarClientes(Cliente_.cuit, this.txtCriterio.getText()).toArray());
-                        break;
-                    //Razon social
-                    case 2:
-                        
-                        //Date d = this.contro.dateParser(this.txtCriterio.getText());
-                        this.lstClientes.setListData(this.controlador.buscarPedidos(Cliente_.razonSocial, this.txtCriterio.getText()).toArray());
-                        break;
-                    case 3:
-                        System.out.println("Nada maese.");
-                        break;
-                }
+        try {
+            switch (this.cmbxCriterio.getSelectedIndex()) {
+                //ID
+                case 0:
+                    this.lstClientes.setListData(this.controlador.buscarClientes(Cliente_.nroCliente, Long.parseLong(this.txtCriterio.getText())).toArray());
+                    break;
+                //CUIT
+                case 1:
+                    this.lstClientes.setListData(this.controlador.buscarClientes(Cliente_.cuit, this.txtCriterio.getText()).toArray());
+                    break;
+                //Razon social
+                case 2:
+                    this.lstClientes.setListData(this.controlador.buscarClientes(Cliente_.razonSocial, this.txtCriterio.getText().toUpperCase()).toArray());
+                    break;
+            }
+        } catch (NumberFormatException numberFormatException) {
+            this.cmbxCriterio.setSelectedIndex(-1);
+            
+        } catch (QueryException qe){
+            System.out.println(qe.getMessage());
+        }
+        
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void limpiar(){
@@ -344,6 +345,7 @@ public class VentanaCliente extends javax.swing.JFrame {
         this.txtProvincia.setText("");
         this.txtRazonSocial.grabFocus();
         this.lstClientes.setListData(this.controlador.listarClientes().toArray());
+        this.lstClientes.clearSelection();
     }
 // <editor-fold defaultstate="collapsed" desc="Elementos de la ventana">  
     // Variables declaration - do not modify//GEN-BEGIN:variables
