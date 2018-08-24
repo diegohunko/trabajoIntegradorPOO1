@@ -6,6 +6,8 @@
 package vistas.pedidos;
 
 import controlador.Controlador;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.text.ParseException;
 import java.text.DateFormat;
 import javax.swing.JFrame;
@@ -35,6 +37,13 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
         this.previo = previo;
         this.pedidoExtranjero = null;
         initComponents();
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        int height = pantalla.height;
+        int width = pantalla.width;
+        setSize(width/2, height/2);
+        setLocationRelativeTo(null);
+        setVisible(true);
+        this.previo.setVisible(false);
         //this.lblIdPedido.setVisible(true);
         //this.lblIdPedido.setText("HOLA");
     }
@@ -47,6 +56,13 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
         String titulo;
         titulo = "Modificación de Pedido: " + Long.toString(this.pedidoExtranjero.getIdPedido());
         initComponents();
+        
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        int height = pantalla.height;
+        int width = pantalla.width;
+        setSize(width/2, height/2);
+        setLocationRelativeTo(null);
+        setVisible(true);
         //Cambiar el titulo de la ventana
         this.setTitle(titulo);
         //Damos formato a la fecha.
@@ -62,6 +78,7 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
         this.txtFechaPrimerEntrega.setText(s);
         //DESACTIVAR O DESHABILITAR LOSS COMPONENTES PARA QUE NO SEAN MODIFICADOS.
         freezeForm();
+        this.previo.setVisible(false);
         
     }
 
@@ -91,6 +108,11 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("NUEVO PEDIDO");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setText("CUIL/CUIT Cliente");
 
@@ -325,6 +347,11 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_lstFechasEntregasMouseClicked
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        this.previo.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_formWindowClosing
+
     private String[] fechasDeEntrega(Date primerFecha, Long codigoPedido,
             int totEnt,
             char period){
@@ -366,11 +393,6 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
         }
     }
     
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {                                   
-        // TODO add your handling code here:
-        this.previo.setVisible(true);
-        this.dispose();
-    }  
     
     private void freezeForm(){
         this.txtCuilPropietario.setEditable(false);

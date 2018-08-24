@@ -5,6 +5,8 @@
  */
 package vistas.pedidos;
 import controlador.Controlador;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.text.ParseException;
 import java.util.Date;
 import javax.swing.JFrame;
@@ -27,6 +29,13 @@ public class ABMPedidos extends javax.swing.JFrame {
         this.contro = c;
         this.previo = p;
         initComponents();
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        int height = pantalla.height;
+        int width = pantalla.width;
+        setSize(width/2, height/2);
+        setLocationRelativeTo(null);
+        setVisible(true);
+        this.previo.setVisible(false);
     }
 
     /**

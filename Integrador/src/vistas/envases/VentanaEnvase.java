@@ -6,6 +6,8 @@
 package vistas.envases;
 
 import controlador.Controlador;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -27,6 +29,13 @@ public class VentanaEnvase extends javax.swing.JFrame {
         this.controlador = c;
         this.vp = previo;
         initComponents();
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        int height = pantalla.height;
+        int width = pantalla.width;
+        setSize(width/2, height/2);
+        setLocationRelativeTo(null);
+        setVisible(true);
+        this.vp.setVisible(false);
         limpiar();
     }
 
@@ -52,6 +61,11 @@ public class VentanaEnvase extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Envases");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setText("ID Envase");
 
@@ -189,6 +203,11 @@ public class VentanaEnvase extends javax.swing.JFrame {
             this.cmbxTipoArticulo.setSelectedItem(ta.getTipoArticulo());
         }
     }//GEN-LAST:event_lstEnvasesValueChanged
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        this.vp.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_formWindowClosing
 
 
     private void limpiar(){

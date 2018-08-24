@@ -6,6 +6,8 @@
 package vistas.clientes;
 
 import controlador.Controlador;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -28,6 +30,13 @@ public class VentanaCliente extends javax.swing.JFrame {
         this.controlador = c;
         this.vp = previo;
         initComponents();
+        /*Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        int height = pantalla.height;
+        int width = pantalla.width;*/
+        //setSize(width/2, height);
+        setLocationRelativeTo(null);
+        setVisible(true);
+        this.vp.setVisible(false);
         limpiar();
     }
 
@@ -66,6 +75,11 @@ public class VentanaCliente extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("NUEVO CLIENTE");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel2.setText("Razon social");
 
@@ -334,6 +348,11 @@ public class VentanaCliente extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        this.vp.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_formWindowClosing
 
     private void limpiar(){
         this.lblID.setText("");

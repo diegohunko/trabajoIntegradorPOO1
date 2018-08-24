@@ -5,7 +5,9 @@
  */
 package vistas.articulos;
 import controlador.Controlador;
+import java.awt.Dimension;
 import java.awt.HeadlessException;
+import java.awt.Toolkit;
 import java.util.List;
 import javax.swing.*;
 import modelo.Articulo;
@@ -27,7 +29,14 @@ public class VentanaArticulo extends javax.swing.JFrame {
         this.controlador = c;
         this.vp = previo;
         initComponents();
+        this.vp.setVisible(false);
         limpiar();
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        int height = pantalla.height;
+        int width = pantalla.width;
+        setSize(width/2, height/2);
+        setLocationRelativeTo(null);
+        setVisible(true);
         //poblar el comboBox de tipo articulo.
         
     }
@@ -69,6 +78,11 @@ public class VentanaArticulo extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Ventana articulos");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         lblID.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblID.setText("-- ID --");
@@ -458,6 +472,11 @@ public class VentanaArticulo extends javax.swing.JFrame {
             this.cmbxTipArt.setVisible(false);
         }
     }//GEN-LAST:event_cmbxCriterioBusquedaActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        this.vp.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_formWindowClosing
 
 
     private void limpiar(){

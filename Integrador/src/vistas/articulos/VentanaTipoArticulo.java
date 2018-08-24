@@ -5,11 +5,10 @@
  */
 package vistas.articulos;
 import controlador.Controlador;
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import javax.swing.*;
 import modelo.TipoArticulo;
-import modelo.TipoArticulo_;
 /**
  *
  * @author Diego Raul Fernandez
@@ -27,6 +26,13 @@ public class VentanaTipoArticulo extends javax.swing.JFrame {
         this.controlador = c;
         this.vp = previo;
         initComponents();
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        int height = pantalla.height;
+        int width = pantalla.width;
+        setSize(width/2, height/2);
+        setLocationRelativeTo(null);
+        setVisible(true);
+        this.vp.setVisible(false);
         limpiar();
     }
 
@@ -51,6 +57,11 @@ public class VentanaTipoArticulo extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Hi Führer, ABM ta");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setText("ID Tipo Art");
 
@@ -179,6 +190,11 @@ public class VentanaTipoArticulo extends javax.swing.JFrame {
             this.txtDescripcion.setText(ta.getDescripcion());
         }
     }//GEN-LAST:event_lstTiposArtValueChanged
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        this.vp.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_formWindowClosing
 
 
     private void limpiar(){

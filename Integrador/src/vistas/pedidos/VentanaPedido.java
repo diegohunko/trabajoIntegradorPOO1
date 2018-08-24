@@ -5,6 +5,8 @@
  */
 package vistas.pedidos;
 import controlador.Controlador;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import javax.swing.JFrame;
 /**
  *
@@ -21,6 +23,13 @@ public class VentanaPedido extends javax.swing.JFrame {
         this.controlador = c;
         this.previo = p;
         initComponents();
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        int height = pantalla.height;
+        int width = pantalla.width;
+        setSize(width/2, height/2);
+        setLocationRelativeTo(null);
+        setVisible(true);
+        this.previo.setVisible(false);
     }
 
     /**

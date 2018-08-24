@@ -25,22 +25,22 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="136" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="120" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="btnVentEnvases" alignment="0" max="32767" attributes="0"/>
                   <Component id="btnVentPedidos" alignment="0" max="32767" attributes="0"/>
                   <Component id="btnVentClientes" max="32767" attributes="0"/>
-                  <Component id="btnVentArticulos" alignment="0" pref="212" max="32767" attributes="0"/>
-                  <Component id="btnTipoArt" max="32767" attributes="0"/>
+                  <Component id="btnVentArticulos" alignment="0" max="32767" attributes="0"/>
+                  <Component id="btnTipoArt" min="-2" pref="212" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="255" max="32767" attributes="0"/>
+              <EmptySpace pref="139" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
               <Component id="btnVentClientes" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btnVentPedidos" min="-2" max="-2" attributes="0"/>
@@ -50,7 +50,7 @@
               <Component id="btnVentArticulos" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
               <Component id="btnTipoArt" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="162" max="32767" attributes="0"/>
+              <EmptySpace pref="70" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package controlador;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.metamodel.SingularAttribute;
-//import javax.swing.JOptionPane;
+import javax.swing.JFrame;
 import modelo.*;
 import persistencia.*;
 /**
@@ -27,7 +29,7 @@ public class Controlador {
     }
     
     //Controlador de clientes
-//<editor-fold defaultstate="collapsed" desc="Métodos para Manejar Clientes.">
+    //<editor-fold defaultstate="collapsed" desc="Métodos para Manejar Clientes.">
     
     /**
      * retorna un monton de clientes.
@@ -109,7 +111,7 @@ public class Controlador {
         
     }
     
-//</editor-fold>
+    //</editor-fold>
     //Controlador de Pedidos
 
     /**
@@ -308,11 +310,6 @@ public class Controlador {
     }
     
    
-    
-    
-    
-
-
     //<editor-fold defaultstate="collapsed" desc="Métodos para manipular Artículos">
     /**
      * Busca los artículos según una columna de la tabla.
@@ -453,7 +450,7 @@ public class Controlador {
     }
 //</editor-fold>
      
-//<editor-fold defaultstate="collapsed" desc="Métodos para manipular envases">
+    //<editor-fold defaultstate="collapsed" desc="Métodos para manipular envases">
 
     public List buscarEnvaseTipo(TipoArticulo ta) {
         return this.persistencia.buscarPorClaseCampoYCriterio(Envase.class, Envase_.tipoArticulo, ta);
@@ -499,8 +496,7 @@ public class Controlador {
         }
         
     }
-//</editor-fold>
-    
+    //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="Métodos miscelaneos.">
     /**
@@ -522,6 +518,10 @@ public class Controlador {
         DateFormat df;
         df = DateFormat.getDateInstance(DateFormat.MEDIUM);
         return df.format(fechaAFormatear);
+    }
+    
+    public void centrarPantalla(){
+        
     }
 //</editor-fold>
 
