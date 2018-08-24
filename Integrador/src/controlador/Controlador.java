@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package controlador;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -26,17 +27,18 @@ public class Controlador {
     }
     
     //Controlador de clientes
-
+//<editor-fold defaultstate="collapsed" desc="Métodos para Manejar Clientes.">
+    
     /**
      * retorna un monton de clientes.
      * @param metaModelo donde se quiere buscar
      * @param criterio lo que se desea buscar
-     * 
+     *
      * @return clientes que coinciden con criterio.
      */
     public List buscarClientes(SingularAttribute metaModelo, Object criterio){
         //return this.persistencia.buscar(Cliente.class, criterioBusqueda);
-        return this.persistencia.buscarPorClaseCampoYCriterio(Pedido.class, (SingularAttribute)metaModelo, criterio);
+        return this.persistencia.buscarPorClaseCampoYCriterio(Cliente.class, (SingularAttribute)metaModelo, criterio);
     }
     
     public Cliente buscarClienteCUIT(String cuit){
@@ -48,7 +50,7 @@ public class Controlador {
      * @return Retorna una lista con los clientes
      */
     public List listarClientes(){
-        return this.persistencia.buscarTodosOrdenadosPor(Cliente.class, 
+        return this.persistencia.buscarTodosOrdenadosPor(Cliente.class,
                 Cliente_.nroCliente);
         
     }
@@ -62,7 +64,7 @@ public class Controlador {
      * @param localidad
      * @param provincia
      */
-    public void nuevoCliente(String razonSocial, String cuit, String calle, 
+    public void nuevoCliente(String razonSocial, String cuit, String calle,
             String numero, String localidad, String provincia){
         Cliente cliente;
         cliente = new Cliente(razonSocial, cuit, calle, numero, localidad, provincia);
@@ -75,7 +77,7 @@ public class Controlador {
         }
     }
     
-    public void modificarCliente(Cliente c, String razonSocial, String calle, 
+    public void modificarCliente(Cliente c, String razonSocial, String calle,
             String numero, String localidad, String provincia){
         if (c != null){
             this.persistencia.iniciarTransaccion();
@@ -107,9 +109,16 @@ public class Controlador {
         
     }
     
+//</editor-fold>
     //Controlador de Pedidos
-    public Pedido buscarPedido(Object criterioBusqueda){
-        return this.persistencia.buscar(Pedido.class, criterioBusqueda);
+
+    /**
+     * Devuelve un pedido
+     * @param idPedido identificador del pedido que se busca
+     * @return Pedido cuyo ID es idPedido
+     */
+    public Pedido buscarPedido(Long idPedido){
+        return this.persistencia.buscar(Pedido.class, idPedido);
     }
 
     /**
@@ -122,12 +131,12 @@ public class Controlador {
     }
     
     /**
-     *
-     * @param cuitOwner
-     * @param entregaInicial
-     * @param totalDeEntregas
-     * @param periodicidad
-     * @param marcaTiempo
+     * Crea un nuevo pedido en la base de datos.
+     * @param cuitOwner Clave tributaria del cliente al que pertenece el pedido
+     * @param entregaInicial Fecha en la que se tiene que hacer la primer entrega
+     * @param totalDeEntregas cuantas entregas componen el Pedido
+     * @param periodicidad Cada cuanto se realizan las entregas
+     * @param marcaTiempo Se genera automática mente cuando se crea el pedido. (Sirve para encontrarlo mas tarde(?))
      * @return idPedido si tiene éxito; -1 en caso de argumento ilegal; 
      * -2 si no se encuentran resultados, al buscar el propietario del pedido;
      * -3 en caso de puntero a null y
@@ -166,18 +175,27 @@ public class Controlador {
         }
     }
     
+    /**
+     * Retorna todos los pedidos de la base. (Esto puede ser algo tonto
+     * y poco eficiente a la larga.)
+     * @return Algo asi como una vista en SQL, pero no.
+     */
     public List mostrarPedidos(){
         return this.persistencia.vistaPedido();
     }
     
+    /**
+     * Devuelve una Lista con las tuplas.
+     * @param metaModelo Columna en la cual se ha de buscar criterio.
+     * @param criterio Lo que se quiere buscar.
+     * @return Una lista con las tuplas coincidentes.
+     */
     public List buscarPedidos(Object metaModelo, Object criterio){
         try{
             return this.persistencia.buscarPorClaseCampoYCriterio(Pedido.class, (SingularAttribute)metaModelo, criterio);
         }catch(Exception e){
-            
+            throw e;
         }
-            
-       throw new UnsupportedOperationException("Not supported yet."); 
     }
     
     //Controlador de Entrega
@@ -209,8 +227,13 @@ public class Controlador {
         }
     }
     
-    public Entrega buscarEntrega(Object criterioBusqueda){
-        return this.persistencia.buscar(Entrega.class, criterioBusqueda);
+    /**
+     * Devuelve una entrega.
+     * @param idEntrega Identificador de la entrega a buscar
+     * @return entrega buscada.
+     */
+    public Entrega buscarEntrega(Object idEntrega){
+        return this.persistencia.buscar(Entrega.class, idEntrega);
     }
     
     /**
@@ -284,44 +307,13 @@ public class Controlador {
         return this.persistencia.buscarPorClaseCampoYCriterio(Linea.class, Linea_.entrega, entrega);
     }
     
-    /**
-     * Recupera todos los tipos de artículo de la base de datos.
-     * @return lista que contiene los tipos de artículo.
-     */
-    public List listarTipoArticulo(){
-        return this.persistencia.buscarTodosOrdenadosPor(TipoArticulo.class, TipoArticulo_.idTipoArticulo);
-    }
+   
     
-    /**
-     * Agrea un nuevo envase a la base de datos.
-     * @param capacidad
-     * @param tipoArticulo
-     */
-    public void agregarNuevoEnvase(Double capacidad, TipoArticulo tipoArticulo){
-        try{
-            this.persistencia.iniciarTransaccion();
-            Envase nuevoEnvase;
-            nuevoEnvase = new Envase(capacidad, tipoArticulo);
-            this.persistencia.insertar(nuevoEnvase);
-            tipoArticulo.agregarEnvase(nuevoEnvase);
-            this.persistencia.modificar(tipoArticulo);
-            this.persistencia.confirmarTransaccion();
-        } catch (Exception e){
-            this.persistencia.descartarTransaccion();
-        }
-        
-    }
     
-    /**
-     * Devuelve un Envase segun su capacidad y tipo
-     * @param capacidad
-     * @param ta
-     * @return
-     */
-    public Envase buscarEnvaseCapacidadTipo(Double capacidad, TipoArticulo ta){
-        return this.persistencia.buscarEnvaseCapTipo(capacidad, ta);
-    }
+    
 
+
+    //<editor-fold defaultstate="collapsed" desc="Métodos para manipular Artículos">
     /**
      * Busca los artículos según una columna de la tabla.
      * @param metaModelo Se obtiene del metamodelo generado por EclipseLink
@@ -331,7 +323,7 @@ public class Controlador {
     public List buscarArticulos(Object metaModelo, Object criterio) {
         return this.persistencia.buscarPorClaseCampoYCriterio(Articulo.class, (SingularAttribute)metaModelo, criterio);
     }
-
+    
     public void nuevoArticulo(
             String descripcion,
             Double largo,
@@ -359,34 +351,27 @@ public class Controlador {
             throw e;
         }
     }
-
-    public List buscarEnvaseTipo(TipoArticulo ta) {
-        return this.persistencia.buscarPorClaseCampoYCriterio(Envase.class, Envase_.tipoArticulo, ta);
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public void nuevoTipoArticulo(String text) {
-        try {
-            TipoArticulo ta;
-            ta = new TipoArticulo(text);
-            this.persistencia.iniciarTransaccion();
-            this.persistencia.insertar(ta);
-            this.persistencia.confirmarTransaccion();
-        } catch (Exception e) {
-            this.persistencia.descartarTransaccion();
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-        
-    }
-
+    
+    
+    
+    
     /*public void nuevoArticulo(String text, double parseDouble, double parseDouble0, double parseDouble1, List<Envase> env, TipoArticulo ta) {
     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }*/
     
+    
+    /**
+     *
+     * @return
+     */
     public List listarArticulos(){
         return this.persistencia.buscarTodos(Articulo.class);
     }
-
+    
+    /**
+     *
+     * @param articulo
+     */
     public void eliminarArticulo(Articulo articulo) {
         try {
             this.persistencia.iniciarTransaccion();
@@ -396,9 +381,16 @@ public class Controlador {
             this.persistencia.descartarTransaccion();
             throw e;
         }
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
+    /**
+     *
+     * @param art
+     * @param newDescripcion
+     * @param newLargo
+     * @param newAncho
+     * @param newDiametro
+     */
     public void editarArticulo(Articulo art, String newDescripcion,
             double newLargo, double newAncho,
             double newDiametro) {
@@ -415,9 +407,102 @@ public class Controlador {
             this.persistencia.descartarTransaccion();
             throw ex;
         }
- //To change body of generated methods, choose Tools | Templates.
     }
     
+//</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Métodos para manipular Tipos de Artículos">
+    /**
+     *
+     * @param ta
+     */
+    public void eliminarTipoArticulo(TipoArticulo ta) {
+        if (ta.getArticulo().isEmpty() && ta.getEnvases().isEmpty()) {
+            this.persistencia.iniciarTransaccion();
+            this.persistencia.eliminar(ta);
+            this.persistencia.confirmarTransaccion();
+        }else{
+            throw new UnsupportedOperationException("No se pudo eliminar, hay elementos relacionados.");
+        }
+    }
+    
+    /**
+     *
+     * @param text
+     */
+    public void nuevoTipoArticulo(String text) {
+        try {
+            TipoArticulo ta;
+            ta = new TipoArticulo(text);
+            this.persistencia.iniciarTransaccion();
+            this.persistencia.insertar(ta);
+            this.persistencia.confirmarTransaccion();
+        } catch (Exception e) {
+            this.persistencia.descartarTransaccion();
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+        
+    }
+    
+     /**
+     * Recupera todos los tipos de artículo de la base de datos.
+     * @return lista que contiene los tipos de artículo.
+     */
+    public List listarTipoArticulo(){
+        return this.persistencia.buscarTodosOrdenadosPor(TipoArticulo.class, TipoArticulo_.idTipoArticulo);
+    }
+//</editor-fold>
+     
+//<editor-fold defaultstate="collapsed" desc="Métodos para manipular envases">
+
+    public List buscarEnvaseTipo(TipoArticulo ta) {
+        return this.persistencia.buscarPorClaseCampoYCriterio(Envase.class, Envase_.tipoArticulo, ta);
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public List listarEnvases() {
+        return this.persistencia.buscarTodosOrdenadosPor(Envase.class, Envase_.idEnvase);
+    }
+    
+    public void eliminarEnvase(Envase envaseNoDeseado){
+        this.persistencia.iniciarTransaccion();
+        this.persistencia.eliminar(envaseNoDeseado);
+        this.persistencia.confirmarTransaccion();
+    }
+    
+    /**
+     * Devuelve un Envase segun su capacidad y tipo
+     * @param capacidad
+     * @param ta
+     * @return
+     */
+    public Envase buscarEnvaseCapacidadTipo(Double capacidad, TipoArticulo ta){
+        return this.persistencia.buscarEnvaseCapTipo(capacidad, ta);
+    }
+    
+    /**
+     * Agrea un nuevo envase a la base de datos.
+     * @param capacidad
+     * @param tipoArticulo
+     */
+    public void agregarNuevoEnvase(Double capacidad, TipoArticulo tipoArticulo){
+        try{
+            this.persistencia.iniciarTransaccion();
+            Envase nuevoEnvase;
+            nuevoEnvase = new Envase(capacidad, tipoArticulo);
+            this.persistencia.insertar(nuevoEnvase);
+            tipoArticulo.agregarEnvase(nuevoEnvase);
+            this.persistencia.modificar(tipoArticulo);
+            this.persistencia.confirmarTransaccion();
+        } catch (Exception e){
+            this.persistencia.descartarTransaccion();
+        }
+        
+    }
+//</editor-fold>
+    
+    
+    //<editor-fold defaultstate="collapsed" desc="Métodos miscelaneos.">
     /**
      * Convierte un String a Date.
      * @param fecha cadena de texto a ser convertida en fecha
@@ -432,26 +517,13 @@ public class Controlador {
             throw ex;
         }
     }
-
-    public void eliminarTipoArticulo(TipoArticulo ta) {
-        if (ta.getArticulo().isEmpty() && ta.getEnvases().isEmpty()) {
-            this.persistencia.iniciarTransaccion();
-            this.persistencia.eliminar(ta);
-            this.persistencia.confirmarTransaccion();
-        }else{
-            throw new UnsupportedOperationException("No se pudo eliminar, hay elementos relacionados.");
-        }
-    }
-
-    public List listarEnvases() {
-        return this.persistencia.buscarTodosOrdenadosPor(Envase.class, Envase_.idEnvase);
-    }
     
-    public void eliminarEnvase(Envase envaseNoDeseado){
-        this.persistencia.iniciarTransaccion();
-        this.persistencia.eliminar(envaseNoDeseado);
-        this.persistencia.confirmarTransaccion();
+    public String dateFormater(Date fechaAFormatear){
+        DateFormat df;
+        df = DateFormat.getDateInstance(DateFormat.MEDIUM);
+        return df.format(fechaAFormatear);
     }
+//</editor-fold>
 
     
 }
