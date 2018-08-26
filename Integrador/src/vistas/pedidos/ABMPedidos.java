@@ -47,12 +47,13 @@ public class ABMPedidos extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnMostrarPedidos = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstVistaPedidos = new javax.swing.JList();
         cmbxCriterio = new javax.swing.JComboBox<>();
         txtCriterio = new javax.swing.JTextField();
         btnBorrar = new javax.swing.JButton();
+        btnMostrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Buscar la felicidad!!! o pedidos.");
@@ -63,10 +64,10 @@ public class ABMPedidos extends javax.swing.JFrame {
             }
         });
 
-        btnMostrarPedidos.setText("Mostrar");
-        btnMostrarPedidos.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMostrarPedidosActionPerformed(evt);
+                btnBuscarActionPerformed(evt);
             }
         });
 
@@ -80,10 +81,17 @@ public class ABMPedidos extends javax.swing.JFrame {
 
         cmbxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "CUIT", "Fecha" }));
 
-        btnBorrar.setText("Borar?");
+        btnBorrar.setText("Eliminar");
         btnBorrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBorrarActionPerformed(evt);
+            }
+        });
+
+        btnMostrar.setText("Ver");
+        btnMostrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMostrarActionPerformed(evt);
             }
         });
 
@@ -97,13 +105,18 @@ public class ABMPedidos extends javax.swing.JFrame {
                         .addComponent(cmbxCriterio, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)
                         .addComponent(txtCriterio, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 160, Short.MAX_VALUE)
-                        .addComponent(btnMostrarPedidos)
-                        .addGap(16, 16, 16)
-                        .addComponent(btnBorrar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 164, Short.MAX_VALUE)
+                        .addComponent(btnBuscar)
+                        .addGap(79, 79, 79))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1)))
+                        .addComponent(jScrollPane1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnMostrar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnBorrar)
+                        .addGap(8, 8, 8)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -111,21 +124,23 @@ public class ABMPedidos extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnMostrarPedidos)
-                        .addComponent(btnBorrar))
+                    .addComponent(btnBuscar)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtCriterio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(cmbxCriterio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBorrar)
+                    .addComponent(btnMostrar))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnMostrarPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarPedidosActionPerformed
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
         //
         try{
@@ -156,7 +171,7 @@ public class ABMPedidos extends javax.swing.JFrame {
         }catch (ParseException | NumberFormatException e){
             System.out.println("Hubo un error, pero no te preocupes. :D");
         }
-    }//GEN-LAST:event_btnMostrarPedidosActionPerformed
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
@@ -166,24 +181,37 @@ public class ABMPedidos extends javax.swing.JFrame {
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null, "Pronto...", "Error", JOptionPane.ERROR_MESSAGE);
+        
+        if (!this.lstVistaPedidos.isSelectionEmpty()){
+            try {
+                Pedido p = (Pedido) this.lstVistaPedidos.getSelectedValue();
+                this.contro.eliminarPedido(p);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_btnBorrarActionPerformed
 
     private void lstVistaPedidosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstVistaPedidosValueChanged
         // Cuando se hace click en un resultado, se abre una ventana para poder ver
         // las entregas que dorresponden a ese pedido.
+        
+    }//GEN-LAST:event_lstVistaPedidosValueChanged
+
+    private void btnMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarActionPerformed
         if (!this.lstVistaPedidos.isSelectionEmpty()){
             Pedido unPedido = (Pedido) this.lstVistaPedidos.getSelectedValue();
             VentanaNuevoPedido vnp;
             vnp = new VentanaNuevoPedido(this.contro, this, unPedido);
             vnp.setVisible(true);
         }
-    }//GEN-LAST:event_lstVistaPedidosValueChanged
+    }//GEN-LAST:event_btnMostrarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBorrar;
-    private javax.swing.JButton btnMostrarPedidos;
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnMostrar;
     private javax.swing.JComboBox<String> cmbxCriterio;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList lstVistaPedidos;

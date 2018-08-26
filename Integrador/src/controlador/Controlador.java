@@ -4,17 +4,15 @@
  * and open the template in the editor.
  */
 package controlador;
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.metamodel.SingularAttribute;
-import javax.swing.JFrame;
 import modelo.*;
 import persistencia.*;
 /**
@@ -200,6 +198,46 @@ public class Controlador {
         }
     }
     
+    public void eliminarPedido(Pedido p) throws DateRelatedException {
+        Date hoy = new Date();
+        Date d = p.getEntregaInicial();
+        if (d.after(hoy)){
+            try {
+                //obtenemos el propietario del pedido
+                Cliente propietario = p.getPropietario();
+                //eliminamos el pedido
+                this.persistencia.iniciarTransaccion();
+                //eliminar las entregas del pedido
+                List entregas = p.getEntregas();
+                Iterator<Entrega> entregaItr = entregas.iterator();
+                while (entregaItr.hasNext()) {
+                    Entrega entrega = entregaItr.next();
+                    //eliminar el detalle de cada entrega.
+                    Iterator<Linea> lineaItr = entrega.getDetalle().iterator();
+                    while (lineaItr.hasNext()) {
+                        Linea linea = lineaItr.next();
+                        this.eliminarLinea(linea);
+                    }
+                    this.eliminarEntrega(entrega);
+                }
+                propietario.quitarPedido(p);
+                this.persistencia.modificar(propietario);
+                this.persistencia.eliminar(p);
+                this.persistencia.confirmarTransaccion();
+            } catch (Exception e) {
+                this.persistencia.descartarTransaccion();
+                throw e;
+            }
+            //entregas.forEach(cnsmr);
+            
+            //actualizar el propietario del pedido.
+        } else {
+            //lanzar error.
+            
+            throw new DateRelatedException("Negativo maese, no se puede borrar che. Ya está en proceso de entrega.");
+        }
+    }
+    
     //Controlador de Entrega
 
     /**
@@ -247,6 +285,19 @@ public class Controlador {
     public Entrega buscarEntrega(Date fechaEnt, Long idPedido){
         return this.persistencia.buscarEntrega(fechaEnt, idPedido);
         
+    }
+    
+    public void eliminarEntrega(Entrega entregaNoDeseada){
+        try {
+            Pedido pedidoOrig = entregaNoDeseada.getNroPedido();
+            this.persistencia.iniciarTransaccion();
+            pedidoOrig.removerEntrega(entregaNoDeseada);
+            this.persistencia.modificar(pedidoOrig);
+            this.persistencia.eliminar(entregaNoDeseada);
+            this.persistencia.confirmarTransaccion();
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     /**
@@ -525,5 +576,4 @@ public class Controlador {
     }
 //</editor-fold>
 
-    
 }
