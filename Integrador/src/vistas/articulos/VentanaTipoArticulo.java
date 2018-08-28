@@ -26,10 +26,10 @@ public class VentanaTipoArticulo extends javax.swing.JFrame {
         this.controlador = c;
         this.vp = previo;
         initComponents();
-        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        /*Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
         int height = pantalla.height;
         int width = pantalla.width;
-        setSize(width/2, height/2);
+        setSize(width/2, height/2);*/
         setLocationRelativeTo(null);
         setVisible(true);
         this.vp.setVisible(false);
