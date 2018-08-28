@@ -10,12 +10,13 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import javax.persistence.criteria.Subquery;
 import javax.persistence.metamodel.SingularAttribute;
 import modelo.*;
+import org.eclipse.persistence.exceptions.QueryException;
 
 
 /**
@@ -91,12 +92,16 @@ public class Persistencia  {
      * @return
      */
     public Cliente buscarClientePorCuit(String cuit){
-        CriteriaBuilder cb = this.em.getCriteriaBuilder();
-        CriteriaQuery<Cliente> query = cb.createQuery(Cliente.class);
-        Root<Cliente> clienteRoot = query.from(Cliente.class);
-        query.where(cb.equal(clienteRoot.get(Cliente_.cuit), cuit));
-        Cliente retornoCliente = em.createQuery(query).getSingleResult();
-        return retornoCliente;
+        try {
+            CriteriaBuilder cb = this.em.getCriteriaBuilder();
+            CriteriaQuery<Cliente> query = cb.createQuery(Cliente.class);
+            Root<Cliente> clienteRoot = query.from(Cliente.class);
+            query.where(cb.equal(clienteRoot.get(Cliente_.cuit), cuit));
+            Cliente retornoCliente = em.createQuery(query).getSingleResult();
+            return retornoCliente;
+        } catch (NoResultException qe) {
+            return null;
+        }
     }
     
     /**

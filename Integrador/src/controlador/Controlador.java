@@ -14,6 +14,7 @@ import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.metamodel.SingularAttribute;
 import modelo.*;
+import org.eclipse.persistence.exceptions.QueryException;
 import persistencia.*;
 /**
  *
@@ -104,9 +105,20 @@ public class Controlador {
             this.persistencia.confirmarTransaccion();
         } else {
             throw new Exception("El cliente aún tiene pedidos");
-            
         }
-        
+    }
+    
+    /**
+     * busca un cliente por CUIT, si es devuelve true.
+     * @param cuit
+     * @return verdadero si es, falso si no.
+     */
+    public boolean esCliente(String cuit){
+        boolean estado;
+        Cliente c;
+        c = this.persistencia.buscarClientePorCuit(cuit);
+        estado = c != null;
+        return estado;
     }
     
     //</editor-fold>

@@ -37,10 +37,10 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
         this.previo = previo;
         this.pedidoExtranjero = null;
         initComponents();
-        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        /*Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
         int height = pantalla.height;
         int width = pantalla.width;
-        setSize(width/2, height/2);
+        setSize(width/2, height/2);*/
         setLocationRelativeTo(null);
         setVisible(true);
         this.previo.setVisible(false);

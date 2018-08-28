@@ -40,6 +40,8 @@ public class VentanaEntrega extends javax.swing.JFrame {
         this.fechaEntrega = fEnt;
         this.pedido = pedido;
         initComponents();
+        setLocationRelativeTo(null);
+        setVisible(true);
         this.entrega = this.controlador.buscarEntrega(fechaEntrega, pedido.getIdPedido());
         limpiar();
         lsm = new DefaultListModel();
@@ -57,6 +59,8 @@ public class VentanaEntrega extends javax.swing.JFrame {
         this.pedido = pedido;
         this.entrega = entrega;
         initComponents();
+        setLocationRelativeTo(null);
+        setVisible(true);
         //COMPLETAR LOS ELEMENTOS DE LA VENTANA.
         //Establecer el id de la entrega en la etiqueta.
         this.lblIDentrega.setText(this.entrega.getIdEntrega().toString());

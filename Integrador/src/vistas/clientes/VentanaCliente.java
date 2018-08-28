@@ -269,12 +269,13 @@ public class VentanaCliente extends javax.swing.JFrame {
     private void btnCrearClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearClienteActionPerformed
         // TODO add your handling code here:
         try {
-            if (this.lstClientes.isSelectionEmpty()) {
-                this.controlador.nuevoCliente(this.txtRazonSocial.getText().toUpperCase(),
-                        this.txtCUIT.getText().toUpperCase(), this.txtCalle.getText().toUpperCase(),
-                        this.txtNumero.getText().toUpperCase(), this.txtLocalidad.getText().toUpperCase(),
-                        this.txtProvincia.getText().toUpperCase());
-                
+            if (this.lstClientes.isSelectionEmpty() ) {
+                if (!this.controlador.esCliente(this.txtCUIT.getText())) {
+                    this.controlador.nuevoCliente(this.txtRazonSocial.getText().toUpperCase(),
+                            this.txtCUIT.getText().toUpperCase(), this.txtCalle.getText().toUpperCase(),
+                            this.txtNumero.getText().toUpperCase(), this.txtLocalidad.getText().toUpperCase(),
+                            this.txtProvincia.getText().toUpperCase());
+                }              
                 //limpiar();
             } else {
                 Cliente clienteEditado;
@@ -287,6 +288,7 @@ public class VentanaCliente extends javax.swing.JFrame {
                 this.controlador.modificarCliente(clienteEditado, razon, calle, numero, localidad, provincia);
             }
         } catch (Exception e) {
+            System.out.println(e.getMessage()+" "+e.getCause().toString());
         } finally {
             limpiar();
         }
