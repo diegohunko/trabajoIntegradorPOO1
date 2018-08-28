@@ -58,7 +58,7 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="btnVentClientes">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Customers&apos; Management"/>
+        <Property name="text" type="java.lang.String" value="Clientes"/>
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnVentClientesMouseClicked"/>
@@ -67,7 +67,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnVentPedidos">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Customers&apos; orders&apos; Management"/>
+        <Property name="text" type="java.lang.String" value="Pedidos"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVentPedidosActionPerformed"/>
@@ -75,7 +75,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnVentEnvases">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Packaging"/>
+        <Property name="text" type="java.lang.String" value="Envases"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVentEnvasesActionPerformed"/>
@@ -83,7 +83,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnVentArticulos">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Products"/>
+        <Property name="text" type="java.lang.String" value="Art&#xed;culos"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVentArticulosActionPerformed"/>

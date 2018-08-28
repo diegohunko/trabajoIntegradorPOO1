@@ -31,10 +31,10 @@ public class VentanaArticulo extends javax.swing.JFrame {
         initComponents();
         this.vp.setVisible(false);
         limpiar();
-        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        /*Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
         int height = pantalla.height;
         int width = pantalla.width;
-        setSize(width/2, height/2);
+        setSize(width/2, height/2);*/
         setLocationRelativeTo(null);
         setVisible(true);
         //poblar el comboBox de tipo articulo.
@@ -70,11 +70,9 @@ public class VentanaArticulo extends javax.swing.JFrame {
         txtBuscar = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         lblIdArticulo = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        lstEnvases = new javax.swing.JList();
         btnEliminArt = new javax.swing.JButton();
         cmbxTipArt = new javax.swing.JComboBox();
+        btnLimpiar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Ventana articulos");
@@ -158,16 +156,17 @@ public class VentanaArticulo extends javax.swing.JFrame {
 
         lblIdArticulo.setText("ID Artículo");
 
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel8.setText("Envase");
-
-        lstEnvases.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jScrollPane2.setViewportView(lstEnvases);
-
         btnEliminArt.setText("Eliminar");
         btnEliminArt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminArtActionPerformed(evt);
+            }
+        });
+
+        btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
             }
         });
 
@@ -203,21 +202,15 @@ public class VentanaArticulo extends javax.swing.JFrame {
                             .addComponent(txtAncho, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cmbxTipoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(38, 38, 38))
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(243, 243, 243)
+                                .addComponent(btnBuscar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(192, 192, 192)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(243, 243, 243)
-                                        .addComponent(btnBuscar))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(192, 192, 192)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(cmbxTipArt, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                                    .addComponent(cmbxTipArt, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblID, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(134, 134, 134)
@@ -227,19 +220,16 @@ public class VentanaArticulo extends javax.swing.JFrame {
                         .addGap(30, 30, 30)
                         .addComponent(cmbxCriterioBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(80, 80, 80)
-                        .addComponent(btnGuardarArticulo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnEliminArt, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(419, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(4, 4, 4)
+                .addComponent(btnLimpiar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnGuardarArticulo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnEliminArt, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -284,16 +274,13 @@ public class VentanaArticulo extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(cmbxTipoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(21, 21, 21)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8)))
+                        .addGap(42, 42, 42)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnGuardarArticulo)
+                            .addComponent(btnEliminArt)
+                            .addComponent(btnLimpiar)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGuardarArticulo)
-                    .addComponent(btnEliminArt))
-                .addContainerGap(142, Short.MAX_VALUE))
+                .addContainerGap(222, Short.MAX_VALUE))
         );
 
         pack();
@@ -421,13 +408,13 @@ public class VentanaArticulo extends javax.swing.JFrame {
 
     private void cmbxTipoArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbxTipoArticuloActionPerformed
         // TODO add your handling code here:
-        TipoArticulo ta;
-        ta = (TipoArticulo) this.cmbxTipoArticulo.getSelectedItem();
+        //TipoArticulo ta;
+        //ta = (TipoArticulo) this.cmbxTipoArticulo.getSelectedItem();
         /*DefaultComboBoxModel modeloCombo;
         modeloCombo = new DefaultComboBoxModel(this.controlador.buscarEnvaseTipo(ta).toArray());
         this.cmbxEnvase.setModel(modeloCombo);
         this.cmbxEnvase.setSelectedIndex(0);*/
-        this.lstEnvases.setListData(this.controlador.buscarEnvaseTipo(ta).toArray());
+        //this.lstEnvases.setListData(this.controlador.buscarEnvaseTipo(ta).toArray());
         
     }//GEN-LAST:event_cmbxTipoArticuloActionPerformed
 
@@ -478,6 +465,10 @@ public class VentanaArticulo extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_formWindowClosing
 
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        limpiar();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
 
     private void limpiar(){
         this.txtBuscar.setVisible(true);
@@ -491,8 +482,9 @@ public class VentanaArticulo extends javax.swing.JFrame {
         DefaultComboBoxModel modeloCombo;
         modeloCombo = new DefaultComboBoxModel(this.controlador.listarTipoArticulo().toArray());
         this.cmbxTipoArticulo.setModel(modeloCombo);
-        DefaultListModel modeloLista = new DefaultListModel();
-        this.lstArticulos.setModel(modeloLista);
+        this.cmbxTipoArticulo.setSelectedIndex(-1);
+        //DefaultListModel modeloLista = new DefaultListModel();
+        this.lstArticulos.setListData(this.controlador.listarArticulos().toArray());
         this.lstArticulos.clearSelection();
     }
     //<editor-fold defaultstate="collapsed" desc="Elementos de la ventana">
@@ -500,6 +492,7 @@ public class VentanaArticulo extends javax.swing.JFrame {
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminArt;
     private javax.swing.JButton btnGuardarArticulo;
+    private javax.swing.JButton btnLimpiar;
     private javax.swing.JComboBox<String> cmbxCriterioBusqueda;
     private javax.swing.JComboBox cmbxTipArt;
     private javax.swing.JComboBox<String> cmbxTipoArticulo;
@@ -510,13 +503,10 @@ public class VentanaArticulo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblID;
     private javax.swing.JLabel lblIdArticulo;
     private javax.swing.JList lstArticulos;
-    private javax.swing.JList lstEnvases;
     private javax.swing.JTextField txtAncho;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtDescripcion;

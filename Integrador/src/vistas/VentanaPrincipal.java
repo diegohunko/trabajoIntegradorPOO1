@@ -51,7 +51,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("VENTANA PRINCIPAL");
 
-        btnVentClientes.setText("Customers' Management");
+        btnVentClientes.setText("Clientes");
         btnVentClientes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnVentClientesMouseClicked(evt);
@@ -63,21 +63,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnVentPedidos.setText("Customers' orders' Management");
+        btnVentPedidos.setText("Pedidos");
         btnVentPedidos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVentPedidosActionPerformed(evt);
             }
         });
 
-        btnVentEnvases.setText("Packaging");
+        btnVentEnvases.setText("Envases");
         btnVentEnvases.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVentEnvasesActionPerformed(evt);
             }
         });
 
-        btnVentArticulos.setText("Products");
+        btnVentArticulos.setText("Artículos");
         btnVentArticulos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVentArticulosActionPerformed(evt);

@@ -8,6 +8,7 @@ import controlador.Controlador;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
+import vistas.entregas.VerEntregas;
 /**
  *
  * @author Diego Raul Fernandez
@@ -43,6 +44,7 @@ public class VentanaPedido extends javax.swing.JFrame {
 
         btnNuevoPedido = new javax.swing.JButton();
         btnMostrar = new javax.swing.JButton();
+        btnVerEntregas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("PEDIDOS");
@@ -67,6 +69,13 @@ public class VentanaPedido extends javax.swing.JFrame {
             }
         });
 
+        btnVerEntregas.setText("Ver Entregas");
+        btnVerEntregas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerEntregasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -75,7 +84,8 @@ public class VentanaPedido extends javax.swing.JFrame {
                 .addGap(57, 57, 57)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnNuevoPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnMostrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnMostrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnVerEntregas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(283, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -85,7 +95,9 @@ public class VentanaPedido extends javax.swing.JFrame {
                 .addComponent(btnNuevoPedido)
                 .addGap(35, 35, 35)
                 .addComponent(btnMostrar)
-                .addContainerGap(349, Short.MAX_VALUE))
+                .addGap(27, 27, 27)
+                .addComponent(btnVerEntregas)
+                .addContainerGap(299, Short.MAX_VALUE))
         );
 
         pack();
@@ -110,11 +122,19 @@ public class VentanaPedido extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_formWindowClosing
 
+    private void btnVerEntregasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerEntregasActionPerformed
+        // TODO add your handling code here:
+        VerEntregas ver = new VerEntregas(this.controlador, this);
+        ver.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnVerEntregasActionPerformed
+
    
     // <editor-fold defaultstate="collapsed" desc="Elementos de la Ventana">
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnMostrar;
     private javax.swing.JButton btnNuevoPedido;
+    private javax.swing.JButton btnVerEntregas;
     // End of variables declaration//GEN-END:variables
     // </editor-fold>
 }

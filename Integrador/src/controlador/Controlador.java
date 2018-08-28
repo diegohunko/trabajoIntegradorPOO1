@@ -299,6 +299,10 @@ public class Controlador {
         
     }
     
+    public List buscarEntregas(Date fechaEntre){
+        return this.persistencia.buscarPorClaseCampoYCriterio(Entrega.class, Entrega_.fechaEntrega, fechaEntre);
+    }
+    
     public void eliminarEntrega(Entrega entregaNoDeseada){
         try {
             Pedido pedidoOrig = entregaNoDeseada.getNroPedido();
