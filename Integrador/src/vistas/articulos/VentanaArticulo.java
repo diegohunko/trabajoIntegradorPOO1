@@ -5,14 +5,11 @@
  */
 package vistas.articulos;
 import controlador.Controlador;
-import java.awt.Dimension;
 import java.awt.HeadlessException;
-import java.awt.Toolkit;
 import java.util.List;
 import javax.swing.*;
 import modelo.Articulo;
 import modelo.Articulo_;
-import modelo.Envase;
 import modelo.TipoArticulo;
 /**
  *
@@ -287,7 +284,6 @@ public class VentanaArticulo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
         try {
             List resultado;
             switch (this.cmbxCriterioBusqueda.getSelectedIndex()) {
@@ -298,16 +294,7 @@ public class VentanaArticulo extends javax.swing.JFrame {
                     if (resultado.isEmpty()) {
                         JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.ERROR_MESSAGE);
                     } else {
-                        //mostrar el resultado en algun lado. 
                         this.lstArticulos.setListData(resultado.toArray());
-                        /*Articulo articulo;
-                  articulo = (Articulo) resultado.get(0);
-                  this.lblIdArticulo.setText(Long.toString(articulo.getIdArticulo()));
-                  this.txtDiametro.setText(articulo.getDiametro().toString());
-                  this.txtAncho.setText(articulo.getAncho().toString());
-                  this.txtDescripcion.setText(articulo.getDescripcion());
-                  this.txtLargo.setText(articulo.getLargo().toString());
-                  this.cmbxTipoArticulo.setSelectedItem(articulo.getTipo());*/
                     }
                     break;
                 //Nombre, 
@@ -375,9 +362,6 @@ public class VentanaArticulo extends javax.swing.JFrame {
             TipoArticulo ta;
             ta = (TipoArticulo) this.cmbxTipoArticulo.getSelectedItem();
             if (this.lstArticulos.isSelectionEmpty()){
-                /*Envase env;
-            env = (Envase) this.cmbxEnvase.getSelectedItem();*/
-                
                 if (!"".equals(this.txtDescripcion.getText())) {
                     this.controlador.nuevoArticulo(this.txtDescripcion.getText().toUpperCase(),
                             Double.parseDouble(this.txtLargo.getText()),
@@ -388,6 +372,7 @@ public class VentanaArticulo extends javax.swing.JFrame {
                     limpiar();
                 } else {
                     System.out.println("Te olvidaste poner una descripción al ertículo. :@");
+                    this.txtDescripcion.grabFocus();
                 }
                 
             } else {

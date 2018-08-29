@@ -168,11 +168,14 @@ public class VentanaEnvase extends javax.swing.JFrame {
             TipoArticulo ta;
             ta = (TipoArticulo) this.cmbxTipoArticulo.getSelectedItem();
             if (!"".equals(this.txtCapacidad.getText()) && ta != null)  {
-                this.controlador.agregarNuevoEnvase(Double.parseDouble(this.txtCapacidad.getText()),
-                        ta);
-                /*Envase enva;
-            enva = (Envase) this.controlador.buscarEnvaseCapacidadTipo(Double.parseDouble(this.txtCapacidad.getText()), ta);
-                 */
+                try {
+                    this.controlador.agregarNuevoEnvase(Double.parseDouble(this.txtCapacidad.getText()),
+                            ta);
+                } catch (NumberFormatException numberFormatException) {
+                    JOptionPane.showMessageDialog(null, "El valor Ingresado NO ES un NÚMERO", "Error", JOptionPane.ERROR_MESSAGE);
+                    this.txtCapacidad.setText("");
+                    this.txtCapacidad.grabFocus();
+                }
                 limpiar();
             } else {
                 JOptionPane.showMessageDialog(null, "DEBE seleccionar el tipo de artículo.", "Error", JOptionPane.ERROR_MESSAGE);

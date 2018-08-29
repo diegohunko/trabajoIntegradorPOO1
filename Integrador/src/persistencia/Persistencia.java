@@ -16,7 +16,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.SingularAttribute;
 import modelo.*;
-import org.eclipse.persistence.exceptions.QueryException;
 
 
 /**
