@@ -153,14 +153,14 @@ public class Persistencia  {
      * @param ta
      * @return
      */
-    public Envase buscarEnvaseCapTipo(Double capacidad, TipoArticulo ta){
+    public List buscarEnvaseCapTipo(Double capacidad, TipoArticulo ta){
         CriteriaBuilder builder = this.em.getCriteriaBuilder();
         CriteriaQuery<Envase> consulta = builder.createQuery(Envase.class);
         Root<Envase> inicio = consulta.from(Envase.class);
         consulta.where(builder.and(
                 builder.equal(inicio.get(Envase_.tipoArticulo), ta)),
                 builder.equal(inicio.get(Envase_.capacidad), capacidad));
-        return em.createQuery(consulta).getSingleResult();
+        return em.createQuery(consulta).getResultList();
     }
     
     /**

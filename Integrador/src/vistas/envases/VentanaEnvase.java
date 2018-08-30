@@ -29,10 +29,10 @@ public class VentanaEnvase extends javax.swing.JFrame {
         this.controlador = c;
         this.vp = previo;
         initComponents();
-        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        /*Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
         int height = pantalla.height;
         int width = pantalla.width;
-        setSize(width/2, height/2);
+        setSize(width/2, height/2);*/
         setLocationRelativeTo(null);
         setVisible(true);
         this.vp.setVisible(false);
@@ -58,6 +58,8 @@ public class VentanaEnvase extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         lstEnvases = new javax.swing.JList();
         btnEliminar = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
+        cmbxCriterio = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Envases");
@@ -100,13 +102,23 @@ public class VentanaEnvase extends javax.swing.JFrame {
             }
         });
 
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
+        cmbxCriterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Capacidad", "Tipo Artículo", "Ambos" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+            .addComponent(btnEliminar)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel2)
@@ -117,22 +129,20 @@ public class VentanaEnvase extends javax.swing.JFrame {
                                 .addComponent(lblIdEnvase, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(28, 28, 28)
-                                .addComponent(txtCapacidad))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                        .addComponent(cmbxTipoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cmbxTipoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnNuevoEnvase)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnNuevoEnvase)))
-                .addGap(18, 18, 18)
-                .addComponent(btnEliminar)
-                .addGap(94, 94, 94))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel3)))
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(cmbxCriterio, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -145,18 +155,21 @@ public class VentanaEnvase extends javax.swing.JFrame {
                             .addComponent(lblIdEnvase))
                         .addGap(18, 18, 18)
                         .addComponent(jLabel2))
-                    .addComponent(txtCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmbxCriterio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(cmbxTipoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbxTipoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnNuevoEnvase)
-                    .addComponent(btnEliminar))
+                .addComponent(btnNuevoEnvase)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnEliminar)
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
@@ -171,12 +184,12 @@ public class VentanaEnvase extends javax.swing.JFrame {
                 try {
                     this.controlador.agregarNuevoEnvase(Double.parseDouble(this.txtCapacidad.getText()),
                             ta);
+                    limpiar();
                 } catch (NumberFormatException numberFormatException) {
                     JOptionPane.showMessageDialog(null, "El valor Ingresado NO ES un NÚMERO", "Error", JOptionPane.ERROR_MESSAGE);
                     this.txtCapacidad.setText("");
                     this.txtCapacidad.grabFocus();
                 }
-                limpiar();
             } else {
                 JOptionPane.showMessageDialog(null, "DEBE seleccionar el tipo de artículo.", "Error", JOptionPane.ERROR_MESSAGE);
                 this.cmbxTipoArticulo.grabFocus();
@@ -212,6 +225,25 @@ public class VentanaEnvase extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_formWindowClosing
 
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        try {
+            TipoArticulo ta = (TipoArticulo) this.cmbxTipoArticulo.getSelectedItem();
+            switch (this.cmbxCriterio.getSelectedIndex()) {
+                case 0:
+                    this.lstEnvases.setListData(this.controlador.buscarEnvaseCapacidad(Double.parseDouble(this.txtCapacidad.getText())).toArray());
+                    break;
+                case 1:
+                    this.lstEnvases.setListData(this.controlador.buscarEnvaseTipo(ta).toArray());
+                    break;
+                case 2:
+                    this.lstEnvases.setListData(this.controlador.buscarEnvaseCapacidadTipo(Double.parseDouble(this.txtCapacidad.getText()), ta).toArray());
+                    break;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Revise los parámetros de netrada y de búsqueda", "Error", JOptionPane.ERROR_MESSAGE);
+            this.txtCapacidad.grabFocus();
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void limpiar(){
         this.lblIdEnvase.setText("");
@@ -223,10 +255,13 @@ public class VentanaEnvase extends javax.swing.JFrame {
         this.lstEnvases.setListData(this.controlador.listarEnvases().toArray());
         this.lstEnvases.clearSelection();
     }
+    
     // <editor-fold defaultstate="collapsed" desc="Componentes de la ventana">
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnNuevoEnvase;
+    private javax.swing.JComboBox<String> cmbxCriterio;
     private javax.swing.JComboBox<String> cmbxTipoArticulo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

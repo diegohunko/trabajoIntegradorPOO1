@@ -9,10 +9,8 @@ import controlador.Controlador;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.text.ParseException;
-import java.text.DateFormat;
 import javax.swing.JFrame;
 import java.util.*;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import vistas.entregas.VentanaEntrega;
 import modelo.Pedido;
@@ -44,6 +42,10 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
         this.previo.setVisible(false);
+        Calendar cal = Calendar.getInstance();
+        String titulo;
+        titulo = "NUEVO PEDIDO. FECHA: " + this.controlador.dateFormater(cal.getTime());
+        this.setTitle(titulo);
         //this.lblIdPedido.setVisible(true);
         //this.lblIdPedido.setText("HOLA");
     }
@@ -54,7 +56,7 @@ public class VentanaNuevoPedido extends javax.swing.JFrame {
         this.pedidoExtranjero = p;
         
         String titulo;
-        titulo = "Modificación de Pedido: " + Long.toString(this.pedidoExtranjero.getIdPedido());
+        titulo = "MODIFICACIÓN PEDIDO: " + Long.toString(this.pedidoExtranjero.getIdPedido());
         initComponents();
         
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();

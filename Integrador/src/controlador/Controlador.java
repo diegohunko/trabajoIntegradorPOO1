@@ -14,7 +14,6 @@ import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.metamodel.SingularAttribute;
 import modelo.*;
-import org.eclipse.persistence.exceptions.QueryException;
 import persistencia.*;
 /**
  *
@@ -330,14 +329,6 @@ public class Controlador {
         try{
             //Inicia la transaccion
             this.persistencia.iniciarTransaccion();
-            //Recuperar los objetos para crear un objeto de tipo Linea
-            /*Entrega unaEntrega;
-            unaEntrega = (Entrega) this.persistencia.buscar(Entrega.class, idEntrega);*/
-            /*Articulo unArticulo;
-            unArticulo = (Articulo) this.persistencia.buscar(Articulo.class, articulo);
-            Envase unEnvase;
-            unEnvase = (Envase) this.persistencia.buscar(Envase.class, envase);*/
-            
             //Creamos la linea para la entrega
             Linea unaLinea;
             unaLinea = new Linea(entrega, articulo, cantidad, envase);
@@ -362,6 +353,7 @@ public class Controlador {
             this.persistencia.eliminar(linea);
             this.persistencia.confirmarTransaccion();
         } catch (Exception e) {
+            this.persistencia.descartarTransaccion();
             throw e;
         }
         
@@ -529,9 +521,13 @@ public class Controlador {
     }
     
     public void eliminarEnvase(Envase envaseNoDeseado){
-        this.persistencia.iniciarTransaccion();
-        this.persistencia.eliminar(envaseNoDeseado);
-        this.persistencia.confirmarTransaccion();
+        try {
+            this.persistencia.iniciarTransaccion();
+            this.persistencia.eliminar(envaseNoDeseado);
+            this.persistencia.confirmarTransaccion();
+        } catch (Exception e) {
+            this.persistencia.descartarTransaccion();
+        }
     }
     
     /**
@@ -540,7 +536,7 @@ public class Controlador {
      * @param ta
      * @return
      */
-    public Envase buscarEnvaseCapacidadTipo(Double capacidad, TipoArticulo ta){
+    public List buscarEnvaseCapacidadTipo(Double capacidad, TipoArticulo ta){
         return this.persistencia.buscarEnvaseCapTipo(capacidad, ta);
     }
     
@@ -562,6 +558,10 @@ public class Controlador {
             this.persistencia.descartarTransaccion();
         }
         
+    }
+    
+    public List buscarEnvaseCapacidad(double capacidad) {
+                return this.persistencia.buscarPorClaseCampoYCriterio(Envase.class, Envase_.capacidad, capacidad);
     }
     //</editor-fold>
     
@@ -591,5 +591,6 @@ public class Controlador {
         
     }
 //</editor-fold>
+
 
 }
